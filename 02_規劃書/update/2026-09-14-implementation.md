@@ -214,4 +214,4 @@ pnpm test:e2e --workers=1
 ## 非管理員 RLS 回歸
 
 - `supabase/scripts/verify-local.sh` 新增已登入但不在 `admin_users` 的 `member_user`，確認其無法讀取留言／草稿／隱藏服務，也不能新增、修改或刪除內容與網站設定；一般 table grant 不會繞過資料庫 RLS。
-- `pnpm db:verify` 通過；本機驗證提交待本次工作樹提交後補入索引。
+- `pnpm db:verify` 通過；提交 `d07c55d`。
