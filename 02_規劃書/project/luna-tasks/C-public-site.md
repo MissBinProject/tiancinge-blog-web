@@ -110,7 +110,7 @@
 - 步驟：建列表 → 建詳情 → 接預約 → 測試隱藏/缺 slug。
 - 驗收：首頁、列表、詳情資料一致；交接：附 URL 流程。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c11)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --grep "公開文章與服務路由" --workers=1；服務列表／詳情使用同一資料來源，詳情介紹保留換行且預約入口指向 LINE。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c11)。
 
 ## C12 文章列表樣板
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。

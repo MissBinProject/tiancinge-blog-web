@@ -138,3 +138,8 @@ pnpm test:e2e --workers=1
 
 - `enforce_single_admin` 與 `enforce_single_site_settings` trigger 在存在性檢查前加入交易級 advisory lock，確保併發插入／upsert 仍維持單一管理員與單一設定列。
 - 提交 `665280c`；驗證：`pnpm db:verify`、`pnpm db:backup:verify` 通過。
+
+## 服務詳情多行介紹
+
+- 服務詳情的介紹段落加入 `detail-description`，以 `white-space: pre-line` 保留後台內容換行，維持療程文案的排版節奏。
+- 提交 `61c8616`；驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm test:e2e --grep "公開文章與服務路由" --workers=1`（1／1 通過）。
