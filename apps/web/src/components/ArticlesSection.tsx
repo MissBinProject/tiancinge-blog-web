@@ -31,7 +31,8 @@ export function NewsSection({ items = getPublished('news'), siteSettings = setti
   </section>;
 }
 
-export function BlogSection({ items = getPublished('blog').slice(0, 4), siteSettings = settings }: { items?: Article[]; siteSettings?: SiteSettings }) {
+export function BlogSection({ items = getPublished('blog'), siteSettings = settings }: { items?: Article[]; siteSettings?: SiteSettings }) {
+  const cards = items.slice(0, 4);
   const categories = Array.from(new Set(items.map((article) => article.category.trim()).filter(Boolean))).slice(0, 5);
   const glyphs = ['◉', '⌁', '♡', '☕', '▢'];
   return <section id="blog" className="articles blog section">
@@ -43,7 +44,7 @@ export function BlogSection({ items = getPublished('blog').slice(0, 4), siteSett
     <div className="container">
       <div className="section-title"><span className="eyebrow">OUR BLOG</span><h2>{siteSettings.blogTitle}</h2><p>{siteSettings.blogSubtitle}</p></div>
       <a className="article-more blog-more" href="/blog">查看更多文章 <ArrowRight size={16} /></a>
-      <div className="article-grid blog-grid">{items.map((article) => <ArticleCard key={article.id} article={article} />)}{items.length === 0 && <p className="empty">目前沒有部落格文章。</p>}</div>
+      <div className="article-grid blog-grid">{cards.map((article) => <ArticleCard key={article.id} article={article} />)}{cards.length === 0 && <p className="empty">目前沒有部落格文章。</p>}</div>
       {categories.length > 0 && <div className="category-row">{categories.map((category, index) => <a href={`/blog?category=${encodeURIComponent(category)}`} key={category}>{glyphs[index]}　{category}</a>)}</div>}
     </div>
   </section>;
