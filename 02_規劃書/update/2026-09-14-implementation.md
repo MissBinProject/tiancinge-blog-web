@@ -174,3 +174,8 @@ pnpm test:e2e --workers=1
 
 - Supabase 新增文章 trigger，直接寫入時也會要求 `articles.type` 與所選 `article_categories.type` 一致，與後台分類選擇器的驗證保持一致。
 - 提交 `41a2431`；驗證：`pnpm db:verify` 通過。
+
+## 後台正式網址正規化
+
+- 後台使用 `VITE_WEB_URL` 組合 Logo、查看官網及預覽連結時會移除尾斜線，避免正式素材路徑出現雙斜線。
+- 提交 `5c142b6`；驗證：`pnpm --filter @tian-xin-ge/admin typecheck`、`pnpm --filter @tian-xin-ge/admin build`、`pnpm test:e2e --grep "後台" --workers=1 --reporter=line`（11／11 通過）。
