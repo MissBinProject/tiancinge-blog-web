@@ -114,3 +114,4 @@ pnpm test:e2e --workers=1
 - `e2e/public.spec.ts` 新增 `main#main-content` 唯一性與連結目標檢查。
 - 驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm --filter @tian-xin-ge/web build`、`pnpm test:e2e --workers=1 e2e/public.spec.ts`（10 條）通過；提交 `705d6dc`。
 - 全站 `main#main-content` 增加固定 Header 高度相容的 `scroll-margin-top`，桌機 76px、手機 66px。
+- 後台 Dashboard 在 Supabase 資料載入完成前顯示 `aria-busy` 載入遮罩並停用內容區互動，避免初始 fixture 值覆寫正式資料。
