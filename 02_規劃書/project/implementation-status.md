@@ -65,6 +65,7 @@
 - 新增 `supabase/scripts/verify-backup-restore.sh` 與 `pnpm db:backup:verify`，已完成本機 custom-format 備份／checksum／異動／回復演練（5 項服務、7 篇已發布文章恢復）；正式 Supabase 仍待上線前演練。
 - 63 張 Luna 任務卡已補上實際交接日期、驗證命令、證據位置與提交 SHA；逐卡索引見 [`luna-tasks/commit-map.md`](luna-tasks/commit-map.md)，任務卡驗證器會拒絕未填寫的交接範本。
 - fixture 素材已記錄目前處理檔案的實際 byte 大小；後台網站設定在正式資料只有 `line_url` 時也能正確載入並保存該連結。
+- 首頁部落格分類入口改由已發布文章的實際分類產生，後台分類異動不會留下失效的硬編碼連結。
 
 ## 待正式資料／營運設定
 
@@ -81,7 +82,7 @@
 - `pnpm run typecheck`：通過。
 - `pnpm run build`：官網與後台均通過。
 - `pnpm test`：Vitest 3 個檔案、13 個測試通過，包含資料 fixture、單筆服務／文章公開 repository、Supabase 部分環境設定邊界、留言 API（含 JSON Content-Type、五次／分鐘限流）與共用內容安全規則驗證。
-- `pnpm test:e2e --workers=1`：Playwright 20 個公開／後台流程通過，包含四種 viewport、手機選單 ARIA／錨點位置、內頁導覽目前區段、服務／文章／搜尋／政策內頁手機溢出、缺圖 fallback、404、聯絡表單成功／失敗保留內容、草稿公開限制（網址／搜尋／sitemap）、消息手動輪播與空白頁防護、所有價格卡導向官方 LINE、登入／登出／重設密碼輔助狀態、文章預覽／建立／發布／刪除、正文圖片素材選擇、服務新增／排序／顯示狀態、狀態篩選、留言備註／處理、未儲存離頁提醒、品牌設定、素材篩選／尺寸顯示及使用中素材／分類刪除保護。
+- `pnpm test:e2e --workers=1`：Playwright 21 個公開／後台流程通過，包含四種 viewport、手機選單 ARIA／錨點位置、內頁導覽目前區段、服務／文章／搜尋／政策內頁手機溢出、缺圖 fallback、404、聯絡表單成功／失敗保留內容、草稿公開限制（網址／搜尋／sitemap）、消息手動輪播與空白頁防護、首頁分類入口同步、所有價格卡導向官方 LINE、登入／登出／重設密碼輔助狀態、文章預覽／建立／發布／刪除、正文圖片素材選擇、服務新增／排序／顯示狀態、狀態篩選、留言備註／處理、未儲存離頁提醒、品牌設定、素材篩選／尺寸顯示及使用中素材／分類刪除保護。
 - `pnpm preflight:production`：檢查流程正常，因正式 Supabase、Vercel 網址與伺服器 key 尚未提供而依預期回報 7 個缺少欄位；未輸出任何 secret 值。
 - `pnpm db:verify`：暫存 PostgreSQL migration／seed、匿名／管理員 RLS、Storage 限制、素材引用保護、正文 schema、LINE URL 及留言 guard 通過。
 - `pnpm db:backup:verify`：暫存 PostgreSQL custom-format 備份、checksum、資料異動後回復及 5 項服務／7 篇已發布文章筆數驗證通過。

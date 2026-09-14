@@ -102,3 +102,4 @@ pnpm test:e2e --workers=1
 - 驗證：`pnpm tasks:verify`、`git diff --check` 通過。
 - 後台文章新增刪除操作，Supabase 與 local fixture adapter 均支援；Playwright 回歸流程增至 20 條。
 - fixture 素材列表改用實際檔案大小；後台設定可處理只提供 `line_url` 的正式設定資料。
+- 首頁部落格分類入口改由已發布文章分類產生，並新增公開端到端檢查；Playwright 回歸流程增至 21 條。
