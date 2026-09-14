@@ -7,7 +7,7 @@ import './styles.css';
 import { adminSupabase } from './supabase';
 import { deleteArticle, deleteCategory, deleteMedia, deleteMessage, deleteService, loadArticles, loadCategories, loadMedia, loadMessages, loadServices, loadSettings, saveArticle, saveCategory, saveMediaAlt, saveMessage, saveService, saveSettings, uploadMedia, type AdminCategory, type ManagedArticle, type AdminMessage, type AdminMedia } from './repositories';
 
-const webOrigin = import.meta.env.VITE_WEB_URL || 'http://localhost:3000';
+const webOrigin = (import.meta.env.VITE_WEB_URL || 'http://localhost:3000').replace(/\/+$/, '');
 const seedServices: Service[] = fixtureServices;
 const seedArticles: ManagedArticle[] = fixtureArticles.map((article) => ({ ...article, id: `local-${article.id}`, body: JSON.stringify(article.body) }));
 const seedCategories: AdminCategory[] = fixtureCategories.map((category) => ({ ...category, id: `local-${category.id}` }));
