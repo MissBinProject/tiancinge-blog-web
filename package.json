@@ -17,6 +17,7 @@
     "visual:capture": "node scripts/capture-visual.mjs",
     "visual:diff": "./scripts/generate-visual-diffs.sh",
     "assets:export": "./scripts/export-crops.sh",
+    "tasks:verify": "node scripts/verify-task-cards.mjs",
     "db:verify": "./supabase/scripts/verify-local.sh",
     "preflight:production": "node scripts/check-production-env.mjs"
   },

@@ -22,6 +22,8 @@ pnpm run dev:admin     # http://localhost:5173
 
 若要產生五個桌機區段的設計稿疊圖與像素差異定位圖，先確定官網 dev server 已啟動，再執行 `pnpm visual:capture && pnpm visual:diff`；輸出位於 `02_規劃書/project/visual-baseline/`。
 
+若要檢查 Luna 任務卡是否仍保有完整欄位及 A01–E11 唯一 ID，可執行 `pnpm tasks:verify`。
+
 若本機已安裝 PostgreSQL，可執行 `pnpm db:verify`。腳本會在暫存資料庫執行 migration／seed，並驗證匿名讀寫權限、唯一管理員、Storage MIME 限制、正文圖片引用保護及價格 constraint；不會連線或修改正式 Supabase。
 
 ## 驗證
