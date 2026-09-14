@@ -112,6 +112,6 @@ pnpm test:e2e --workers=1
 
 - 將根 layout 的外層 `#main-content` 改為各公開頁真正的 `main#main-content`，讓 Header 的「跳到主要內容」不會把焦點留在導覽列之前。
 - `e2e/public.spec.ts` 新增 `main#main-content` 唯一性與連結目標檢查。
-- 驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm --filter @tian-xin-ge/web build`、`pnpm test:e2e --workers=1 e2e/public.spec.ts`（10 條）通過；提交 `705d6dc`。
+- 驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm --filter @tian-xin-ge/web build`、`pnpm test:e2e --workers=1 e2e/public.spec.ts`（10 條）通過；相關提交為 `705d6dc`、`c3e2c35`、`234fbe7`。
 - 全站 `main#main-content` 增加固定 Header 高度相容的 `scroll-margin-top`，桌機 76px、手機 66px。
-- 後台 Dashboard 在 Supabase 資料載入完成前顯示 `aria-busy` 載入遮罩並停用內容區互動，避免初始 fixture 值覆寫正式資料。
+- 後台 Dashboard 在 Supabase 資料載入完成前顯示 `aria-busy` 載入遮罩並停用內容區互動，避免初始 fixture 值覆寫正式資料；提交 `15123a6`。
