@@ -4,5 +4,6 @@
 - `supabase/scripts/verify-local.sh` 增加已登入但不在 `admin_users` 的 `member_user`，驗證非管理員無法讀取留言／草稿／隱藏服務，也不能新增、修改或刪除內容與網站設定。`pnpm db:verify` 通過，相關提交：`d07c55d`、`670ac83`、`4d7dc39`、`4b5a572`。
 - 依 UI 配置矩陣補上 768px 平板版面：服務／消息／部落格內頁列表改為兩欄，服務詳情與聯繫區改為上下排列；Playwright 新增斷點驗收，提交 `fe75ebc`。
 - 後台 Auth 登入、session／管理員 allowlist 驗證、登出與密碼重設改由 `apps/admin/src/auth.ts` adapter 提供，畫面元件不再直接查詢 `admin_users`；相關提交：`e0aab0b`。
+- 修正 Auth 初次 session 權限查詢與手動登出的競態，加入 request 世代／元件卸載防護並覆蓋 `SIGNED_IN` 重新驗證；相關提交：`1dd44f9`。
 - 本輪回歸：`pnpm run typecheck`、`pnpm run build`、`pnpm test`（13／13）、`pnpm test:e2e --workers=1`（24／24，含後台主要模組 390px 溢出）、`pnpm db:verify`、`pnpm db:backup:verify`、`pnpm tasks:verify`、`pnpm assets:export`、`git diff --check` 均通過。
 - E10／E11 仍待正式 Supabase、Vercel、Auth 管理員、店家正式資料、原始字型／照片及正式備份環境；不可將本機 fixture 驗收標記為正式上線完成。

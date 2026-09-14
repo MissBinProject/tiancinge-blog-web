@@ -41,8 +41,8 @@
 | <a id="c16"></a>C16 | 3759e6e, 690db45, 4c5016, b5e7471, 5a352f7, fe75ebc | 本機 CSS／截圖流程通過；390px 服務與價格卡單欄、768px 首頁維持三欄配置且內頁不溢出，長服務摘要可折行，原始手機稿、字型及照片到位後需完成正式疊圖確認。 |
 | <a id="c17"></a>C17 | 3759e6e, 690db45, d2258b4, 5a352f7, fe75ebc | 本機 CSS／流程通過；390px 部落格與特色列單欄、768px 內頁列表兩欄，消息輪播每頁顯示一張，原始手機稿、字型及照片到位後需完成正式疊圖確認。 |
 | <a id="c18"></a>C18 | 3759e6e, 690db45, 5a352f7, fe75ebc | 本機 CSS／流程通過；390px 服務／消息／部落格列表單欄、768px 列表兩欄且服務詳情上下排列，手機內頁無溢出，原始手機稿、字型及照片到位後需完成正式疊圖確認。 |
-| <a id="d01"></a>D01 | 3759e6e, 665280c, e0aab0b | 本機 fixture 驗收通過；Supabase 單一管理員關聯的 trigger 具交易級競態保護，Auth 登入／登出／密碼重設已由獨立 adapter 封裝，正式 Auth 待設定。 |
-| <a id="d02"></a>D02 | 3759e6e, 7267c23, 5c142b6, e0aab0b | 本機 fixture 驗收通過；收合側欄保留按鈕名稱、aria-expanded 與目前頁面 aria-current，Auth session／管理員權限檢查由獨立 adapter 提供，後台正式網址組合會移除尾斜線。 |
+| <a id="d01"></a>D01 | 3759e6e, 665280c, e0aab0b, 1dd44f9 | 本機 fixture 驗收通過；Supabase 單一管理員關聯的 trigger 具交易級競態保護，Auth 登入／登出／密碼重設已由獨立 adapter 封裝，session 驗證具過期查詢防護，正式 Auth 待設定。 |
+| <a id="d02"></a>D02 | 3759e6e, 7267c23, 5c142b6, e0aab0b, 1dd44f9 | 本機 fixture 驗收通過；收合側欄保留按鈕名稱、aria-expanded 與目前頁面 aria-current，Auth session／管理員權限檢查由獨立 adapter 提供，過期 session 查詢不會覆蓋登出狀態，後台正式網址組合會移除尾斜線。 |
 | <a id="d03"></a>D03 | 3759e6e, 1de1a07, e9f4eef | 本機 fixture 驗收通過；Dashboard 統一提供素材資料，素材編輯器不再重複載入舊快照。 |
 | <a id="d04"></a>D04 | 3759e6e, e9f4eef | 本機 fixture 驗收通過；共用圖片選擇器改由父層傳入已同步素材。 |
 | <a id="d05"></a>D05 | 3759e6e, f696054, c38a3a2, 145ee6b | 本機 fixture 驗收通過。 |
