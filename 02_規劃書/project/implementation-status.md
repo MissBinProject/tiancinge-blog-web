@@ -64,6 +64,7 @@
 - 新增 `pnpm db:verify`／`supabase/scripts/verify-local.sh`，可重複建立暫存 PostgreSQL 並驗證匿名／唯一管理員 RLS、隱藏服務與草稿不可見、Storage MIME 限制、文章正文圖片引用保護及價格 constraint；正式 Supabase 仍需以實際專案重跑。
 - 新增 `supabase/scripts/verify-backup-restore.sh` 與 `pnpm db:backup:verify`，已完成本機 custom-format 備份／checksum／異動／回復演練（5 項服務、7 篇已發布文章恢復）；正式 Supabase 仍待上線前演練。
 - 63 張 Luna 任務卡已補上實際交接日期、驗證命令、證據位置與提交 SHA；逐卡索引見 [`luna-tasks/commit-map.md`](luna-tasks/commit-map.md)，任務卡驗證器會拒絕未填寫的交接範本。
+- fixture 素材已記錄目前處理檔案的實際 byte 大小；後台網站設定在正式資料只有 `line_url` 時也能正確載入並保存該連結。
 
 ## 待正式資料／營運設定
 
