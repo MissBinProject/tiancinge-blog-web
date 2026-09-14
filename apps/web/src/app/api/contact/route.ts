@@ -54,6 +54,8 @@ async function readBodyWithinLimit(request: Request) {
 
 export async function POST(request: Request) {
   try {
+    const contentType = (request.headers.get('content-type') || '').split(';', 1)[0].trim().toLowerCase();
+    if (contentType !== 'application/json') return json({ error: '請使用 JSON 格式提交' }, 400);
     const contentLength = Number(request.headers.get('content-length') || 0);
     if (contentLength > MAX_BODY_BYTES) return json({ error: '提交內容過大' }, 413);
 

@@ -8,6 +8,11 @@ const request = (body: unknown, headers: HeadersInit = {}) => new Request('http:
 });
 
 describe('POST /api/contact', () => {
+  it('rejects a non-JSON content type', async () => {
+    const response = await POST(new Request('http://localhost/api/contact', { method: 'POST', headers: { 'content-type': 'text/plain' }, body: 'name=訪客' }));
+    expect(response.status).toBe(400);
+  });
+
   it('rejects missing required fields and malformed email', async () => {
     const missing = await POST(request({ name: '', phone: '0900000000', message: 'hello' }));
     expect(missing.status).toBe(400);
