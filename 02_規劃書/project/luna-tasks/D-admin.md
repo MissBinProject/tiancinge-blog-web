@@ -18,7 +18,7 @@
 - 步驟：建立 layout → 選單切換 → responsive sidebar → guard。
 - 驗收：重新整理、逾時及手機寬度均正確；交接：附路由矩陣。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d02)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm --filter @tian-xin-ge/admin typecheck && pnpm --filter @tian-xin-ge/admin build && pnpm test:e2e --grep "收合側欄" --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`，收合前後保留 `aria-label`、`aria-expanded` 與 `aria-current="page"`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d02)。
 
 ## D03 素材列表及上傳
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -167,4 +167,4 @@
 - 固定契約：所有儲存按鈕、錯誤、空狀態與 loading 文案一致。
 - 步驟：盤點流程 → 抽 feedback component → dirty guard → 全頁驗證。
 - 驗收：各模組可理解且無靜默失敗；交接：附 UX checklist。
-- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d17)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm --filter @tian-xin-ge/admin typecheck && pnpm --filter @tian-xin-ge/admin build && pnpm test:e2e --grep "收合側欄" --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`，收合側欄與正式資料載入／錯誤回饋語意一致。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d17)。

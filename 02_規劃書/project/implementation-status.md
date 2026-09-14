@@ -80,6 +80,7 @@
 - 後台正式資料初次載入期間會以 `aria-busy` 與載入遮罩取代內容編輯區，避免滑鼠或鍵盤在遠端資料尚未完成同步前用 fixture／舊快照覆寫正式資料。
 - 聯絡表單欄位補上可讀 `aria-label` 與姓名／電話／Email 自動填寫提示；最新消息輪播控制以 `role="group"` 與中文標籤標示，方便輔助技術辨識控制範圍。
 - 單一管理員與單一網站設定列的 Supabase trigger 加入交易級 advisory lock，避免併發 upsert 在存在性檢查競態下建立第二筆資料。
+- 後台收合側欄按鈕補上展開／收合狀態與可讀名稱，側欄項目以 `aria-current="page"` 標示目前頁面；Playwright 覆蓋收合前後的讀屏語意。
 
 ## 待正式資料／營運設定
 
@@ -96,7 +97,7 @@
 - `pnpm run typecheck`：通過。
 - `pnpm run build`：官網與後台均通過。
 - `pnpm test`：Vitest 3 個檔案、13 個測試通過，包含資料 fixture、單筆服務／文章公開 repository、Supabase 部分環境設定邊界、留言 API（含 JSON Content-Type、五次／分鐘限流）與共用內容安全規則驗證。
-- `pnpm test:e2e --workers=1`：Playwright 21 個公開／後台流程通過，包含四種 viewport、手機選單 ARIA／錨點位置、內頁導覽目前區段、服務／文章／搜尋／政策內頁手機溢出、缺圖 fallback、404、聯絡表單成功／失敗保留內容、草稿公開限制（網址／搜尋／sitemap）、消息手動輪播與空白頁防護、首頁分類入口同步、所有價格卡導向官方 LINE、登入／登出／重設密碼輔助狀態、文章預覽／建立／發布／刪除、正文圖片素材選擇、服務新增／排序／顯示狀態、狀態篩選、留言備註／處理、未儲存離頁提醒、品牌設定、素材篩選／尺寸顯示及使用中素材／分類刪除保護。
+- `pnpm test:e2e --workers=1`：Playwright 22 個公開／後台流程通過，包含四種 viewport、手機選單 ARIA／錨點位置、內頁導覽目前區段、服務／文章／搜尋／政策內頁手機溢出、缺圖 fallback、404、聯絡表單成功／失敗保留內容、草稿公開限制（網址／搜尋／sitemap）、消息手動輪播與空白頁防護、首頁分類入口同步、所有價格卡導向官方 LINE、登入／登出／重設密碼輔助狀態、後台收合側欄 aria 名稱與目前頁面語意、文章預覽／建立／發布／刪除、正文圖片素材選擇、服務新增／排序／顯示狀態、狀態篩選、留言備註／處理、未儲存離頁提醒、品牌設定、素材篩選／尺寸顯示及使用中素材／分類刪除保護。
 - `pnpm preflight:production`：檢查流程正常，因正式 Supabase、Vercel 網址與伺服器 key 尚未提供而依預期回報 7 個缺少欄位；未輸出任何 secret 值。
 - `pnpm db:verify`：暫存 PostgreSQL migration／seed、匿名／管理員 RLS、Storage 限制、素材引用保護、正文 schema、LINE URL 及留言 guard（含過期 digest 清理）通過。
 - `pnpm db:backup:verify`：暫存 PostgreSQL custom-format 備份、checksum、資料異動後回復及 5 項服務／7 篇已發布文章筆數驗證通過。

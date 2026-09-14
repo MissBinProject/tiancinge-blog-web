@@ -148,3 +148,8 @@ pnpm test:e2e --workers=1
 
 - 服務卡摘要移除固定單行限制，加入自然換行與長字串折行，避免後台文案變長時破壞手機版版面。
 - 提交 `b5e7471`；驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm test:e2e --grep "首頁桌機與手機版" --workers=1`（1／1 通過）。
+
+## 後台收合側欄可及性
+
+- 收合／展開按鈕改用狀態化 `aria-label` 與 `aria-expanded`；側欄導覽項目補上固定可讀名稱與 `aria-current="page"`，收合後仍可由鍵盤與讀屏辨識目前頁面。
+- 提交 `7267c23`；驗證：`pnpm --filter @tian-xin-ge/admin typecheck`、`pnpm --filter @tian-xin-ge/admin build`、`pnpm test:e2e --grep "收合側欄" --workers=1`（1／1 通過），後台 grep 回歸 10／10 通過。

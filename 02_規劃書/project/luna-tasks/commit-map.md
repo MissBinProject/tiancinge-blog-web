@@ -42,7 +42,7 @@
 | <a id="c17"></a>C17 | 3759e6e, 690db45, d2258b4 | 本機 CSS／截圖流程通過；原始手機稿、字型及照片到位後需完成正式疊圖確認。 |
 | <a id="c18"></a>C18 | 3759e6e, 690db45 | 本機 CSS／截圖流程通過；原始手機稿、字型及照片到位後需完成正式疊圖確認。 |
 | <a id="d01"></a>D01 | 3759e6e, 665280c | 本機 fixture 驗收通過；Supabase 單一管理員關聯的 trigger 具交易級競態保護，正式 Auth 待設定。 |
-| <a id="d02"></a>D02 | 3759e6e | 本機 fixture 驗收通過。 |
+| <a id="d02"></a>D02 | 3759e6e, 7267c23 | 本機 fixture 驗收通過；收合側欄保留按鈕名稱、aria-expanded 與目前頁面 aria-current。 |
 | <a id="d03"></a>D03 | 3759e6e, 1de1a07 | 本機 fixture 驗收通過。 |
 | <a id="d04"></a>D04 | 3759e6e | 本機 fixture 驗收通過。 |
 | <a id="d05"></a>D05 | 3759e6e, f696054, c38a3a2, 145ee6b | 本機 fixture 驗收通過。 |
@@ -57,7 +57,7 @@
 | <a id="d14"></a>D14 | 3759e6e | 本機 fixture 驗收通過。 |
 | <a id="d15"></a>D15 | 3759e6e | 本機 fixture 驗收通過。 |
 | <a id="d16"></a>D16 | 3759e6e | 本機 fixture 驗收通過。 |
-| <a id="d17"></a>D17 | 3759e6e, 15123a6, c709884 | 本機 fixture 驗收通過；Supabase 正式資料初次載入期間不掛載內容編輯區，避免快照覆寫。 |
+| <a id="d17"></a>D17 | 3759e6e, 15123a6, c709884, 7267c23 | 本機 fixture 驗收通過；Supabase 正式資料初次載入期間不掛載內容編輯區，且收合側欄提供一致的儲存／目前頁面語意。 |
 | <a id="e01"></a>E01 | 3759e6e, f696054 | 程式與 fixture 驗證通過；正式資料與環境變數待接入。 |
 | <a id="e02"></a>E02 | 3759e6e, ef9283b | 程式與 fixture 驗證通過；正式資料與環境變數待接入。 |
 | <a id="e03"></a>E03 | 3759e6e, 89fd05c, c360aed, 172152c | 程式與 fixture 驗證通過；正式資料與環境變數待接入。 |
@@ -75,6 +75,6 @@
 - `pnpm tasks:verify`：確認 63 張卡均有必要欄位。
 - `pnpm typecheck`、`pnpm build`：官網與後台型別及建置。
 - `pnpm test`：Vitest 13 個測試。
-- `pnpm test:e2e --workers=1`：Playwright 21 個公開／後台流程。
+- `pnpm test:e2e --workers=1`：Playwright 22 個公開／後台流程。
 - `pnpm db:verify`：暫存 PostgreSQL migration、RLS、Storage 與引用保護。
 - `pnpm db:backup:verify`：本機備份、checksum、異動與回復演練。
