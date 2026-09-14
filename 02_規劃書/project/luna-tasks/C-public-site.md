@@ -70,7 +70,7 @@
 - 步驟：載入四筆 → 建分類列 → 驗證卡片連結與空狀態。
 - 驗收：四欄桌機及手機重排符合規格；交接：附分類連結清單。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c07)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --grep "首頁部落格分類入口" --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`，首頁列出所有已發布文章分類並連到對應列表。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c07)。
 
 ## C08 聯絡資訊與地圖區
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。

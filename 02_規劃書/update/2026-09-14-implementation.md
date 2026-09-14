@@ -123,3 +123,8 @@ pnpm test:e2e --workers=1
 - 聯絡表單姓名、電話、Email 與留言欄位補上可讀 `aria-label`；姓名／電話／Email 分別提供瀏覽器可辨識的 `autocomplete` 值。
 - 最新消息手動輪播控制群組補上 `role="group"` 與中文 `aria-label`，保留原有上一頁／下一頁／圓點操作。
 - 提交 `21d8668`；驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm --filter @tian-xin-ge/web build`、`pnpm test:e2e --grep public --workers=1`（10／10 通過）。
+
+## 首頁部落格分類完整性
+
+- 首頁分類入口改為列出所有已發布文章分類，避免固定五筆上限造成後台新增分類後入口遺失。
+- 提交 `c9001d4`；驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm test:e2e --grep "首頁部落格分類入口" --workers=1`（1／1 通過）。
