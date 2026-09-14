@@ -15,9 +15,9 @@
 | <a id="a07"></a>A07 | 3759e6e, 1de1a07 | 本機 fixture 驗收通過。 |
 | <a id="b01"></a>B01 | 3759e6e | 本機 fixture 驗收通過。 |
 | <a id="b02"></a>B02 | 3759e6e | 本機 fixture 驗收通過。 |
-| <a id="b03"></a>B03 | 3759e6e | 本機 fixture 驗收通過。 |
+| <a id="b03"></a>B03 | 3759e6e, 665280c | 本機 fixture／暫存 PostgreSQL 驗收通過；單一網站設定列 trigger 具交易級競態保護。 |
 | <a id="b04"></a>B04 | 3759e6e | 本機 fixture 驗收通過。 |
-| <a id="b05"></a>B05 | 3759e6e | 本機 fixture 驗收通過。 |
+| <a id="b05"></a>B05 | 3759e6e, 665280c | 本機 fixture／暫存 PostgreSQL 驗收通過；單一管理員 trigger 具交易級競態保護。 |
 | <a id="b06"></a>B06 | 3759e6e, 1de1a07, 90fcd1f | 本機驗證通過；素材引用 guard 已限制函式執行角色，正式 Supabase／Storage 權限或營運演練待執行。 |
 | <a id="b07"></a>B07 | 3759e6e, 1de1a07, 90fcd1f | 本機驗證通過；素材引用 guard 已限制函式執行角色，正式 Supabase／Storage 權限或營運演練待執行。 |
 | <a id="b08"></a>B08 | 3759e6e, ef9283b | 程式與 fixture 驗證通過；正式資料與環境變數待接入。 |
@@ -41,7 +41,7 @@
 | <a id="c16"></a>C16 | 3759e6e, 690db45, 4c5016 | 本機 CSS／截圖流程通過；原始手機稿、字型及照片到位後需完成正式疊圖確認。 |
 | <a id="c17"></a>C17 | 3759e6e, 690db45, d2258b4 | 本機 CSS／截圖流程通過；原始手機稿、字型及照片到位後需完成正式疊圖確認。 |
 | <a id="c18"></a>C18 | 3759e6e, 690db45 | 本機 CSS／截圖流程通過；原始手機稿、字型及照片到位後需完成正式疊圖確認。 |
-| <a id="d01"></a>D01 | 3759e6e | 本機 fixture 驗收通過。 |
+| <a id="d01"></a>D01 | 3759e6e, 665280c | 本機 fixture 驗收通過；Supabase 單一管理員關聯的 trigger 具交易級競態保護，正式 Auth 待設定。 |
 | <a id="d02"></a>D02 | 3759e6e | 本機 fixture 驗收通過。 |
 | <a id="d03"></a>D03 | 3759e6e, 1de1a07 | 本機 fixture 驗收通過。 |
 | <a id="d04"></a>D04 | 3759e6e | 本機 fixture 驗收通過。 |
@@ -65,7 +65,7 @@
 | <a id="e05"></a>E05 | 3759e6e, f696054, 6329f57 | 程式與 fixture 驗證通過；政策頁也輸出動態 metadata，正式資料與環境變數待接入。 |
 | <a id="e06"></a>E06 | 690db45, 4c5016, 551dc1d | 本機 CSS／截圖流程通過；原始手機稿、字型及照片到位後需完成正式疊圖確認。 |
 | <a id="e07"></a>E07 | 690db45, d2258b4, 5770785 | 本機 CSS／截圖流程通過；原始手機稿、字型及照片到位後需完成正式疊圖確認。 |
-| <a id="e08"></a>E08 | 1de1a07, 89fd05c, c360aed, 172152c | 本機驗證通過；正式 Supabase／Storage 權限或營運演練待執行。 |
+| <a id="e08"></a>E08 | 1de1a07, 89fd05c, c360aed, 172152c, 665280c | 本機驗證通過；singleton trigger 競態保護已加入，正式 Supabase／Storage 權限或營運演練待執行。 |
 | <a id="e09"></a>E09 | b0a0a40, 717bf8c, c6f85f3 | 本機驗證通過；正式 Supabase／Storage 權限或營運演練待執行。 |
 | <a id="e10"></a>E10 | — | 尚未通過：正式網域、Vercel、Supabase、Auth 管理員與店家資料尚未提供。 |
 | <a id="e11"></a>E11 | 717bf8c, b63955c | 本機驗證通過；正式 Supabase／Storage 權限或營運演練待執行。 |

@@ -133,3 +133,8 @@ pnpm test:e2e --workers=1
 
 - 隱私權與服務條款頁改用 `generateMetadata` 讀取網站設定，輸出動態標題、描述、canonical 與 Open Graph 分享資訊。
 - 提交 `6329f57`；驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm --filter @tian-xin-ge/web build`、`pnpm test:e2e --grep "政策頁提供" --workers=1`（1／1 通過）。
+
+## Supabase singleton 競態保護
+
+- `enforce_single_admin` 與 `enforce_single_site_settings` trigger 在存在性檢查前加入交易級 advisory lock，確保併發插入／upsert 仍維持單一管理員與單一設定列。
+- 提交 `665280c`；驗證：`pnpm db:verify`、`pnpm db:backup:verify` 通過。

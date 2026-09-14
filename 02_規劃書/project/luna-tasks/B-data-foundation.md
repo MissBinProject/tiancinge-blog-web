@@ -28,7 +28,7 @@
 - 步驟：寫 migration → 加 RLS → 加測試 seed → 以空資料庫執行。
 - 驗收：migration 可重跑，首頁服務及價格共用資料；交接：附 SQL 輸出。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm typecheck && pnpm build && pnpm db:verify；資料證據見 `supabase/` 與 `packages/contracts/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#b03)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm db:verify && pnpm db:backup:verify；資料證據見 `supabase/` 與 `packages/contracts/`，單一網站設定列 trigger 已加入 advisory lock。 本機 fixture／暫存 PostgreSQL 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#b03)。
 
 ## B04 建立文章、分類與素材 migration
 - 參考圖：無新增視覺稿；依 A07 固定資料契約、`packages/contracts/` 與 `supabase/` 實作。
@@ -48,7 +48,7 @@
 - 步驟：建表 → 建 `admin_users` → 建 `is_admin()` → 寫 seed/設定說明。
 - 驗收：欄位、狀態與 FK 正常；交接：附管理員建立步驟。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm typecheck && pnpm build && pnpm db:verify；資料證據見 `supabase/` 與 `packages/contracts/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#b05)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm db:verify && pnpm db:backup:verify；資料證據見 `supabase/` 與 `packages/contracts/`，單一管理員 trigger 已加入 advisory lock。 本機 fixture／暫存 PostgreSQL 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#b05)。
 
 ## B06 建立公開／管理員資料權限
 - 參考圖：無新增視覺稿；依 A07 固定資料契約、`packages/contracts/` 與 `supabase/` 實作。
