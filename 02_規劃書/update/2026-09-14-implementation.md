@@ -82,7 +82,12 @@ pnpm test
 pnpm test:e2e --workers=1
 ```
 
-以上命令均通過（Vitest 12、Playwright 16）；另 `pnpm db:verify` 通過本機資料權限與 constraint 檢查；本機 smoke test 已確認公開路由、404、留言 API（400／200／413／429）及後台主要路由。`pnpm preflight:production` 的檢查流程正常，但因正式環境尚未提供而依預期回報 7 個缺少欄位。
+以上命令均通過（當時版本為 Vitest 12、Playwright 16）；另 `pnpm db:verify` 通過本機資料權限與 constraint 檢查；本機 smoke test 已確認公開路由、404、留言 API（400／200／413／429）及後台主要路由。`pnpm preflight:production` 的檢查流程正常，但因正式環境尚未提供而依預期回報 7 個缺少欄位。
+
+## 追加驗證
+
+- 後台 Playwright 流程補上服務新增／排序／顯示狀態，以及文章建立／發布；目前 `pnpm test:e2e --workers=1` 共 19 條通過。
+- 聯絡 API 增加 JSON Content-Type 邊界測試，Vitest 目前共 13 條通過；`pnpm build`、`pnpm tasks:verify`、`pnpm db:verify` 與 `pnpm db:backup:verify` 亦已重跑通過。
 
 ## 待店家／上線前處理
 

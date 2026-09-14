@@ -13,7 +13,7 @@
 | D01–D17 | 已完成本機操作流程 | `e2e/admin.spec.ts`、後台表單／預覽／素材／分類／留言／設定；Supabase Auth 正式登入待設定 |
 | E01–E05 | 程式完成，待正式資料 | settings、服務、文章、搜尋、留言 API、SEO 已接條件式 Supabase；需建立專案並做營運流程測試 |
 | E06–E07 | 基準截圖與 overlay 已產生，差異修正待店家確認 | `02_規劃書/project/visual-diff-log.md`、五張 current／overlay／difference PNG；原始照片／字型不足時不可宣稱像素完全一致 |
-| E08–E09 | 本機測試完成，正式權限待驗證 | Vitest 12、Playwright 16；需用匿名／唯一管理員帳號重跑 RLS、Storage 與完整營運流程 |
+| E08–E09 | 本機測試完成，正式權限待驗證 | Vitest 13、Playwright 19；需用匿名／唯一管理員帳號重跑 RLS、Storage 與完整營運流程 |
 | E10 | 待正式部署 | 正式輸入欄位見 `../production-input-form.md`；需正式網域、Vercel、Supabase、Auth 管理員與店家聯絡資料 |
 | E11 | 本機演練完成，正式環境待驗證 | `supabase/scripts/backup.sh`、`restore.sh`、`verify-backup-restore.sh`、`supabase/backup-restore.md`；`pnpm db:backup:verify` 已驗證備份／checksum／回復，正式專案仍需依交接清單重跑 |
 
