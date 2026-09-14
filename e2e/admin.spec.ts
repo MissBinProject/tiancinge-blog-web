@@ -125,6 +125,9 @@ test('後台可建立草稿文章並發布', async ({ page }) => {
   await editor.getByLabel('文章標題').fill('春日放鬆指南');
   await editor.getByLabel('網址代稱（slug）').fill('spring-relax-guide');
   await editor.getByLabel('摘要').fill('用一段安靜時光照顧自己。');
+  await editor.getByLabel('已發布').click();
+  await expect(editor.getByLabel('已發布')).not.toBeChecked();
+  await expect(editor.getByText('文章必須先提供正文內容才能發布')).toBeVisible();
   await editor.getByRole('button', { name: '+ 段落' }).click();
   await editor.locator('.body-block').last().locator('textarea').fill('春日裡留一段時間，讓身心重新呼吸。');
   await editor.getByLabel('已發布').check();
