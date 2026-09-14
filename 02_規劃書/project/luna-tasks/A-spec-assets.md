@@ -50,7 +50,7 @@
 - 步驟：標記桌機到手機的重排 → 設定互動觸控尺寸 → 記錄無手機稿的推定。
 - 驗收：每一區有配置表及未知項目；交接：附尺寸矩陣。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm tasks:verify；素材／基準證據見 `03_UI設計圖/asset-map.md`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#a05)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm tasks:verify、pnpm test:e2e --grep "首頁桌機與手機版|內頁在手機版" --workers=1；手機配置矩陣見 `02_規劃書/project/ui-ux-plan.md`，390px 單欄與 768px 平板欄數已由 CSS／端到端檢查固定。 本機 fixture 驗收通過；原始手機稿到位後仍需正式疊圖。 提交索引見 [commit-map.md](./commit-map.md#a05)。
 
 ## A06 建立列表、詳情與後台樣板
 - 參考圖：`03_UI設計圖/01_首頁設計圖/`；素材：`03_UI設計圖/02_素材/`。

@@ -153,3 +153,8 @@ pnpm test:e2e --workers=1
 
 - 收合／展開按鈕改用狀態化 `aria-label` 與 `aria-expanded`；側欄導覽項目補上固定可讀名稱與 `aria-current="page"`，收合後仍可由鍵盤與讀屏辨識目前頁面。
 - 提交 `7267c23`；驗證：`pnpm --filter @tian-xin-ge/admin typecheck`、`pnpm --filter @tian-xin-ge/admin build`、`pnpm test:e2e --grep "收合側欄" --workers=1`（1／1 通過），後台 grep 回歸 11／11 通過。
+
+## 手機版單欄與消息輪播配置
+
+- 依 A05／UI 配置矩陣補上 390px 單欄服務、價格、部落格及內頁列表，特色列改為縱向排列；消息輪播以媒體查詢切換為手機每頁一張，桌機仍維持三卡循環視窗。
+- 提交 `5a352f7`；驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm --filter @tian-xin-ge/web build`、`pnpm test:e2e --grep "首頁桌機與手機版|最新消息手動輪播" --workers=1`（2／2 通過）、`pnpm test:e2e --grep "內頁在手機版" --workers=1`（1／1 通過）。
