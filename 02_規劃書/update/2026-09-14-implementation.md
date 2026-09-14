@@ -163,3 +163,4 @@ pnpm test:e2e --workers=1
 
 - 修正後台正式資料載入競態：Dashboard 現在一次載入服務、文章、分類、素材、留言與網站設定，並將已同步資料與 setter 傳給各編輯器及共用圖片選擇器；子元件不再各自啟動第二次 repository 查詢，避免使用者編輯期間被舊快照覆寫。
 - 提交 `e9f4eef`；驗證：`pnpm --filter @tian-xin-ge/admin typecheck`、`pnpm --filter @tian-xin-ge/admin build`、`pnpm test:e2e --grep "後台|正文圖片" --workers=1 --reporter=line`（12／12 通過）。
+- 提交後完整回歸：`pnpm run typecheck`、`pnpm run build`、`pnpm test`（13／13）、`pnpm test:e2e --workers=1`（23／23）、`pnpm db:verify`、`pnpm db:backup:verify`、`pnpm tasks:verify` 及 `git diff --check` 均通過。
