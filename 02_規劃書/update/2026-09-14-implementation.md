@@ -204,3 +204,4 @@ pnpm test:e2e --workers=1
 
 - 404 頁改為讀取網站設定並沿用固定 Header、Footer 與主要內容錨點；即使詳細頁找不到，訪客仍可使用全站導覽。
 - 提交 `5ccca0f`；驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm --filter @tian-xin-ge/web build`、`pnpm test:e2e --grep "公開文章與服務路由及 404 狀態正確" --workers=1 --reporter=line`（1／1 通過）。
+- 正式 Supabase 讀取失敗時 404 不使用 fixture 備援，維持正式資料錯誤邊界；提交 `ee1389e`，同一 404 回歸測試仍通過。
