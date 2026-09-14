@@ -8,7 +8,7 @@
 |---|---|---|
 | <a id="a01"></a>A01 | 3759e6e, faa5396 | 本機 fixture 驗收通過。 |
 | <a id="a02"></a>A02 | 3759e6e | 本機 fixture 驗收通過。 |
-| <a id="a03"></a>A03 | 3759e6e, 551dc1d | 本機 fixture 驗收通過。 |
+| <a id="a03"></a>A03 | 3759e6e, 551dc1d, c38a3a2 | 本機 fixture 驗收通過。 |
 | <a id="a04"></a>A04 | 3759e6e, 4c5016 | 本機 fixture 驗收通過。 |
 | <a id="a05"></a>A05 | 3759e6e | 本機 fixture 驗收通過。 |
 | <a id="a06"></a>A06 | 3759e6e | 本機 fixture 驗收通過。 |
@@ -45,7 +45,7 @@
 | <a id="d02"></a>D02 | 3759e6e | 本機 fixture 驗收通過。 |
 | <a id="d03"></a>D03 | 3759e6e, 1de1a07 | 本機 fixture 驗收通過。 |
 | <a id="d04"></a>D04 | 3759e6e | 本機 fixture 驗收通過。 |
-| <a id="d05"></a>D05 | 3759e6e, f696054 | 本機 fixture 驗收通過。 |
+| <a id="d05"></a>D05 | 3759e6e, f696054, c38a3a2, 145ee6b | 本機 fixture 驗收通過。 |
 | <a id="d06"></a>D06 | 3759e6e | 本機 fixture 驗收通過。 |
 | <a id="d07"></a>D07 | 3759e6e, b0a0a40 | 本機 fixture 驗收通過。 |
 | <a id="d08"></a>D08 | 3759e6e | 本機 fixture 驗收通過。 |
