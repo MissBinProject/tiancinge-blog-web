@@ -1,5 +1,7 @@
 # Luna 任務卡
 
+> 歷史版本：本資料夾的 B／E 卡片原先以 Supabase／Vercel 為前提。現行 Firebase、Firestore、Cloud Run 動態部署與後台分頁任務以 [`../luna-tasks-firebase.md`](../luna-tasks-firebase.md) 為準。
+
 每張卡只修改一個功能切片，完成後附上變更檔案、驗收截圖、測試命令及交接備註。任務依 `A 規格素材 → B 基礎資料 → C 官網 → D 後台 → E 串接上線` 執行。
 
 ## 任務卡索引

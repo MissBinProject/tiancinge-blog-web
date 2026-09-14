@@ -3,6 +3,20 @@ export type ArticleType = 'news' | 'blog';
 export type ArticleBodyBlock = { type: 'heading' | 'paragraph' | 'list' | 'link' | 'image'; text: string; items?: string[]; url?: string; alt?: string };
 export type SiteBenefit = { title: string; caption: string };
 
+const CONTENT_CODE_ALPHABET = 'abcdefghijklmnopqrstuvwxyz0123456789';
+
+/** Public URL code used by services and articles. Always lower-case, 10 characters. */
+export function createContentCode(): string {
+  const values = new Uint32Array(10);
+  if (globalThis.crypto?.getRandomValues) globalThis.crypto.getRandomValues(values);
+  else for (let index = 0; index < values.length; index += 1) values[index] = Math.floor(Math.random() * 2 ** 32);
+  return Array.from(values, (value) => CONTENT_CODE_ALPHABET[value % CONTENT_CODE_ALPHABET.length]).join('');
+}
+
+export function isContentCode(value: unknown): value is string {
+  return typeof value === 'string' && /^[a-z0-9]{10}$/.test(value);
+}
+
 /** Shared URL and structured-body rules used by the admin editor and public mapper. */
 export function isSafeContentUrl(value: unknown, image = false): value is string {
   if (typeof value !== 'string' || value.length > 2048 || /^(javascript|data|vbscript):/i.test(value)) return false;
@@ -125,7 +139,7 @@ export interface MediaAsset {
   alt: string;
   mimeType: string;
   size: number;
-  /** Supabase Storage object path, when the asset is persisted remotely. */
+  /** Cloud Storage object path, when the asset is persisted remotely. */
   storagePath?: string;
   /** Dimensions captured at upload time for layout and media QA. */
   width?: number;

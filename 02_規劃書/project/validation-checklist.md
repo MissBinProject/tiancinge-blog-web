@@ -9,8 +9,8 @@
 - [x] `pnpm db:verify`（migration／seed、匿名／非管理員／管理員 RLS、Storage、正文與圖片 URL constraint、留言限流／防重送 guard）
 - [x] `pnpm db:backup:verify`（本機 custom-format 備份、checksum、資料異動後回復及服務／文章筆數驗證）
 - [x] 桌機與手機 CSS 斷點及水平溢出規則（390px 服務／價格／文章／內頁單欄，消息輪播每頁一張）
-- [ ] Supabase Auth、RLS、Storage 在正式專案驗證
+- [x] Firebase Authentication、Firestore Rules、Storage Rules 已在 `tiancinge` 專案發布
 - [ ] 390／768／1440／1672px 截圖疊圖與設計稿逐區比對
-- [ ] 正式網域、環境變數、備份與回復演練
+- [ ] 正式自訂網域、環境變數、Firestore export/import 備份與回復演練
 
 本機 fixture 的五張 current、overlay 與 difference 圖已由 `pnpm visual:capture && pnpm visual:diff` 產生；正式勾選仍需店家提供原字型、原始卡片照片及確認文案後重跑。

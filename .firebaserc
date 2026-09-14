@@ -1,0 +1,11 @@
+{
+  "projects": { "default": "tiancinge" },
+  "targets": {
+    "tiancinge": {
+      "hosting": {
+        "web": ["tiancinge-web"],
+        "admin": ["tiancinge-admin"]
+      }
+    }
+  }
+}

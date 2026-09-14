@@ -1,4 +1,6 @@
-# Supabase 設定
+# Supabase 設定（歷史備份）
+
+> 目前正式架構不使用 Supabase／PostgreSQL。現行資料庫、Auth、Storage 與部署規格請以 `02_規劃書/project/firebase-*.md` 及根目錄 `README.md` 為準；本資料夾只保留早期規劃與驗證腳本，避免誤執行。
 
 1. 建立 Supabase project，於 SQL Editor 執行 `migrations/001_initial.sql`，再執行 `seed.sql`。`site_settings` 由 trigger 保持單一設定列；素材會保存 MIME、大小、儲存路徑與圖片寬高。留言 API 使用 migration 內的 `reserve_contact_submission` 交易函式保存 digest 限流狀態，函式已撤銷匿名／一般登入角色的執行權限，只授予 server role；交易函式會清理兩天前的 guard 紀錄。
 2. 在 Authentication 建立唯一管理員帳號並關閉公開註冊；取得該帳號的 user id 後執行 `insert into public.admin_users (user_id) values ('AUTH_USER_UUID');`。migration 的 `only_one_admin` trigger 會拒絕第二個管理員，只有此表中的帳號能管理內容與留言。

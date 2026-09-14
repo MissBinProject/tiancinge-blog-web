@@ -1,65 +1,61 @@
-import type { AuthChangeEvent, Session } from '@supabase/supabase-js';
-import { adminSupabase } from './supabase';
+import { onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, updatePassword, type User } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { firebaseAuth, firebaseDb, firebaseConfigured } from './firebase';
 
+export type AdminAuthEvent = 'INITIAL_SESSION' | 'SIGNED_IN' | 'SIGNED_OUT' | 'PASSWORD_RECOVERY';
 export type AdminSessionCheck =
   | { status: 'signed-out' }
-  | { status: 'ok'; session: Session }
+  | { status: 'ok'; session: User }
   | { status: 'forbidden' }
   | { status: 'error' };
-
 export type AdminSignInResult =
-  | { ok: true; session: Session }
+  | { ok: true; session: User }
   | { ok: false; reason: 'unconfigured' | 'invalid' | 'forbidden' | 'error' };
-
 export type AdminPasswordResult = { ok: true } | { ok: false; reason: 'unconfigured' | 'error' };
 
-/**
- * Check the Supabase session and the database-backed administrator allowlist.
- * UI components should use this adapter instead of querying `admin_users`.
- */
-export async function verifyAdminSession(session: Session | null): Promise<AdminSessionCheck> {
-  if (!session) return { status: 'signed-out' };
-  if (!adminSupabase) return { status: 'error' };
-
-  const { data, error } = await adminSupabase
-    .from('admin_users')
-    .select('user_id')
-    .eq('user_id', session.user.id)
-    .maybeSingle();
-  if (error) return { status: 'error' };
-  if (!data) return { status: 'forbidden' };
-  return { status: 'ok', session };
+/** Firebase Auth plus a Firestore admins/{uid} allowlist. */
+export async function verifyAdminSession(user: User | null): Promise<AdminSessionCheck> {
+  if (!user) return { status: 'signed-out' };
+  if (!firebaseAuth || !firebaseDb) return { status: 'error' };
+  try {
+    const admin = await getDoc(doc(firebaseDb, 'admins', user.uid));
+    return admin.exists() && admin.data().active !== false ? { status: 'ok', session: user } : { status: 'forbidden' };
+  } catch {
+    return { status: 'error' };
+  }
 }
 
-export function subscribeAuthChanges(callback: (event: AuthChangeEvent, session: Session | null) => void): () => void {
-  if (!adminSupabase) return () => undefined;
-  const { data } = adminSupabase.auth.onAuthStateChange(callback);
-  return () => data.subscription.unsubscribe();
+export function subscribeAuthChanges(callback: (event: AdminAuthEvent, session: User | null) => void): () => void {
+  if (!firebaseAuth) return () => undefined;
+  let first = true;
+  return onAuthStateChanged(firebaseAuth, (user) => {
+    const event: AdminAuthEvent = first ? 'INITIAL_SESSION' : user ? 'SIGNED_IN' : 'SIGNED_OUT';
+    first = false;
+    callback(event, user);
+  });
 }
 
 export async function signInAdmin(email: string, password: string): Promise<AdminSignInResult> {
-  if (!adminSupabase) return { ok: false, reason: 'unconfigured' };
-  const { data, error } = await adminSupabase.auth.signInWithPassword({ email, password });
-  if (error || !data.session) return { ok: false, reason: 'invalid' };
-
-  const check = await verifyAdminSession(data.session);
-  if (check.status === 'ok') return { ok: true, session: data.session };
-  await adminSupabase.auth.signOut();
-  return { ok: false, reason: check.status === 'forbidden' ? 'forbidden' : 'error' };
+  if (!firebaseAuth || !firebaseConfigured) return { ok: false, reason: 'unconfigured' };
+  try {
+    const credential = await signInWithEmailAndPassword(firebaseAuth, email, password);
+    const check = await verifyAdminSession(credential.user);
+    if (check.status === 'ok') return { ok: true, session: credential.user };
+    await signOut(firebaseAuth);
+    return { ok: false, reason: check.status === 'forbidden' ? 'forbidden' : 'error' };
+  } catch {
+    return { ok: false, reason: 'invalid' };
+  }
 }
 
-export async function signOutAdmin(): Promise<void> {
-  if (adminSupabase) await adminSupabase.auth.signOut();
-}
+export async function signOutAdmin(): Promise<void> { if (firebaseAuth) await signOut(firebaseAuth); }
 
-export async function requestPasswordReset(email: string, redirectTo: string): Promise<AdminPasswordResult> {
-  if (!adminSupabase) return { ok: false, reason: 'unconfigured' };
-  const { error } = await adminSupabase.auth.resetPasswordForEmail(email, { redirectTo });
-  return error ? { ok: false, reason: 'error' } : { ok: true };
+export async function requestPasswordReset(email: string, _redirectTo: string): Promise<AdminPasswordResult> {
+  if (!firebaseAuth || !firebaseConfigured) return { ok: false, reason: 'unconfigured' };
+  try { await sendPasswordResetEmail(firebaseAuth, email); return { ok: true }; } catch { return { ok: false, reason: 'error' }; }
 }
 
 export async function updateAdminPassword(password: string): Promise<AdminPasswordResult> {
-  if (!adminSupabase) return { ok: false, reason: 'unconfigured' };
-  const { error } = await adminSupabase.auth.updateUser({ password });
-  return error ? { ok: false, reason: 'error' } : { ok: true };
+  if (!firebaseAuth || !firebaseConfigured || !firebaseAuth.currentUser) return { ok: false, reason: 'unconfigured' };
+  try { await updatePassword(firebaseAuth.currentUser, password); return { ok: true }; } catch { return { ok: false, reason: 'error' }; }
 }

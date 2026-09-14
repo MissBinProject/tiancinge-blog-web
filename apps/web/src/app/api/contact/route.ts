@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { createHash } from 'node:crypto';
-import { hasAnySupabaseEnv, serviceSupabase } from '@/lib/supabase';
+import { firebaseServer, firebaseServerExpected } from '@/lib/firebase-admin';
+
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 const recentSubmissions = new Map<string, number>();
 const rateWindows = new Map<string, { startedAt: number; count: number }>();
@@ -78,23 +81,29 @@ export async function POST(request: Request) {
       .split(',')[0]
       .trim();
     const duplicateKey = `${phone}:${message}`;
-    if (serviceSupabase) {
-      const guard = await serviceSupabase.rpc('reserve_contact_submission', {
-        client_key: digest(clientId),
-        duplicate_key: digest(duplicateKey),
-      });
-      if (guard.error) return json({ error: '留言服務尚未完成伺服器設定' }, 503);
-      if (guard.data === 'rate_limited') return json({ error: '提交次數過多，請稍後再試' }, 429);
-      if (guard.data === 'duplicate') return json({ error: '請稍候再送出' }, 429);
-      if (guard.data !== 'ok') return json({ error: '提交內容無效' }, 400);
-      const { error } = await serviceSupabase.from('contact_messages').insert({
-        name,
-        phone,
-        email: email || null,
-        message,
-      });
-      if (error) return json({ error: '目前無法儲存留言' }, 503);
-    } else if (hasAnySupabaseEnv) {
+    const firebase = firebaseServer();
+    if (firebase) {
+      const guardRef = firebase.db.collection('contact_guards').doc(digest(clientId));
+      const duplicateRef = firebase.db.collection('contact_duplicates').doc(digest(duplicateKey));
+      const messageRef = firebase.db.collection('contact_messages').doc();
+      try {
+        await firebase.db.runTransaction(async (transaction) => {
+          const [guardSnapshot, duplicateSnapshot] = await Promise.all([transaction.get(guardRef), transaction.get(duplicateRef)]);
+          const guardData = guardSnapshot.data() as { startedAt?: number; count?: number } | undefined;
+          const duplicateData = duplicateSnapshot.data() as { createdAt?: number } | undefined;
+          if (duplicateData?.createdAt && now - duplicateData.createdAt < DUPLICATE_MS) throw new Error('duplicate');
+          const count = guardData?.startedAt && now - guardData.startedAt < WINDOW_MS ? Number(guardData.count ?? 0) : 0;
+          if (count >= 5) throw new Error('rate_limited');
+          transaction.set(guardRef, { startedAt: count ? guardData?.startedAt : now, count: count + 1, updatedAt: now });
+          transaction.set(duplicateRef, { createdAt: now, expiresAt: now + WINDOW_MS });
+          transaction.set(messageRef, { name, phone, email: email || '', message, status: 'unread', note: '', createdAt: new Date().toISOString() });
+        });
+      } catch (error) {
+        if (error instanceof Error && error.message === 'rate_limited') return json({ error: '提交次數過多，請稍後再試' }, 429);
+        if (error instanceof Error && error.message === 'duplicate') return json({ error: '請稍候再送出' }, 429);
+        return json({ error: '目前無法儲存留言' }, 503);
+      }
+    } else if (firebaseServerExpected) {
       return json({ error: '留言服務尚未完成伺服器設定' }, 503);
     } else {
       const clientWindow = rateWindows.get(clientId);

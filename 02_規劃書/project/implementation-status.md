@@ -1,5 +1,15 @@
 # 實作狀態
 
+> 架構更新（2026-09-15）：正式資料層已改為 Firebase Authentication、Cloud Firestore、Cloud Storage；官網採 Cloud Run 動態 SSR，後台採 Firebase Hosting。下方早期 Supabase／Vercel 歷史紀錄僅保留作為變更追蹤，不是目前部署規格。
+
+## Firebase 正式環境
+
+- GCP/Firebase project：`tiancinge`，region：`asia-east1`。
+- 官網：Cloud Run `tiancinge-web`，Firebase Hosting rewrite：<https://tiancinge-web.web.app>。
+- 後台：Firebase Hosting：<https://tiancinge-admin.web.app>。
+- Firestore、Storage Rules 已發布；管理員為 `ouyangtaisen@gmail.com`，密碼透過後台「忘記密碼」設定。
+- Cloud Build image：`asia-east1-docker.pkg.dev/tiancinge/tiancinge/web:20260915-v3`。
+
 目前已完成第一個可驗收切片：Next.js 官網、React/Vite 後台、共享 TypeScript 契約、設計素材匯入與裁切、公開路由及首頁全區塊。
 
 各 Luna 任務的本機／正式環境狀態與交接證據請見 [`luna-tasks/status.md`](luna-tasks/status.md)；A01–E11 共 63 張任務卡，均已分開列出目標、契約、步驟與驗收。

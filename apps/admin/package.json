@@ -11,7 +11,12 @@
   "dependencies": {
     "@tian-xin-ge/contracts": "file:../../packages/contracts",
     "@tian-xin-ge/design-tokens": "file:../../packages/design-tokens",
-    "@supabase/supabase-js": "2.116.0",
+    "firebase": "12.4.0",
+    "@tiptap/react": "3.31.3",
+    "@tiptap/core": "3.31.3",
+    "@tiptap/starter-kit": "3.31.3",
+    "@tiptap/extension-link": "3.31.3",
+    "@tiptap/extension-image": "3.31.3",
     "lucide-react": "1.45.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
