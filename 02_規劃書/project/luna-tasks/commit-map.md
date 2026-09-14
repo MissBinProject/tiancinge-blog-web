@@ -65,7 +65,7 @@
 | <a id="e05"></a>E05 | 3759e6e, f696054, 6329f57 | 程式與 fixture 驗證通過；政策頁也輸出動態 metadata，正式資料與環境變數待接入。 |
 | <a id="e06"></a>E06 | 690db45, 4c5016, 551dc1d, 2026-09-15 | 本機 CSS／截圖流程通過；基準腳本等待圖片／地圖 iframe 並確認連續兩次 hash 一致，原始手機稿、字型及照片到位後需完成正式疊圖確認。 |
 | <a id="e07"></a>E07 | 690db45, d2258b4, 5770785, 2026-09-15 | 本機 CSS／截圖流程通過；基準腳本等待圖片／地圖 iframe 並確認連續兩次 hash 一致，原始手機稿、字型及照片到位後需完成正式疊圖確認。 |
-| <a id="e08"></a>E08 | 1de1a07, 89fd05c, c360aed, 172152c, 665280c, 674eec3, 41a2431 | 本機驗證通過；singleton trigger、服務圖示 constraint 與文章／分類類型 guard 已加入，正式 Supabase／Storage 權限或營運演練待執行。 |
+| <a id="e08"></a>E08 | 1de1a07, 89fd05c, c360aed, 172152c, 665280c, 674eec3, 41a2431, 2026-09-15 | 本機驗證通過；`db:verify` 新增非管理員角色的讀寫拒絕案例，並保留 singleton trigger、服務圖示 constraint 與文章／分類類型 guard；正式 Supabase／Storage 權限或營運演練待執行。 |
 | <a id="e09"></a>E09 | b0a0a40, 717bf8c, c6f85f3 | 本機驗證通過；正式 Supabase／Storage 權限或營運演練待執行。 |
 | <a id="e10"></a>E10 | — | 尚未通過：正式網域、Vercel、Supabase、Auth 管理員與店家資料尚未提供。 |
 | <a id="e11"></a>E11 | 717bf8c, b63955c | 本機驗證通過；正式 Supabase／Storage 權限或營運演練待執行。 |

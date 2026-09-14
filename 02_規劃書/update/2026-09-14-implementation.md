@@ -210,3 +210,8 @@ pnpm test:e2e --workers=1
 
 - `scripts/capture-visual.mjs` 現在等待頁面圖片、跨來源地圖 iframe 初始載入，並在聯繫區加入固定 settling window；避免外部地圖圖磚載入時序造成 current 截圖漂移。
 - 連續執行兩次 `VISUAL_BASE_URL=http://localhost:3000 pnpm visual:capture` 的五張 current SHA-256 完全一致，再執行 `pnpm visual:diff` 重新產生五組 overlay／difference；提交 `ded03d4`。
+
+## 非管理員 RLS 回歸
+
+- `supabase/scripts/verify-local.sh` 新增已登入但不在 `admin_users` 的 `member_user`，確認其無法讀取留言／草稿／隱藏服務，也不能新增、修改或刪除內容與網站設定；一般 table grant 不會繞過資料庫 RLS。
+- `pnpm db:verify` 通過；本機驗證提交待本次工作樹提交後補入索引。

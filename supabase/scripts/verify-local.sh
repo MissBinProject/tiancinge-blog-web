@@ -54,9 +54,13 @@ alter table storage.objects enable row level security;
 
 create role app_user login;
 create role anon_user login;
+create role member_user login;
 grant usage on schema public, auth, storage to app_user;
+grant usage on schema public, auth, storage to member_user;
 grant select, insert, update, delete on all tables in schema public to app_user;
+grant select, insert, update, delete on all tables in schema public to member_user;
 grant select, insert, update, delete on all tables in schema auth, storage to app_user;
+grant select, insert, update, delete on all tables in schema auth, storage to member_user;
 grant usage, select on all sequences in schema public to app_user;
 grant execute on function auth.uid() to public;
 SQL
@@ -66,6 +70,7 @@ SQL
 "${PSQL[@]}" -f "$ROOT_DIR/supabase/seed.sql" >/dev/null
 "${PSQL[@]}" >/dev/null <<'SQL'
 grant select, insert, update, delete on all tables in schema public to app_user;
+grant select, insert, update, delete on all tables in schema public to member_user;
 grant usage, select on all sequences in schema public to app_user;
 grant execute on function public.reserve_contact_submission(text, text) to app_user;
 do $$
@@ -115,6 +120,46 @@ begin
     raise exception 'anonymous inserted a service';
   exception when insufficient_privilege then null;
   end;
+end $$;
+reset role;
+SQL
+
+# A signed-in account that is not listed in admin_users must remain unable to
+# read internal data or mutate content, even though it has ordinary table
+# grants. This exercises the RLS boundary separately from anonymous access and
+# the sole administrator path above.
+"${PSQL[@]}" >/dev/null <<'SQL'
+set role member_user;
+set request.jwt.claim.sub = '22222222-2222-2222-2222-222222222222';
+do $$
+declare
+  service_name text;
+  settings_brand text;
+begin
+  if exists (select 1 from public.contact_messages) then raise exception 'non-admin can read messages'; end if;
+  if exists (select 1 from public.articles where status <> 'published') then raise exception 'non-admin can see a draft'; end if;
+  if exists (select 1 from public.services where slug = 'internal-only-service') then raise exception 'non-admin can see a hidden service'; end if;
+
+  begin
+    insert into public.services (slug, name) values ('member-write', '越權');
+    raise exception 'non-admin inserted a service';
+  exception when insufficient_privilege then null;
+  end;
+  begin
+    insert into public.contact_messages (name, phone, message) values ('非管理員', '000', '拒絕');
+    raise exception 'non-admin inserted a message';
+  exception when insufficient_privilege then null;
+  end;
+
+  select name into service_name from public.services where slug = 'full-body';
+  update public.services set name = '非管理員修改' where slug = 'full-body';
+  if (select name from public.services where slug = 'full-body') is distinct from service_name then raise exception 'non-admin updated a service'; end if;
+  delete from public.services where slug = 'full-body';
+  if not exists (select 1 from public.services where slug = 'full-body') then raise exception 'non-admin deleted a service'; end if;
+
+  select brand_name into settings_brand from public.site_settings limit 1;
+  update public.site_settings set brand_name = '非管理員修改';
+  if (select brand_name from public.site_settings limit 1) is distinct from settings_brand then raise exception 'non-admin updated settings'; end if;
 end $$;
 reset role;
 SQL
