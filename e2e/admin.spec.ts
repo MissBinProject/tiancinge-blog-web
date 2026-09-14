@@ -84,6 +84,40 @@ test('後台設定可編輯品牌且素材可搜尋篩選', async ({ page }) => 
   await expect(page.getByText('service-2.png')).not.toBeVisible();
 });
 
+test('後台可新增服務並保存排序與顯示狀態', async ({ page }) => {
+  await page.goto('http://localhost:5173/services');
+  await page.getByLabel('管理員帳號').fill('admin@example.com');
+  await page.getByLabel('密碼').fill('local-development-password');
+  await page.getByRole('button', { name: '登入後台' }).click();
+  await page.getByRole('button', { name: '新增', exact: true }).click();
+  const editor = page.locator('.form-panel');
+  await editor.getByLabel('服務名稱').fill('深層放鬆體驗');
+  await editor.getByLabel('網址代稱（slug）').fill('deep-relaxation');
+  await editor.getByLabel('卡片摘要').fill('沉浸式放鬆・找回平衡');
+  await editor.getByLabel('介紹內容').fill('專業手技陪伴你放下日常壓力。');
+  await editor.getByLabel('排序').fill('6');
+  await editor.getByLabel('顯示於官網').check();
+  await editor.getByRole('button', { name: '儲存' }).click();
+  await expect(editor.getByText('服務已儲存')).toBeVisible();
+  await expect(page.getByRole('button', { name: /深層放鬆體驗/ })).toBeVisible();
+});
+
+test('後台可建立草稿文章並發布', async ({ page }) => {
+  await page.goto('http://localhost:5173/articles');
+  await page.getByLabel('管理員帳號').fill('admin@example.com');
+  await page.getByLabel('密碼').fill('local-development-password');
+  await page.getByRole('button', { name: '登入後台' }).click();
+  const editor = page.locator('.article-editor');
+  await editor.getByRole('button', { name: '新增', exact: true }).click();
+  await editor.getByLabel('文章標題').fill('春日放鬆指南');
+  await editor.getByLabel('網址代稱（slug）').fill('spring-relax-guide');
+  await editor.getByLabel('摘要').fill('用一段安靜時光照顧自己。');
+  await editor.getByLabel('已發布').check();
+  await editor.getByRole('button', { name: '儲存' }).click();
+  await expect(editor.getByText('文章已儲存')).toBeVisible();
+  await expect(editor.getByRole('button', { name: /春日放鬆指南/ })).toContainText('已發布');
+});
+
 test('後台留言可篩選、保存備註並標記處理', async ({ page }) => {
   await page.goto('http://localhost:5173/messages');
   await page.getByLabel('管理員帳號').fill('admin@example.com');
