@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { Search, Menu, X, CalendarCheck } from 'lucide-react';
-import { settings } from '@/lib/data';
 import type { SiteSettings } from '@tian-xin-ge/contracts';
 import { SafeImage } from './SafeImage';
 import styles from './Header.module.css';
@@ -10,7 +9,7 @@ import { FacebookIcon, InstagramIcon, LineIcon } from './SocialIcons';
 
 const links = [['首頁','/#home'],['服務項目','/#services'],['價格','/#pricing'],['最新消息','/#news'],['部落格','/#blog'],['聯繫我們','/#contact']];
 
-export function Header({siteSettings=settings}:{siteSettings?:SiteSettings}){
+export function Header({siteSettings}:{siteSettings:SiteSettings}){
   const pathname = usePathname();
   const pageSection = pathname === '/' ? 'home' : pathname.startsWith('/services') ? 'services' : pathname.startsWith('/news') ? 'news' : pathname.startsWith('/blog') ? 'blog' : '';
   const [open,setOpen]=useState(false);

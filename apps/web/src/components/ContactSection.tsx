@@ -2,12 +2,11 @@
 
 import { FormEvent, useState } from 'react';
 import { Clock3, Flower2, Mail, MapPin, Phone, Send, UserRound } from 'lucide-react';
-import { settings } from '@/lib/data';
 import type { SiteSettings } from '@tian-xin-ge/contracts';
 import { SafeImage } from './SafeImage';
 import { FacebookIcon, InstagramIcon, LineIcon, YoutubeIcon } from './SocialIcons';
 
-export function ContactSection({ siteSettings = settings }: { siteSettings?: SiteSettings }) {
+export function ContactSection({ siteSettings }: { siteSettings: SiteSettings }) {
   const [state, setState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {

@@ -2,11 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight, Flower2, Gift, Heart, Megaphone } from 'lucide-react';
-import { getPublished, settings } from '@/lib/data';
 import type { Article, SiteSettings } from '@tian-xin-ge/contracts';
 import { SafeImage } from './SafeImage';
 
-export function NewsSection({ items = getPublished('news'), siteSettings = settings }: { items?: Article[]; siteSettings?: SiteSettings }) {
+export function NewsSection({ items, siteSettings }: { items: Article[]; siteSettings: SiteSettings }) {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const media = window.matchMedia('(max-width: 700px)');
@@ -44,7 +43,7 @@ export function NewsSection({ items = getPublished('news'), siteSettings = setti
   </section>;
 }
 
-export function BlogSection({ items = getPublished('blog'), siteSettings = settings }: { items?: Article[]; siteSettings?: SiteSettings }) {
+export function BlogSection({ items, siteSettings }: { items: Article[]; siteSettings: SiteSettings }) {
   const cards = items.slice(0, 4);
   const categories = Array.from(new Set(items.map((article) => article.category.trim()).filter(Boolean)));
   const glyphs = ['◉', '⌁', '♡', '☕', '▢'];
