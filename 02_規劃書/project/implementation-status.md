@@ -31,6 +31,7 @@
 - 後台在側欄導覽與登出前會攔截尚未儲存變更，避免編輯內容被意外捨棄。
 - 後台正式資料載入失敗時會在內容區顯示明確錯誤橫幅，並保留上次本機快照供檢查，不會靜默覆蓋編輯畫面。
 - Supabase session 逾時或登入帳號失去管理員權限時，後台會清除本機 session 並在登入畫面顯示可理解的提示；手動登出不會誤顯示逾時訊息。
+- 後台 Supabase Auth 登入、登出、session／管理員 allowlist 驗證、密碼重設已收進 `apps/admin/src/auth.ts` adapter；畫面元件只呼叫 auth use case，不直接查詢 `admin_users` 或呼叫 Auth API。
 - 後台本機分類新增／編輯會先檢查全域名稱唯一性，與資料庫 `article_categories.name` unique constraint 保持一致。
 - 後台本機刪除分類在首次載入、尚未建立 localStorage 快照的短暫期間也會以 fixture 文章檢查引用，避免競態刪除使用中的分類。
 - 官網加入 `Header.module.css` 的鍵盤跳至主要內容樣式，保留全站設計基準 CSS 的同時具備元件級 CSS Module 入口。
