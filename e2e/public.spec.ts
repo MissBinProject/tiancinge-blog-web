@@ -10,6 +10,8 @@ test('首頁桌機與手機版可操作且沒有水平溢出', async ({ page }, 
   await expect(page.locator('main#main-content')).toHaveCount(1);
   await expect(page.locator('main#main-content')).toBeVisible();
   await expect(page.locator('main#main-content')).toHaveCSS('scroll-margin-top', '76px');
+  await skipLink.click();
+  await expect.poll(() => page.evaluate(() => document.activeElement?.id)).toBe('main-content');
   await expect(page.locator('.hero-mark')).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath('home-desktop.png'), fullPage: true });
 
