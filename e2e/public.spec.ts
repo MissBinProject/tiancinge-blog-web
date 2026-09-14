@@ -48,6 +48,15 @@ test('最新消息手動輪播不會切到空白頁', async ({ page }) => {
   await expect(news.locator('.article-card')).toHaveCount(3);
 });
 
+test('價格卡的預約入口都使用官方 LINE', async ({ page }) => {
+  await page.goto('/');
+  const bookingLinks = page.locator('#pricing .price-card a.btn');
+  await expect(bookingLinks).toHaveCount(5);
+  for (let index = 0; index < 5; index += 1) {
+    await expect(bookingLinks.nth(index)).toHaveAttribute('href', /^https:\/\/line\.me\/ti\/p\//);
+  }
+});
+
 test('內頁導覽會標示目前內容區段', async ({ page }) => {
   await page.goto('/services');
   await expect(page.getByRole('banner').getByRole('link', { name: '服務項目' })).toHaveAttribute('aria-current', 'location');
