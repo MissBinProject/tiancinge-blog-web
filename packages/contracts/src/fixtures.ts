@@ -90,21 +90,21 @@ export const fixtureMessages: ContactMessage[] = [
   { id: 'message-2', name: '林先生', phone: '0987-654-321', message: '上次服務很滿意，謝謝團隊的照顧。', status: 'handled', note: '已於電話中回覆', createdAt: '2025-09-13T16:20:00+08:00' },
 ];
 
-const mediaDefinition: Array<[string, string, string, number, number]> = [
-  ['service-1.png', '全身舒壓', 'crops', 285, 125], ['service-2.png', '精油按摩', 'crops', 285, 125], ['service-3.png', '熱石養生', 'crops', 285, 125], ['service-4.png', '足部舒壓', 'crops', 285, 125], ['service-5.png', '客製化課程', 'crops', 285, 125],
-  ['news-1.png', '中秋限定優惠活動', 'crops', 410, 175], ['news-2.png', '全新精油課程登場', 'crops', 410, 175], ['news-3.png', '環境升級', 'crops', 410, 175],
-  ['blog-1.png', '精油的療癒力量', 'crops', 320, 180], ['blog-2.png', '日常養生小技巧', 'crops', 320, 180], ['blog-3.png', '如何舒緩壓力', 'crops', 320, 180], ['blog-4.png', '舒適的空間', 'crops', 320, 180],
-  ['icon-01.png', '全身舒壓圖示', 'icons', 62, 56], ['icon-02.png', '精油按摩圖示', 'icons', 62, 56], ['icon-03.png', '熱石養生圖示', 'icons', 62, 56], ['icon-04.png', '足部舒壓圖示', 'icons', 62, 56], ['icon-05.png', '客製化課程圖示', 'icons', 62, 56],
-  ['01_標題.png', '主視覺背景', 'design', 2172, 724], ['02_服務價格背景.png', '價格區背景', 'design', 1737, 906], ['03_最新消息背景.png', '消息區背景', 'design', 1670, 941], ['04_部落格背景.png', '部落格區背景', 'design', 1666, 944], ['contact.png', '聯繫區背景', 'design', 1767, 890], ['logo_1_去背.png', '品牌 Logo', 'logo', 1254, 1254],
+const mediaDefinition: Array<[string, string, string, number, number, number]> = [
+  ['service-1.png', '全身舒壓', 'crops', 285, 125, 60056], ['service-2.png', '精油按摩', 'crops', 285, 125, 55371], ['service-3.png', '熱石養生', 'crops', 285, 125, 53923], ['service-4.png', '足部舒壓', 'crops', 285, 125, 52839], ['service-5.png', '客製化課程', 'crops', 285, 125, 57923],
+  ['news-1.png', '中秋限定優惠活動', 'crops', 410, 175, 114709], ['news-2.png', '全新精油課程登場', 'crops', 410, 175, 117214], ['news-3.png', '環境升級', 'crops', 410, 175, 114745],
+  ['blog-1.png', '精油的療癒力量', 'crops', 320, 180, 95235], ['blog-2.png', '日常養生小技巧', 'crops', 320, 180, 94933], ['blog-3.png', '如何舒緩壓力', 'crops', 320, 180, 78352], ['blog-4.png', '舒適的空間', 'crops', 320, 180, 96480],
+  ['icon-01.png', '全身舒壓圖示', 'icons', 62, 56, 6383], ['icon-02.png', '精油按摩圖示', 'icons', 62, 56, 5016], ['icon-03.png', '熱石養生圖示', 'icons', 62, 56, 5610], ['icon-04.png', '足部舒壓圖示', 'icons', 62, 56, 4654], ['icon-05.png', '客製化課程圖示', 'icons', 62, 56, 5843],
+  ['01_標題.png', '主視覺背景', 'design', 2172, 724, 1710984], ['02_服務價格背景.png', '價格區背景', 'design', 1737, 906, 1543610], ['03_最新消息背景.png', '消息區背景', 'design', 1670, 941, 1487451], ['04_部落格背景.png', '部落格區背景', 'design', 1666, 944, 1584735], ['contact.png', '聯繫區背景', 'design', 1767, 890, 1804549], ['logo_1_去背.png', '品牌 Logo', 'logo', 1254, 1254, 1554055],
 ];
 
-export const fixtureMedia: MediaAsset[] = mediaDefinition.map(([name, alt, folder, width, height], index) => ({
+export const fixtureMedia: MediaAsset[] = mediaDefinition.map(([name, alt, folder, width, height, size], index) => ({
   id: `media-${index + 1}`,
   name,
   url: asset(`${folder}/${name}`),
   alt,
   mimeType: 'image/png',
-  size: 0,
+  size,
   width,
   height,
   createdAt: '2025-09-01T00:00:00.000Z',
