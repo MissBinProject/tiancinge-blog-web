@@ -12,4 +12,4 @@
 
 可使用 `scripts/backup.sh` 建立資料庫 dump，並依 [`backup-restore.md`](backup-restore.md) 執行 checksum 驗證、回復演練與 Storage 素材交接。
 
-有本機 PostgreSQL 時可由專案根目錄執行 `pnpm db:verify`（或直接執行 `scripts/verify-local.sh`），重複套用 migration／seed 並驗證匿名／管理員 RLS、Storage 檔案限制、素材引用保護及素材引用函式的角色執行權限。這是本機替身檢查，正式 Supabase 仍需依上線清單以實際帳號重跑。
+有本機 PostgreSQL 時可由專案根目錄執行 `pnpm db:verify`（或直接執行 `scripts/verify-local.sh`），重複套用 migration／seed 並驗證匿名／非管理員／管理員 RLS、Storage 檔案限制、素材引用保護及素材引用函式的角色執行權限。這是本機替身檢查，正式 Supabase 仍需依上線清單以實際帳號重跑。
