@@ -176,6 +176,21 @@ as $$
     or exists (select 1 from public.site_settings ss where concat_ws(' ', ss.logo_url, ss.hero_background_url, ss.services_background_url, ss.pricing_background_url, ss.news_background_url, ss.blog_background_url, ss.contact_background_url, ss.og_image_url) like '%' || path);
 $$;
 
+-- This helper is used by authenticated delete policies. Do not expose its
+-- reference lookup as an anonymous PostgREST function.
+revoke execute on function public.is_media_path_in_use(text) from public;
+do $$ begin
+  if exists (select 1 from pg_roles where rolname = 'authenticated') then
+    grant execute on function public.is_media_path_in_use(text) to authenticated;
+  end if;
+  if exists (select 1 from pg_roles where rolname = 'service_role') then
+    grant execute on function public.is_media_path_in_use(text) to service_role;
+  end if;
+  if exists (select 1 from pg_roles where rolname = 'app_user') then
+    grant execute on function public.is_media_path_in_use(text) to app_user;
+  end if;
+end $$;
+
 create or replace function public.is_allowed_media_metadata(metadata jsonb) returns boolean
 language sql immutable
 as $$

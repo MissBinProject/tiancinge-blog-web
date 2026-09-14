@@ -68,6 +68,8 @@
 - 首頁部落格分類入口改由已發布文章的實際分類產生，後台分類異動不會留下失效的硬編碼連結。
 - 正式 Supabase 儲存文章或新增分類時會先檢查同名分類的 `type`，拒絕跨消息／部落格類型覆寫，維持分類資料完整性。
 - 留言限流與防重送交易函式會清理超過兩天的 digest guard 紀錄，避免正式資料庫長期累積內部狀態。
+- 素材引用檢查函式已撤銷匿名執行權限，只授予 authenticated／service_role（及本機驗證用 app_user），避免公開 RPC 暴露內容引用判斷。
+- `pnpm db:verify` 另檢查匿名替身不能執行 `is_media_path_in_use(text)`，而 app_user 仍保有 Storage delete policy 所需的執行權限。
 - 導覽的鍵盤「跳到主要內容」連結現在直接指向各公開頁真正的 `main#main-content`，不會把使用者留在導覽列外層容器。
 - `main#main-content` 具備與固定 Header 對應的桌機／手機 `scroll-margin-top`，錨點定位時不會被導覽列遮住。
 - 後台正式資料初次載入期間會以 `aria-busy` 與載入遮罩鎖住內容編輯區，避免 fixture／舊快照在遠端資料尚未完成同步前被誤儲存覆寫。

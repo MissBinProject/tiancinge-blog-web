@@ -53,6 +53,7 @@ create table storage.objects (
 alter table storage.objects enable row level security;
 
 create role app_user login;
+create role anon_user login;
 grant usage on schema public, auth, storage to app_user;
 grant select, insert, update, delete on all tables in schema public to app_user;
 grant select, insert, update, delete on all tables in schema auth, storage to app_user;
@@ -67,6 +68,15 @@ SQL
 grant select, insert, update, delete on all tables in schema public to app_user;
 grant usage, select on all sequences in schema public to app_user;
 grant execute on function public.reserve_contact_submission(text, text) to app_user;
+do $$
+begin
+  if has_function_privilege('anon_user', 'public.is_media_path_in_use(text)', 'execute') then
+    raise exception 'anonymous function execution must be revoked';
+  end if;
+  if not has_function_privilege('app_user', 'public.is_media_path_in_use(text)', 'execute') then
+    raise exception 'app_user must execute media reference guard for Storage policy';
+  end if;
+end $$;
 SQL
 
 ADMIN_ID='11111111-1111-1111-1111-111111111111'
