@@ -10,7 +10,7 @@ pnpm run dev:web       # http://localhost:3000
 pnpm run dev:admin     # http://localhost:5173
 ```
 
-本機 Firebase 設定使用 `apps/web/.env.local` 的 `FIREBASE_PROJECT_ID`、`FIREBASE_STORAGE_BUCKET`，以及 `apps/admin/.env.local` 的 `VITE_FIREBASE_*` 與 `VITE_WEB_URL`。正式前台使用 Cloud Run 的 Firebase Admin ADC，後台使用 Firebase Web SDK；Firestore 與 Storage Rules 只允許管理員寫入。管理員帳號由 Firebase Authentication 建立，並在 `admins/{uid}` 建立 allowlist 文件，再替換聯絡資訊、LINE 連結、地圖、SEO 及政策文字。
+本機 Firebase 設定使用 `apps/web/.env.local` 的 `FIREBASE_PROJECT_ID`、`FIREBASE_STORAGE_BUCKET`，以及 `apps/admin/.env.local` 的 `VITE_FIREBASE_*` 與 `VITE_WEB_URL`。正式前台使用 Cloud Run 的 Firebase Admin ADC，後台使用 Firebase Web SDK；Firestore Rules 依 `admins/{uid}` allowlist，Storage Rules 依受信任 Admin SDK 設定的 `admin=true` custom claim，只允許管理員寫入。管理員帳號由 Firebase Authentication 建立，並同步 allowlist 與 custom claim，再替換聯絡資訊、LINE 連結、地圖、SEO 及政策文字。
 
 Firebase 部署與備份／回復策略請參考 [`02_規劃書/project/firebase-deployment.md`](02_規劃書/project/firebase-deployment.md)。Firestore 匯出使用 Google Cloud export/import；Storage 使用 Cloud Storage lifecycle 與版本化策略。
 
@@ -37,7 +37,7 @@ pnpm test
 pnpm test:e2e
 ```
 
-`test:e2e` 會使用本機 Chrome 執行 `e2e/` 內的公開頁與後台流程；若兩個 dev server 已啟動會重用現有服務。
+`test:e2e` 會使用本機 Chrome 執行 `e2e/` 內的公開頁與後台流程；若兩個 dev server 已啟動會重用現有服務。後台 Firebase 流程需先設定 `E2E_ADMIN_EMAIL` 與 `E2E_ADMIN_PASSWORD`；未設定時後台案例會跳過，不把正式密碼寫入測試。
 
 ## Firebase／GCP 部署
 

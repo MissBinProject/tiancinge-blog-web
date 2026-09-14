@@ -1,6 +1,6 @@
 # 正式上線資料輸入表
 
-這份表在 E10／E11 前由店家或部署負責人填寫。密碼、service-role key 與資料庫連線字串不要寫入此檔案；只在 Vercel／Supabase 的環境變數或密碼管理器保存。
+這份表在正式資料確認與上線前由店家或部署負責人填寫。密碼、服務帳號金鑰與 Firebase API 私密設定不要寫入此檔案；只在 Firebase／GCP 的環境變數、Secret Manager 或密碼管理器保存。
 
 ## 店家資料
 
@@ -24,22 +24,23 @@
 - [ ] 提供隱私權政策、服務條款、SEO title／description 及 OG 分享圖。
 - [ ] 確認首頁各區標題、副標題、消息特色列與價格信任列（各最多四筆）文案。
 
-## Supabase／Vercel
+## Firebase／GCP
 
 | 項目 | 填寫值或完成日期 |
 |---|---|
-| Supabase project URL |  |
-| Supabase project ref |  |
-| Auth 唯一管理員 Email |  |
-| Auth 管理員 user id（UUID） |  |
-| 官網 Vercel project／正式 URL |  |
-| 後台 Vercel project／正式 URL |  |
-| `NEXT_PUBLIC_SITE_URL` |  |
-| 官網 `NEXT_PUBLIC_SUPABASE_URL`／anon key |  |
-| 官網 `SUPABASE_SERVICE_ROLE_KEY` 已設定 | ☐ |
-| 後台 `VITE_SUPABASE_URL`／anon key／`VITE_WEB_URL` | ☐ |
-| 已關閉 Supabase 公開註冊 | ☐ |
-| 已執行 migration、seed、`admin_users` | ☐ |
+| Firebase project ID | `tiancinge` |
+| Firebase／GCP region | `asia-east1` |
+| Auth 唯一管理員 Email | `ouyangtaisen@gmail.com` |
+| Auth 管理員 UID／`admins/{uid}` |  |
+| 官網 Firebase Hosting URL | `https://tiancinge-web.web.app` |
+| 後台 Firebase Hosting URL | `https://tiancinge-admin.web.app` |
+| Cloud Run service／URL | `tiancinge-web`／  |
+| `NEXT_PUBLIC_SITE_URL` | `https://tiancinge-web.web.app` |
+| Cloud Run `FIREBASE_PROJECT_ID`／`FIREBASE_STORAGE_BUCKET` |  |
+| 後台 `VITE_FIREBASE_*`／`VITE_WEB_URL` | ☐ |
+| 已關閉 Firebase 公開註冊 | ☐ |
+| 已完成 Firestore seed／Rules／Storage Rules | ☐ |
+| 已設定 Firebase/GCP Budget 通知 | ☐ |
 
 ## 上線簽核
 
@@ -49,4 +50,6 @@
 - [ ] 390、768、1440、1672px 無水平溢出，五張設計稿疊圖已確認。
 - [ ] 已完成資料庫與 `site-media` 備份、回復演練及部署回退方案。
 
-填妥後依 [`release-checklist.md`](release-checklist.md)、[`supabase/README.md`](../../supabase/README.md) 與 [`backup-restore.md`](../../supabase/backup-restore.md) 執行 E10／E11，並將日期、操作者、URL、截圖與差異寫回對應 Luna 卡的交接紀錄。
+填妥後依 [`release-checklist.md`](release-checklist.md) 與 [`firebase-deployment.md`](firebase-deployment.md) 執行 E10／E11，並將日期、操作者、URL、截圖與差異寫回對應 Firebase Luna 卡的交接紀錄。
+
+> 舊版 Supabase／Vercel 欄位已移除；歷史實作仍保留在 `supabase/` 與舊版 Luna 卡，僅供變更追蹤。

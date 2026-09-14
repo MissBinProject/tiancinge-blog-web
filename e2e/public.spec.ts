@@ -52,7 +52,7 @@ test('首頁桌機與手機版可操作且沒有水平溢出', async ({ page }, 
     await page.goto(route);
     await expect.poll(() => page.locator('.inner-grid').evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length), { timeout: 5000 }).toBe(2);
   }
-  await page.goto('/services/full-body');
+  await page.goto('/services/7usx1gzbua');
   await expect.poll(() => page.locator('.detail-layout').evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length), { timeout: 5000 }).toBe(1);
   await page.goto('/#contact');
   await expect.poll(() => page.locator('.contact-layout').evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length), { timeout: 5000 }).toBe(1);
@@ -100,12 +100,12 @@ test('價格卡的預約入口都使用官方 LINE', async ({ page }) => {
 test('內頁導覽會標示目前內容區段', async ({ page }) => {
   await page.goto('/services');
   await expect(page.getByRole('banner').getByRole('link', { name: '服務項目' })).toHaveAttribute('aria-current', 'location');
-  await page.goto('/blog/healing-power-of-oils');
+  await page.goto('/blog/edxei4o1pk');
   await expect(page.getByRole('banner').getByRole('link', { name: '部落格' })).toHaveAttribute('aria-current', 'location');
 });
 
 test('公開文章與服務路由及 404 狀態正確', async ({ page }) => {
-  await expect((await page.goto('/services/full-body'))?.status()).toBe(200);
+  await expect((await page.goto('/services/7usx1gzbua'))?.status()).toBe(200);
   await page.goto('/news');
   await expect(page.getByRole('navigation', { name: '最新消息分類' })).toBeVisible();
   await page.getByRole('navigation', { name: '最新消息分類' }).getByRole('link', { name: '活動訊息', exact: true }).click();
@@ -113,13 +113,13 @@ test('公開文章與服務路由及 404 狀態正確', async ({ page }) => {
   await page.goto('/services');
   await page.locator('.inner-card img').first().evaluate((image) => { image.src = '/missing-inner-service-image.png'; });
   await expect(page.locator('.inner-card img').first()).toHaveAttribute('alt', /圖片暫缺/);
-  await page.goto('/services/full-body');
+  await page.goto('/services/7usx1gzbua');
   await expect(page.locator('.detail-description')).toHaveCSS('white-space', 'pre-line');
   const notFoundResponse = await page.goto('/news/missing');
   expect(notFoundResponse?.status()).toBe(404);
   await expect(page.getByRole('banner')).toBeVisible();
   await expect(page.getByRole('contentinfo')).toBeVisible();
-  await expect((await page.goto('/blog/healing-power-of-oils'))?.status()).toBe(200);
+  await expect((await page.goto('/blog/edxei4o1pk'))?.status()).toBe(200);
 });
 
 test('政策頁提供動態標題、描述與分享資訊', async ({ page }) => {
@@ -134,7 +134,7 @@ test('政策頁提供動態標題、描述與分享資訊', async ({ page }) => 
 });
 
 test('服務、文章、搜尋與政策內頁在手機版沒有水平溢出', async ({ page }) => {
-  const routes = ['/services', '/services/full-body', '/news', '/news/mid-autumn-offer', '/blog', '/blog/healing-power-of-oils', '/search?q=精油', '/privacy', '/terms'];
+  const routes = ['/services', '/services/7usx1gzbua', '/news', '/news/0333lu87r6', '/blog', '/blog/edxei4o1pk', '/search?q=精油', '/privacy', '/terms'];
   for (const width of [390, 768]) {
     await page.setViewportSize({ width, height: 844 });
     for (const route of routes) {
@@ -149,7 +149,7 @@ test('服務、文章、搜尋與政策內頁在手機版沒有水平溢出', as
 });
 
 test('草稿不會從公開網址、搜尋或 sitemap 洩漏', async ({ page }) => {
-  await expect((await page.goto('/news/internal-autumn-draft'))?.status()).toBe(404);
+  await expect((await page.goto('/news/dt8qch6sy6'))?.status()).toBe(404);
   await page.goto('/search?q=internal-draft');
   await expect(page.getByText('內部草稿：秋季養生企劃')).not.toBeVisible();
   const sitemap = await (await page.request.get('/sitemap.xml')).text();

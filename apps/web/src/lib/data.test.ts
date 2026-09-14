@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { fixtureSettings, isSafeContentUrl, isValidArticleBody, isValidBenefits } from '@tian-xin-ge/contracts';
+import { fixtureSettings, isContentCode, isSafeContentUrl, isValidArticleBody, isValidBenefits } from '@tian-xin-ge/contracts';
 import { getPublished, loadArticle, loadService, mapRemoteSettings, services } from './data';
 
 describe('公開內容 fixture', () => {
@@ -7,6 +7,7 @@ describe('公開內容 fixture', () => {
     expect(services).toHaveLength(5);
     expect(services.map((service) => service.sortOrder)).toEqual([1, 2, 3, 4, 5]);
     expect(services.at(-1)?.priceLabel).toBe('洽詢');
+    expect(services.every((service) => isContentCode(service.slug))).toBe(true);
   });
 
   it('只回傳已發布且符合類型的文章', () => {
@@ -21,10 +22,10 @@ describe('公開內容 fixture', () => {
   });
 
   it('詳情 repository 只回傳可公開的服務與文章', async () => {
-    await expect(loadService('full-body')).resolves.toMatchObject({ slug: 'full-body', isVisible: true });
+    await expect(loadService('7usx1gzbua')).resolves.toMatchObject({ slug: '7usx1gzbua', isVisible: true });
     await expect(loadService('missing-service')).resolves.toBeNull();
-    await expect(loadArticle('news', 'mid-autumn-offer')).resolves.toMatchObject({ slug: 'mid-autumn-offer', status: 'published' });
-    await expect(loadArticle('news', 'internal-autumn-draft')).resolves.toBeNull();
+    await expect(loadArticle('news', '0333lu87r6')).resolves.toMatchObject({ slug: '0333lu87r6', status: 'published' });
+    await expect(loadArticle('news', 'dt8qch6sy6')).resolves.toBeNull();
   });
 
   it('正式網站設定只使用資料庫值，且要求有效的 LINE 連結', () => {

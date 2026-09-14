@@ -3,11 +3,12 @@
 - [x] `pnpm run build`（web + admin）
 - [x] `pnpm run typecheck`
 - [x] `pnpm test`（fixture、公開內容與 Contact API 驗證）
-- [x] `pnpm test:e2e --workers=1`（24 條公開／後台流程：四種 viewport、手機選單 ARIA／錨點、內頁手機溢出、內頁導覽目前區段、缺圖 fallback、404、表單成功／失敗保留內容、登入／登出／重設密碼輔助狀態、後台收合側欄 aria 名稱與目前頁面語意、後台主要模組 390px 無水平溢出、預覽、正文圖片素材選擇、最新消息手動輪播與空白頁防護、首頁分類入口同步、價格卡 LINE 入口、設定、服務新增／排序／顯示狀態、文章建立／發布／刪除、素材／分類刪除保護、留言與離頁提醒、草稿公開限制）
+- [x] `pnpm exec playwright test e2e/public.spec.ts --workers=1`（11 條公開流程：四種 viewport、手機選單 ARIA／錨點、內頁手機溢出、內頁導覽、缺圖 fallback、404、表單成功／失敗保留內容、最新消息手動輪播、首頁分類入口、價格卡 LINE 入口、草稿公開限制）
+- [ ] `pnpm exec playwright test e2e/admin.spec.ts --workers=1`（需以 `E2E_ADMIN_EMAIL`／`E2E_ADMIN_PASSWORD` 提供測試帳號；未提供時測試安全跳過）
 - [x] 首頁、服務詳情、消息詳情、部落格詳情可載入
 - [x] `POST /api/contact` 成功及必填欄位錯誤回應
-- [x] `pnpm db:verify`（migration／seed、匿名／非管理員／管理員 RLS、Storage、正文與圖片 URL constraint、留言限流／防重送 guard）
-- [x] `pnpm db:backup:verify`（本機 custom-format 備份、checksum、資料異動後回復及服務／文章筆數驗證）
+- [x] Firebase client／Firestore Rules smoke（匿名讀取遭拒、管理員可讀取受保護內容）
+- [ ] Firestore export/import 與 Storage 版本化備份、回復演練
 - [x] 桌機與手機 CSS 斷點及水平溢出規則（390px 服務／價格／文章／內頁單欄，消息輪播每頁一張）
 - [x] Firebase Authentication、Firestore Rules、Storage Rules 已在 `tiancinge` 專案發布
 - [ ] 390／768／1440／1672px 截圖疊圖與設計稿逐區比對

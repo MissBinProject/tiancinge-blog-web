@@ -4,7 +4,7 @@
 
 `site_settings/singleton`、`services`、`article_categories`、`articles`、`media_assets`、`contact_messages`、`admins/{uid}`、`contact_guards`、`contact_duplicates`。
 
-文章 `type` 僅 `news`／`blog`，`status` 僅 `draft`／`published`。公開 repository 只讀取 `published`；後台 repository 使用 Firebase Web SDK，Firestore／Storage Rules 驗證 Firebase ID token 及 `admins/{uid}.active`。需要 server-side 寫入的訪客留言只經 Cloud Run API。
+文章 `type` 僅 `news`／`blog`，`status` 僅 `draft`／`published`。公開 repository 只讀取 `published`；後台 repository 使用 Firebase Web SDK，Firestore Rules 驗證 Firebase ID token 及 `admins/{uid}.active`，Storage Rules 另外驗證受信任 Admin SDK 設定的 `admin=true` custom claim。需要 server-side 寫入的訪客留言只經 Cloud Run API。
 
 正文保存受限 Tiptap JSON，寫入前轉換成共用 `ArticleBodyBlock[]`；只允許 heading、paragraph、list、link、image，圖片必須為 HTTPS 或站內路徑，拒絕任意 HTML。
 
@@ -17,4 +17,4 @@
 
 ## Indexes and security
 
-目前資料量採 Cloud Run 讀取後排序，Firestore 不依賴複合 index；資料成長後再建立 `status + type + publishedAt desc` 與 `createdAt desc` index。Firestore Rules 及 Storage Rules 拒絕匿名直接讀寫，管理員文件只能由本人讀取；Cloud Run 使用 Admin SDK 後仍自行執行相同授權規則。
+目前資料量採 Cloud Run 讀取後排序，Firestore 不依賴複合 index；資料成長後再建立 `status + type + publishedAt desc` 與 `createdAt desc` index。Firestore Rules 及 Storage Rules 拒絕匿名直接讀寫，管理員文件只能由本人讀取；Cloud Run 使用 Admin SDK 後仍自行執行相同授權規則。新增或停用管理員時，必須同步更新 `admins/{uid}` 與 `admin=true` custom claim。
