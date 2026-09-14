@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { Search, Menu, X, MessageCircle } from 'lucide-react';
+import { Search, Menu, X, MessageCircle, CalendarCheck } from 'lucide-react';
 import { settings } from '@/lib/data';
 import type { SiteSettings } from '@tian-xin-ge/contracts';
 import { SafeImage } from './SafeImage';
@@ -29,6 +29,6 @@ export function Header({siteSettings=settings}:{siteSettings?:SiteSettings}){
   return <header className="site-header"><a className={styles.skipLink} href="#main-content">跳到主要內容</a><div className="header-inner container">
     <a href="/#home" className="brand"><SafeImage src={siteSettings.logoUrl} alt={siteSettings.brandName}/><span>{siteSettings.brandName}<small>TIAN XIN GE<br/>WELLNESS SPA</small></span></a>
     <nav id="site-nav" className={open?'nav open':'nav'}>{links.map(([label,href])=>{const id=href.replace('/#','');return <a key={href} href={href} aria-current={active===id?'location':undefined} onClick={()=>{setOpen(false);setActive(id)}}>{label}</a>})}</nav>
-    <div className="header-actions"><a href={siteSettings.lineUrl} className="header-book"><span>▣</span>立即預約</a><a href={siteSettings.social.line} aria-label="LINE"><MessageCircle size={18}/></a><a href={siteSettings.social.instagram} aria-label="Instagram">◎</a><a href={siteSettings.social.facebook} aria-label="Facebook">f</a><a href="/search" aria-label="搜尋"><Search size={20}/></a><button className="menu-btn" aria-label={open?'關閉選單':'開啟選單'} aria-expanded={open} aria-controls="site-nav" onClick={()=>setOpen(!open)}>{open?<X/>:<Menu/>}</button></div>
+    <div className="header-actions"><a href={siteSettings.lineUrl} className="header-book"><CalendarCheck size={16}/>立即預約</a><a href={siteSettings.social.line} aria-label="LINE"><MessageCircle size={18}/></a><a href={siteSettings.social.instagram} aria-label="Instagram">◎</a><a href={siteSettings.social.facebook} aria-label="Facebook">f</a><a href="/search" aria-label="搜尋"><Search size={20}/></a><button className="menu-btn" aria-label={open?'關閉選單':'開啟選單'} aria-expanded={open} aria-controls="site-nav" onClick={()=>setOpen(!open)}>{open?<X/>:<Menu/>}</button></div>
   </div></header>
 }

@@ -87,3 +87,4 @@
 - 交付資料夾已初始化 Git repository，初始完整交付提交為 `3759e6e`（`feat: build Tian Xin Ge website and admin`）；各卡的驗收與交接仍以 `luna-tasks/status.md`、更新紀錄、截圖及可重跑命令保存，後續正式環境卡可再補逐卡提交 SHA。
 - 價格卡 fixture／seed 描述改為原稿上的五組服務文案，首頁價格與服務詳情共用同一份內容。
 - 最新消息／部落格區補回設計稿的左右直排、手寫文案、底部英文與查看更多入口；暫用裁切圖的內嵌分類標籤由裁切容器與 live badge 對齊處理，避免重複顯示。
+- 導覽預約按鈕改用可讀的行事曆圖示，LINE／Instagram／Facebook 社群入口套用品牌色，並以最新視覺基線留存回歸證據。

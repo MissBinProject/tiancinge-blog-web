@@ -128,4 +128,8 @@
 .article-image span{left:24px;bottom:7px;z-index:2}
 .article-image{overflow:hidden}
 .article-image.crop-image{background:#fff;}
-.article-image.crop-image>img{height:calc(100% + 24px);object-position:center top;}
+.article-image.crop-image>img{height:100%;object-position:center top;}
+.header-book svg{stroke-width:1.8}
+.header-actions a[aria-label="LINE"]{color:#06c755}
+.header-actions a[aria-label="Instagram"]{color:#e4405f;font-weight:700}
+.header-actions a[aria-label="Facebook"]{color:#1877f2;font:700 18px Arial,sans-serif}
