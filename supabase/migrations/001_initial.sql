@@ -75,6 +75,7 @@ do $$ begin
   if not exists (select 1 from pg_constraint where conname = 'site_settings_brand_name_length') then alter table site_settings add constraint site_settings_brand_name_length check (char_length(brand_name) between 1 and 120); end if;
   if not exists (select 1 from pg_constraint where conname = 'services_price_label_exclusive') then alter table services add constraint services_price_label_exclusive check (price is null or price_label is null); end if;
   if not exists (select 1 from pg_constraint where conname = 'services_price_label_length') then alter table services add constraint services_price_label_length check (price_label is null or char_length(price_label) <= 80); end if;
+  if not exists (select 1 from pg_constraint where conname = 'services_icon_allowed') then alter table services add constraint services_icon_allowed check (icon in ('lotus','oil','stone','foot','flower')); end if;
   if not exists (select 1 from pg_constraint where conname = 'media_assets_mime_type') then alter table media_assets add constraint media_assets_mime_type check (mime_type in ('image/jpeg','image/png','image/webp')); end if;
   if not exists (select 1 from pg_constraint where conname = 'media_assets_size_limit') then alter table media_assets add constraint media_assets_size_limit check (size_bytes between 0 and 10485760); end if;
   if not exists (select 1 from pg_constraint where conname = 'media_assets_width_limit') then alter table media_assets add constraint media_assets_width_limit check (width is null or width between 1 and 50000); end if;

@@ -203,6 +203,11 @@ begin
   exception when check_violation then null;
   end;
   begin
+    insert into public.services (slug, name, icon) values ('invalid-service-icon', '無效圖示', 'triangle');
+    raise exception 'service icon constraint was not enforced';
+  exception when check_violation then null;
+  end;
+  begin
     insert into public.articles (slug, type, title, body)
       values ('too-many-list-items', 'blog', '清單上限測試', jsonb_build_array(jsonb_build_object('type', 'list', 'text', 'many', 'items', (select jsonb_agg(to_jsonb(value::text)) from generate_series(1, 101) as values(value)))));
     raise exception 'article list item limit was not enforced';
