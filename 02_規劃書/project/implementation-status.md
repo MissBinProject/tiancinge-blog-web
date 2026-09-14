@@ -72,6 +72,7 @@
 - 服務詳情的介紹欄位保留後台輸入的換行，避免多行療程說明在公開頁被壓成單行。
 - 服務卡摘要改為可換行並允許長字串折行，後台更新長文案時不會造成手機水平溢出。
 - 正式 Supabase 儲存文章或新增分類時會先檢查同名分類的 `type`，拒絕跨消息／部落格類型覆寫，維持分類資料完整性。
+- Supabase 文章 trigger 也會在直接寫入時檢查 `articles.type` 與 `article_categories.type` 一致，避免繞過後台表單建立錯誤分類關聯。
 - 留言限流與防重送交易函式會清理超過兩天的 digest guard 紀錄，避免正式資料庫長期累積內部狀態。
 - 素材引用檢查函式已撤銷匿名執行權限，只授予 authenticated／service_role（及本機驗證用 app_user），避免公開 RPC 暴露內容引用判斷。
 - `pnpm db:verify` 另檢查匿名替身不能執行 `is_media_path_in_use(text)`，而 app_user 仍保有 Storage delete policy 所需的執行權限。

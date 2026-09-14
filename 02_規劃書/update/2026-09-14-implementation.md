@@ -169,3 +169,8 @@ pnpm test:e2e --workers=1
 
 - Supabase `services.icon` 新增資料庫 constraint，只接受契約中的 `lotus`、`oil`、`stone`、`foot`、`flower`；`pnpm db:verify` 補上直接寫入未知值的拒絕案例。
 - 提交 `674eec3`；驗證：`pnpm db:verify` 通過。
+
+## 文章分類類型資料契約
+
+- Supabase 新增文章 trigger，直接寫入時也會要求 `articles.type` 與所選 `article_categories.type` 一致，與後台分類選擇器的驗證保持一致。
+- 提交 `41a2431`；驗證：`pnpm db:verify` 通過。

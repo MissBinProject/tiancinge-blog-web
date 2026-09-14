@@ -16,12 +16,12 @@
 | <a id="b01"></a>B01 | 3759e6e | 本機 fixture 驗收通過。 |
 | <a id="b02"></a>B02 | 3759e6e | 本機 fixture 驗收通過。 |
 | <a id="b03"></a>B03 | 3759e6e, 665280c, 674eec3 | 本機 fixture／暫存 PostgreSQL 驗收通過；單一網站設定列 trigger 具交易級競態保護，服務圖示值由資料庫 constraint 固定。 |
-| <a id="b04"></a>B04 | 3759e6e | 本機 fixture 驗收通過。 |
+| <a id="b04"></a>B04 | 3759e6e, 41a2431 | 本機 fixture／暫存 PostgreSQL 驗收通過；文章 trigger 強制文章類型與分類類型一致。 |
 | <a id="b05"></a>B05 | 3759e6e, 665280c | 本機 fixture／暫存 PostgreSQL 驗收通過；單一管理員 trigger 具交易級競態保護。 |
 | <a id="b06"></a>B06 | 3759e6e, 1de1a07, 90fcd1f | 本機驗證通過；素材引用 guard 已限制函式執行角色，正式 Supabase／Storage 權限或營運演練待執行。 |
 | <a id="b07"></a>B07 | 3759e6e, 1de1a07, 90fcd1f | 本機驗證通過；素材引用 guard 已限制函式執行角色，正式 Supabase／Storage 權限或營運演練待執行。 |
 | <a id="b08"></a>B08 | 3759e6e, ef9283b | 程式與 fixture 驗證通過；正式資料與環境變數待接入。 |
-| <a id="b09"></a>B09 | 3759e6e, ef9283b | 程式與 fixture 驗證通過；正式資料與環境變數待接入。 |
+| <a id="b09"></a>B09 | 3759e6e, ef9283b, 41a2431 | 程式與 fixture／暫存 PostgreSQL 驗證通過；文章與分類類型關聯由資料庫再次固定，正式資料與環境變數待接入。 |
 | <a id="b10"></a>B10 | 3759e6e, 89fd05c | 程式與 fixture 驗證通過；正式資料與環境變數待接入。 |
 | <a id="c01"></a>C01 | 3759e6e, 4c5016, cfddded | 本機 fixture 驗收通過。 |
 | <a id="c02"></a>C02 | 3759e6e, 705d6dc, eb761a3 | 本機 fixture 驗收通過；跳至主要內容錨點指向各頁 `main#main-content`，並可接收鍵盤焦點。 |
@@ -65,7 +65,7 @@
 | <a id="e05"></a>E05 | 3759e6e, f696054, 6329f57 | 程式與 fixture 驗證通過；政策頁也輸出動態 metadata，正式資料與環境變數待接入。 |
 | <a id="e06"></a>E06 | 690db45, 4c5016, 551dc1d | 本機 CSS／截圖流程通過；原始手機稿、字型及照片到位後需完成正式疊圖確認。 |
 | <a id="e07"></a>E07 | 690db45, d2258b4, 5770785 | 本機 CSS／截圖流程通過；原始手機稿、字型及照片到位後需完成正式疊圖確認。 |
-| <a id="e08"></a>E08 | 1de1a07, 89fd05c, c360aed, 172152c, 665280c, 674eec3 | 本機驗證通過；singleton trigger 競態保護與服務圖示 constraint 已加入，正式 Supabase／Storage 權限或營運演練待執行。 |
+| <a id="e08"></a>E08 | 1de1a07, 89fd05c, c360aed, 172152c, 665280c, 674eec3, 41a2431 | 本機驗證通過；singleton trigger、服務圖示 constraint 與文章／分類類型 guard 已加入，正式 Supabase／Storage 權限或營運演練待執行。 |
 | <a id="e09"></a>E09 | b0a0a40, 717bf8c, c6f85f3 | 本機驗證通過；正式 Supabase／Storage 權限或營運演練待執行。 |
 | <a id="e10"></a>E10 | — | 尚未通過：正式網域、Vercel、Supabase、Auth 管理員與店家資料尚未提供。 |
 | <a id="e11"></a>E11 | 717bf8c, b63955c | 本機驗證通過；正式 Supabase／Storage 權限或營運演練待執行。 |
