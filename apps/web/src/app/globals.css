@@ -98,3 +98,34 @@
 }
 
 .map-empty,.qr-empty{display:grid;place-items:center;color:#9b7b83;font-size:14px;letter-spacing:.12em;text-align:center}.map-empty{height:100%;margin:0}.qr-empty{width:125px;height:125px;border:7px solid #fff;background:#fff5f6}
+
+/* Editorial ornaments from the supplied news/blog boards. They stay outside
+   the content flow so cards remain data-driven and responsive. */
+.article-decor{display:block;position:absolute;z-index:1;pointer-events:none;margin:0;text-align:center}
+.article-side-copy{left:3.4%;top:29%;color:#8e6870;font-size:15px;line-height:1.65;letter-spacing:.16em}
+.article-side-copy span{display:block;font:12px/1.8 var(--sans);letter-spacing:.3em}
+.article-handwritten{color:#b74663;font-family:cursive;font-size:20px;line-height:1.75;letter-spacing:.08em;transform:rotate(-7deg)}
+.article-handwritten b{font-size:25px;font-weight:400}
+.article-footer-copy{bottom:3.6%;left:50%;color:#bd7889;font:11px/1.8 var(--sans);letter-spacing:.34em;transform:translateX(-50%)}
+.article-more{display:flex;align-items:center;justify-content:flex-end;gap:5px;color:#a33a55;font-size:14px;letter-spacing:.16em;position:absolute;z-index:2}
+@media(max-width:900px){
+  .article-decor{display:none}
+  .article-more{position:static;margin:22px 18px 0}
+}
+@media(min-width:1600px){
+  .news-side-copy,.blog-side-copy{left:48px;top:214px}
+  .news-top-copy{right:85px;top:62px}
+  .news-bottom-copy{right:68px;bottom:88px}
+  .blog-top-copy{right:87px;top:62px}
+  .blog-bottom-copy{right:95px;bottom:104px}
+  .news-footer-copy,.blog-footer-copy{bottom:31px}
+  .news-more,.blog-more{right:8px;top:125px}
+}
+
+/* The temporary cards are cropped from the reference artwork, where the
+   category badge is already present in the photo. Align the live badge to
+   that same rail so it masks the embedded label instead of drifting beside it. */
+.article-image span{left:24px;bottom:7px;z-index:2}
+.article-image{overflow:hidden}
+.article-image.crop-image{background:#fff;}
+.article-image.crop-image>img{height:calc(100% + 24px);object-position:center top;}

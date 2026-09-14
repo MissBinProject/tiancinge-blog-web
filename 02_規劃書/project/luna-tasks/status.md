@@ -8,7 +8,7 @@
 | B01–B05 | 已完成 | workspace、migration、共用 `packages/contracts/src/fixtures.ts`、seed、`pnpm run build`／`pnpm run typecheck` |
 | B06–B07 | 程式完成，本機替身驗證通過，待正式驗證 | `supabase/migrations/001_initial.sql`、`pnpm db:verify` 已驗證匿名／管理員 RLS、Storage MIME 限制與素材引用保護；仍需 Supabase project 執行正式越權測試 |
 | B08–B10 | 已完成 fixture，正式資料待接 | web/admin repository 已有 Supabase adapter 與 local fallback；需填入正式環境變數 |
-| C01–C15 | 已完成 fixture | 公開路由、首頁區塊與內頁；`e2e/public.spec.ts`、`visual-baseline/current-01..05.png` |
+| C01–C15 | 已完成 fixture | 公開路由、首頁區塊與內頁；`e2e/public.spec.ts`、`visual-baseline/current-01..05.png`；消息／部落格裝飾及查看更多入口已補回 |
 | C16–C18 | CSS／流程完成，疊圖待確認 | `e2e/public.spec.ts` 檢查 390／768／1440／1672px 無溢出；原始手機稿與正式字型到位後執行疊圖 |
 | D01–D17 | 已完成本機操作流程 | `e2e/admin.spec.ts`、後台表單／預覽／素材／分類／留言／設定；Supabase Auth 正式登入待設定 |
 | E01–E05 | 程式完成，待正式資料 | settings、服務、文章、搜尋、留言 API、SEO 已接條件式 Supabase；需建立專案並做營運流程測試 |
