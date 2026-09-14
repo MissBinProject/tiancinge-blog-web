@@ -77,10 +77,11 @@
 
 - `pnpm run typecheck`：通過。
 - `pnpm run build`：官網與後台均通過。
-- `pnpm test`：Vitest 3 個檔案、12 個測試通過，包含資料 fixture、單筆服務／文章公開 repository、Supabase 部分環境設定邊界、留言 API（含五次／分鐘限流）與共用內容安全規則驗證。
-- `pnpm test:e2e --workers=1`：Playwright 16 個公開／後台流程通過，包含四種 viewport、手機選單 ARIA／錨點位置、內頁導覽目前區段、服務／文章／搜尋／政策內頁手機溢出、缺圖 fallback、404、聯絡表單成功／失敗保留內容、草稿公開限制（網址／搜尋／sitemap）、消息手動輪播與空白頁防護、登入／登出／重設密碼輔助狀態、文章預覽、正文圖片素材選擇、狀態篩選、留言備註／處理、未儲存離頁提醒、品牌設定、素材篩選／尺寸顯示及使用中素材／分類刪除保護。
+- `pnpm test`：Vitest 3 個檔案、13 個測試通過，包含資料 fixture、單筆服務／文章公開 repository、Supabase 部分環境設定邊界、留言 API（含 JSON Content-Type、五次／分鐘限流）與共用內容安全規則驗證。
+- `pnpm test:e2e --workers=1`：Playwright 17 個公開／後台流程通過，包含四種 viewport、手機選單 ARIA／錨點位置、內頁導覽目前區段、服務／文章／搜尋／政策內頁手機溢出、缺圖 fallback、404、聯絡表單成功／失敗保留內容、草稿公開限制（網址／搜尋／sitemap）、消息手動輪播與空白頁防護、所有價格卡導向官方 LINE、登入／登出／重設密碼輔助狀態、文章預覽、正文圖片素材選擇、狀態篩選、留言備註／處理、未儲存離頁提醒、品牌設定、素材篩選／尺寸顯示及使用中素材／分類刪除保護。
 - `pnpm preflight:production`：檢查流程正常，因正式 Supabase、Vercel 網址與伺服器 key 尚未提供而依預期回報 7 個缺少欄位；未輸出任何 secret 值。
 - `pnpm db:verify`：暫存 PostgreSQL migration／seed、匿名／管理員 RLS、Storage 限制、素材引用保護、正文 schema、LINE URL 及留言 guard 通過。
+- `pnpm db:backup:verify`：暫存 PostgreSQL custom-format 備份、checksum、資料異動後回復及 5 項服務／7 篇已發布文章筆數驗證通過。
 - 本機 smoke test：首頁、服務、消息、部落格、分類、搜尋、政策、sitemap、robots、404 及留言 API 均已檢查；後台登入、服務、文章、分類、素材、留言及設定畫面可操作。
 - 1672px 主視覺／服務區段邊界及服務卡左右基準、價格區左側留白與卡片基準線均依原稿校正，並補回主視覺／聯繫區裝飾文案；重新產生五張 `visual-baseline/current-01..05.png`、overlay 及 difference；原始字型與照片差異仍保留在差異紀錄。
 - 價格區依 `首頁_02.png` 補回左側直排、右上與右下手寫及底部英文裝飾文案；1672px 區段高度與特色列內距同步對齊原稿。
