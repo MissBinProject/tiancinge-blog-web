@@ -146,6 +146,14 @@ SQL
 # The server-side guard is atomic and does not expose its digest tables to an
 # anonymous client. Verify duplicate and five-per-minute outcomes directly.
 "${PSQL[@]}" >/dev/null <<'SQL'
+insert into public.contact_submission_windows (client_key, window_started_at, attempt_count)
+  values (repeat('f', 64), now() - interval '3 days', 1)
+  on conflict (client_key) do update set window_started_at = excluded.window_started_at;
+insert into public.contact_submission_duplicates (duplicate_key, last_submission_at)
+  values (repeat('g', 64), now() - interval '3 days')
+  on conflict (duplicate_key) do update set last_submission_at = excluded.last_submission_at;
+SQL
+"${PSQL[@]}" >/dev/null <<'SQL'
 set role app_user;
 do $$
 declare
@@ -164,6 +172,14 @@ begin
   end loop;
   rate_result := public.reserve_contact_submission(repeat('e', 64), repeat('d', 64));
   if rate_result <> 'rate_limited' then raise exception 'submission guard rate result was %', rate_result; end if;
+
+  if public.reserve_contact_submission(repeat('1', 64), repeat('2', 64)) <> 'ok' then
+    raise exception 'submission guard cleanup probe was rejected';
+  end if;
+  if exists (select 1 from public.contact_submission_windows where client_key = repeat('f', 64))
+    or exists (select 1 from public.contact_submission_duplicates where duplicate_key = repeat('g', 64)) then
+    raise exception 'expired submission guard rows were not pruned';
+  end if;
 end $$;
 reset role;
 SQL
