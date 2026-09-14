@@ -179,3 +179,8 @@ pnpm test:e2e --workers=1
 
 - 後台使用 `VITE_WEB_URL` 組合 Logo、查看官網及預覽連結時會移除尾斜線，避免正式素材路徑出現雙斜線。
 - 提交 `5c142b6`；驗證：`pnpm --filter @tian-xin-ge/admin typecheck`、`pnpm --filter @tian-xin-ge/admin build`、`pnpm test:e2e --grep "後台" --workers=1 --reporter=line`（11／11 通過）。
+
+## 發布前正文完整性
+
+- 修正文章發布邊界：正文為空時只能保存草稿，後台表單、repository 與 Supabase constraint 都會拒絕發布；端到端測試改為先建立正文區塊再發布。
+- 提交 `5154dbf`；驗證：`pnpm run typecheck`、`pnpm --filter @tian-xin-ge/admin build`、`pnpm test`（13／13）、`pnpm db:verify`、`pnpm test:e2e --grep "後台可建立草稿文章並發布|後台可登入" --workers=1 --reporter=line`（2／2 通過）。
