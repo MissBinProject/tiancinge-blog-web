@@ -189,3 +189,8 @@ pnpm test:e2e --workers=1
 
 - 後台文章編輯器在勾選「已發布」時即時檢查正文，空正文會維持草稿並顯示可讀錯誤；端到端案例覆蓋拒絕後補上段落再發布的完整流程。
 - 提交 `2f61eaf`；驗證：`pnpm run typecheck`、`pnpm run build`、`pnpm test`（13／13）、`pnpm test:e2e --workers=1 --reporter=line`（23／23）、`pnpm db:verify`、`pnpm db:backup:verify`、`pnpm tasks:verify`、`git diff --check` 均通過。
+
+## 官網資料邊界整理
+
+- 官網 Header、Hero、服務／價格、消息／部落格、聯繫與頁尾元件改為必須接收頁面取得的設定與內容；client component 不再直接匯入 `@/lib/data`，讓 Supabase repository 保持在伺服器邊界。
+- 提交 `cff19b4`；驗證：`pnpm run typecheck`、`pnpm --filter @tian-xin-ge/web build`、`pnpm test`（13／13）、`pnpm test:e2e --workers=1 --reporter=line`（23／23）通過。
