@@ -54,6 +54,7 @@
 - `scripts/export-crops.sh` 可依裁切座標重建服務／消息／部落格暫用卡片，不會修改原始設計稿。
 - `scripts/generate-visual-diffs.sh` 可將五張設計稿與本機截圖輸出 overlay／difference 圖，供逐區差異定位。
 - 視覺截圖腳本會等待字型載入並停用 animation／transition／caret，確保五張基準圖可重複產生。
+- 視覺截圖腳本另外等待頁面圖片與地圖 iframe 的初始載入，聯繫區地圖保留固定 settling window；連續執行兩次的五張 current hash 一致，避免外部地圖載入時序污染差異圖。
 - 首頁 metadata、canonical、Open Graph、sitemap 與 robots 已完成；LINE QR 由設定連結產生。
 - 公開設定 mapper 會以正式 `line_url` 補足 social JSON 缺少的 LINE 欄位，讓導覽、預約按鈕與 QR 共用同一連結。
 - 留言 API 以串流讀取方式限制 16 KB request body，即使沒有 `Content-Length` 也會在超過上限時中止；正式 Supabase 模式透過交易函式跨 instance 執行每 client 每分鐘五次限流與 30 秒防重送，本機 fixture 保留記憶體 fallback；共用圖片 URL validator 與資料庫 constraint 同步只接受 HTTPS 或站內路徑。

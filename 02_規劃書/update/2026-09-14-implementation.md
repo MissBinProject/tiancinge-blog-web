@@ -205,3 +205,8 @@ pnpm test:e2e --workers=1
 - 404 頁改為讀取網站設定並沿用固定 Header、Footer 與主要內容錨點；即使詳細頁找不到，訪客仍可使用全站導覽。
 - 提交 `5ccca0f`；驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm --filter @tian-xin-ge/web build`、`pnpm test:e2e --grep "公開文章與服務路由及 404 狀態正確" --workers=1 --reporter=line`（1／1 通過）。
 - 正式 Supabase 讀取失敗時 404 不使用 fixture 備援，維持正式資料錯誤邊界；提交 `ee1389e`，同一 404 回歸測試仍通過。
+
+## 視覺基準可重複產生
+
+- `scripts/capture-visual.mjs` 現在等待頁面圖片、跨來源地圖 iframe 初始載入，並在聯繫區加入固定 settling window；避免外部地圖圖磚載入時序造成 current 截圖漂移。
+- 連續執行兩次 `VISUAL_BASE_URL=http://localhost:3000 pnpm visual:capture` 的五張 current SHA-256 完全一致，再執行 `pnpm visual:diff` 重新產生五組 overlay／difference；提交待本次工作樹驗證後建立。

@@ -18,9 +18,23 @@ const sections = [
 await mkdir(outputDir, { recursive: true });
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const page = await browser.newPage({ viewport: { width: 1672, height: 941 }, deviceScaleFactor: 1 });
+const waitForFrames = () => Promise.all(page.frames().map((frame) => frame.waitForLoadState('load', { timeout: 5_000 }).catch(() => undefined)));
 await page.goto(baseUrl, { waitUntil: 'domcontentloaded', timeout: 30_000 });
 await page.waitForTimeout(1_000);
 await page.evaluate(() => document.fonts?.ready);
+// The contact section contains a cross-origin map iframe. Wait for every
+// frame's initial load before capturing any section so the baseline does not
+// depend on whether map tiles happened to arrive during the 250ms scroll pause.
+await waitForFrames();
+await page.locator('img').evaluateAll(async (images) => {
+  await Promise.all(images.map((image) => {
+    if (image.complete) return image.decode?.().catch(() => undefined);
+    return new Promise((resolve) => {
+      image.addEventListener('load', () => resolve(), { once: true });
+      image.addEventListener('error', () => resolve(), { once: true });
+    });
+  }));
+});
 await page.addStyleTag({ content: `
   *, *::before, *::after {
     animation: none !important;
@@ -36,6 +50,11 @@ for (const [index, sectionId, reference] of sections) {
   const top = Math.max(0, (box?.y ?? 0) + await page.evaluate(() => window.scrollY) - headerHeight);
   await page.evaluate((scrollTop) => window.scrollTo(0, scrollTop), top);
   await page.waitForTimeout(250);
+  await waitForFrames();
+  // Map tiles can finish painting shortly after the iframe load event. Give
+  // the contact capture a deterministic settling window before taking the
+  // screenshot; other sections only contain local assets.
+  if (sectionId === 'contact') await page.waitForTimeout(2_000);
   const output = path.join(outputDir, `current-${index}.png`);
   await page.screenshot({ path: output, fullPage: false });
   console.log(`${reference} -> ${output}`);
