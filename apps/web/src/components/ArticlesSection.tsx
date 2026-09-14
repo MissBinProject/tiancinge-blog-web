@@ -33,7 +33,7 @@ export function NewsSection({ items = getPublished('news'), siteSettings = setti
 
 export function BlogSection({ items = getPublished('blog'), siteSettings = settings }: { items?: Article[]; siteSettings?: SiteSettings }) {
   const cards = items.slice(0, 4);
-  const categories = Array.from(new Set(items.map((article) => article.category.trim()).filter(Boolean))).slice(0, 5);
+  const categories = Array.from(new Set(items.map((article) => article.category.trim()).filter(Boolean)));
   const glyphs = ['◉', '⌁', '♡', '☕', '▢'];
   return <section id="blog" className="articles blog section">
     <div className="article-backdrop blog-bg" style={siteSettings.blogBackgroundUrl ? { backgroundImage: `url(${siteSettings.blogBackgroundUrl})` } : undefined} />
