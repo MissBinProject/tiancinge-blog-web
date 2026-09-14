@@ -1,0 +1,27 @@
+{
+  "name": "tian-xin-ge-wellness-spa",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "pnpm --filter @tian-xin-ge/web dev",
+    "dev:admin": "pnpm --filter @tian-xin-ge/admin dev",
+    "build": "pnpm run build:web && pnpm run build:admin",
+    "build:web": "pnpm --filter @tian-xin-ge/web build",
+    "build:admin": "pnpm --filter @tian-xin-ge/admin build",
+    "typecheck": "pnpm --filter @tian-xin-ge/web typecheck && pnpm --filter @tian-xin-ge/admin typecheck",
+    "test": "pnpm --filter @tian-xin-ge/web test",
+    "test:e2e": "playwright test",
+    "visual:capture": "node scripts/capture-visual.mjs",
+    "visual:diff": "./scripts/generate-visual-diffs.sh",
+    "assets:export": "./scripts/export-crops.sh",
+    "db:verify": "./supabase/scripts/verify-local.sh",
+    "preflight:production": "node scripts/check-production-env.mjs"
+  },
+  "packageManager": "pnpm@11.19.0",
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}

@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600&display=swap');
+
+:root {
+  --txg-ink: #281a1e;
+  --txg-rose: #c9486b;
+  --txg-rose-dark: #a92f52;
+  --txg-blush: #fff2f2;
+  --txg-line: #eab7bd;
+  --txg-paper: #fffafa;
+  --txg-muted: #806c73;
+  --txg-border: #f0dfe2;
+  --txg-serif: 'Noto Serif TC', serif;
+  --txg-sans: 'Noto Sans TC', sans-serif;
+  --txg-radius-sm: 7px;
+  --txg-radius-md: 8px;
+  --txg-radius-lg: 12px;
+  --txg-radius-pill: 999px;
+  --txg-page-gutter: 48px;
+  --txg-mobile-gutter: 18px;
+}
