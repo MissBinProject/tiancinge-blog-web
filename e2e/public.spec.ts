@@ -99,6 +99,17 @@ test('公開文章與服務路由及 404 狀態正確', async ({ page }) => {
   await expect((await page.goto('/blog/healing-power-of-oils'))?.status()).toBe(200);
 });
 
+test('政策頁提供動態標題、描述與分享資訊', async ({ page }) => {
+  await page.goto('/privacy');
+  await expect(page).toHaveTitle(/隱私權政策｜天心閣/);
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /重視您的隱私/);
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', /隱私權政策｜天心閣/);
+  await page.goto('/terms');
+  await expect(page).toHaveTitle(/服務條款｜天心閣/);
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /使用本網站/);
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', /服務條款｜天心閣/);
+});
+
 test('服務、文章、搜尋與政策內頁在手機版沒有水平溢出', async ({ page }) => {
   const routes = ['/services', '/services/full-body', '/news', '/news/mid-autumn-offer', '/blog', '/blog/healing-power-of-oils', '/search?q=精油', '/privacy', '/terms'];
   for (const width of [390, 768]) {
