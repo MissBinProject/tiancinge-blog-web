@@ -75,6 +75,6 @@
 - `pnpm tasks:verify`：確認 63 張卡均有必要欄位。
 - `pnpm typecheck`、`pnpm build`：官網與後台型別及建置。
 - `pnpm test`：Vitest 13 個測試。
-- `pnpm test:e2e --workers=1`：Playwright 22 個公開／後台流程。
+- `pnpm test:e2e --workers=1`：Playwright 23 個公開／後台流程。
 - `pnpm db:verify`：暫存 PostgreSQL migration、RLS、Storage 與引用保護。
 - `pnpm db:backup:verify`：本機備份、checksum、異動與回復演練。
