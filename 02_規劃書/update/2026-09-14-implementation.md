@@ -158,3 +158,8 @@ pnpm test:e2e --workers=1
 
 - 依 A05／UI 配置矩陣補上 390px 單欄服務、價格、部落格及內頁列表，特色列改為縱向排列；消息輪播以媒體查詢切換為手機每頁一張，桌機仍維持三卡循環視窗。
 - 提交 `5a352f7`；驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm --filter @tian-xin-ge/web build`、`pnpm test:e2e --grep "首頁桌機與手機版|最新消息手動輪播" --workers=1`（2／2 通過）、`pnpm test:e2e --grep "內頁在手機版" --workers=1`（1／1 通過）。
+
+## 後台共用正式資料載入
+
+- 修正後台正式資料載入競態：Dashboard 現在一次載入服務、文章、分類、素材、留言與網站設定，並將已同步資料與 setter 傳給各編輯器及共用圖片選擇器；子元件不再各自啟動第二次 repository 查詢，避免使用者編輯期間被舊快照覆寫。
+- 提交 `e9f4eef`；驗證：`pnpm --filter @tian-xin-ge/admin typecheck`、`pnpm --filter @tian-xin-ge/admin build`、`pnpm test:e2e --grep "後台|正文圖片" --workers=1 --reporter=line`（12／12 通過）。

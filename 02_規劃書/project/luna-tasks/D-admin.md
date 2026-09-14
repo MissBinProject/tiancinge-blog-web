@@ -28,7 +28,7 @@
 - 步驟：list → file validation → upload → alt save → error state。
 - 驗收：非法檔案拒絕、成功可預覽、RLS 生效；交接：附測試。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d03)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 Dashboard 統一傳入素材資料，避免素材編輯器重複載入舊快照。本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d03)。
 
 ## D04 共用圖片選擇器
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -38,7 +38,7 @@
 - 步驟：建立選擇器 → 接 service/article → 替換預覽 → 清除選取。
 - 驗收：各表單可替換且無引用斷裂；交接：附操作截圖。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d04)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。圖片選擇器改由父層傳入已完成同步的素材清單。本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d04)。
 
 ## D05 網站基本設定
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -98,7 +98,7 @@
 - 步驟：tabs → status filter → keyword → pagination。
 - 驗收：消息/部落格與草稿數量正確；交接：附篩選矩陣。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d10)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。文章列表使用 Dashboard 已同步資料，避免子元件 repository 重複載入。本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d10)。
 
 ## D11 文章基本資料表單
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -108,7 +108,7 @@
 - 步驟：欄位 → slug validation → category picker → save。
 - 驗收：重新整理資料不遺失；交接：附欄位驗證。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d11)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。文章表單與封面選擇器共用父層已同步資料。本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d11)。
 
 ## D12 文章正文編輯器
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -118,7 +118,7 @@
 - 步驟：block add/reorder → validate → preview JSON → save。
 - 驗收：正文可重現，惡意 HTML 不渲染；交接：附 JSON fixture。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d12)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。正文圖片選擇器使用同一份已同步素材清單。本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d12)。
 
 ## D13 文章預覽與發布
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -167,4 +167,4 @@
 - 固定契約：所有儲存按鈕、錯誤、空狀態與 loading 文案一致。
 - 步驟：盤點流程 → 抽 feedback component → dirty guard → 全頁驗證。
 - 驗收：各模組可理解且無靜默失敗；交接：附 UX checklist。
-- 交接紀錄：2026-09-14｜Codex｜pnpm --filter @tian-xin-ge/admin typecheck && pnpm --filter @tian-xin-ge/admin build && pnpm test:e2e --grep "收合側欄" --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`，收合側欄與正式資料載入／錯誤回饋語意一致。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d17)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm --filter @tian-xin-ge/admin typecheck && pnpm --filter @tian-xin-ge/admin build && pnpm test:e2e --grep "收合側欄" --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`，收合側欄與正式資料載入／錯誤回饋語意一致；Dashboard 統一載入六組正式資料，子編輯器不再以重複查詢覆寫編輯中狀態。本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d17)。
