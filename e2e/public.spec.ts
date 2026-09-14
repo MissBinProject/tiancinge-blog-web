@@ -13,6 +13,10 @@ test('首頁桌機與手機版可操作且沒有水平溢出', async ({ page }, 
   await skipLink.click();
   await expect.poll(() => page.evaluate(() => document.activeElement?.id)).toBe('main-content');
   await expect(page.locator('.hero-mark')).toBeVisible();
+  const contactForm = page.locator('form.contact-form');
+  await expect(contactForm.getByLabel('您的姓名')).toHaveAttribute('autocomplete', 'name');
+  await expect(contactForm.getByLabel('聯絡電話')).toHaveAttribute('autocomplete', 'tel');
+  await expect(contactForm.getByLabel('電子郵件')).toHaveAttribute('autocomplete', 'email');
   await page.screenshot({ path: testInfo.outputPath('home-desktop.png'), fullPage: true });
 
   await page.setViewportSize({ width: 390, height: 844 });

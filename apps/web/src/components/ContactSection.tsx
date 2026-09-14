@@ -51,10 +51,10 @@ export function ContactSection({ siteSettings = settings }: { siteSettings?: Sit
           <span><Clock3 /> 營業時間 {siteSettings.businessHours}</span>
         </div>
         <form className="contact-form" onSubmit={submit}>
-          <label><UserRound /><input required name="name" placeholder="您的姓名" /></label>
-          <label><Phone /><input required name="phone" placeholder="聯絡電話" inputMode="tel" /></label>
-          <label><Mail /><input name="email" type="email" placeholder="電子郵件" /></label>
-          <label><Send /><textarea required name="message" placeholder="您的需求或留言" rows={3} /></label>
+          <label><UserRound /><input required name="name" aria-label="您的姓名" autoComplete="name" placeholder="您的姓名" /></label>
+          <label><Phone /><input required name="phone" aria-label="聯絡電話" autoComplete="tel" placeholder="聯絡電話" inputMode="tel" /></label>
+          <label><Mail /><input name="email" aria-label="電子郵件" autoComplete="email" type="email" placeholder="電子郵件" /></label>
+          <label><Send /><textarea required name="message" aria-label="您的需求或留言" placeholder="您的需求或留言" rows={3} /></label>
           <button className="btn" disabled={state === 'sending'}>{state === 'sending' ? '傳送中…' : state === 'sent' ? '已送出，謝謝您' : '送出訊息'} <span>→</span></button>
           {state === 'sent' && <p className="form-success" role="status">留言已成功送出，我們會盡快與您聯繫。</p>}
           {state === 'error' && <p className="form-error" role="alert">送出失敗，請稍後再試或直接透過 LINE 聯繫。</p>}
