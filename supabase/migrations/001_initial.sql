@@ -112,6 +112,14 @@ begin
   perform pg_advisory_xact_lock(hashtextextended(client_key, 0));
   perform pg_advisory_xact_lock(hashtextextended('duplicate:' || duplicate_key, 0));
 
+  -- Guard rows only need to survive the longest active window. Keep the
+  -- implementation tables bounded without retaining visitor-derived digests
+  -- indefinitely.
+  delete from public.contact_submission_windows
+    where window_started_at < now_at - interval '2 days';
+  delete from public.contact_submission_duplicates
+    where last_submission_at < now_at - interval '2 days';
+
   select * into current_window
     from public.contact_submission_windows
     where contact_submission_windows.client_key = reserve_contact_submission.client_key
