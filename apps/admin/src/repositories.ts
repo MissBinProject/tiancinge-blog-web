@@ -207,7 +207,11 @@ export async function saveCategory(category: Omit<AdminCategory, 'id'> & { id?: 
     const { error } = await adminSupabase.from('article_categories').update({ name: category.name.trim(), type: category.type }).eq('id', category.id);
     return error ? { ok: false, mode: 'supabase' as const, error: error.message } : { ok: true, mode: 'supabase' as const, id: category.id };
   }
-  const { data, error } = await adminSupabase.from('article_categories').upsert({ name: category.name.trim(), type: category.type }, { onConflict: 'name' }).select('id').single();
+  const categoryName = category.name.trim();
+  const existing = await adminSupabase.from('article_categories').select('id').eq('name', categoryName).maybeSingle();
+  if (existing.error) return { ok: false, mode: 'supabase' as const, error: existing.error.message };
+  if (existing.data) return { ok: false, mode: 'supabase' as const, error: '分類名稱不可重複' };
+  const { data, error } = await adminSupabase.from('article_categories').insert({ name: categoryName, type: category.type }).select('id').single();
   return error || !data ? { ok: false, mode: 'supabase' as const, error: error?.message || '新增分類失敗' } : { ok: true, mode: 'supabase' as const, id: String(data.id) };
 }
 export async function deleteCategory(category: string | Pick<AdminCategory, 'id' | 'name'>) {
@@ -240,9 +244,17 @@ export async function saveArticle(article: ManagedArticle) {
   if (!adminSupabase) return { ok: true, mode: 'local' as const };
   let categoryId: string | null = null;
   if (article.category.trim()) {
-    const categoryResult = await adminSupabase.from('article_categories').upsert({ name: article.category.trim(), type: article.type }, { onConflict: 'name' }).select('id').single();
+    const categoryName = article.category.trim();
+    const categoryResult = await adminSupabase.from('article_categories').select('id,type').eq('name', categoryName).maybeSingle();
     if (categoryResult.error) return { ok: false, mode: 'supabase' as const, error: categoryResult.error.message };
-    categoryId = String(categoryResult.data.id);
+    if (categoryResult.data) {
+      if (categoryResult.data.type !== article.type) return { ok: false, mode: 'supabase' as const, error: '分類名稱已用於另一種文章類型' };
+      categoryId = String(categoryResult.data.id);
+    } else {
+      const createdCategory = await adminSupabase.from('article_categories').insert({ name: categoryName, type: article.type }).select('id').single();
+      if (createdCategory.error || !createdCategory.data) return { ok: false, mode: 'supabase' as const, error: createdCategory.error?.message || '新增分類失敗' };
+      categoryId = String(createdCategory.data.id);
+    }
   }
   const publishedAt = article.publishedAt && /^\d{4}-\d{2}-\d{2}$/.test(article.publishedAt) ? article.publishedAt : new Date().toISOString().slice(0, 10);
   const payload = { slug: article.slug || `${article.type}-${Date.now()}`, title: article.title, excerpt: article.excerpt, seo_title: article.seoTitle?.trim().slice(0, 160) || null, seo_description: article.seoDescription?.trim().slice(0, 320) || null, type: article.type, category_id: categoryId, status: article.status === 'published' ? 'published' : 'draft', body, cover_url: coverValue || null, published_at: publishedAt };
