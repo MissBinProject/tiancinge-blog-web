@@ -128,7 +128,7 @@
 - 步驟：save draft → preview → publish → unpublish → verify public。
 - 驗收：草稿網址/搜尋/sitemap 均不可見；交接：附流程紀錄。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。缺少正文的文章只能保存為草稿，勾選發布會即時顯示原因，端到端發布流程再建立正文區塊。本機 fixture 驗收通過。提交索引見 [commit-map.md](./commit-map.md#d13)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。缺少正文的文章只能保存為草稿，勾選發布會即時顯示原因；補上正文後可發布，已發布文章可再下架回草稿。本機 fixture 驗收通過。提交索引見 [commit-map.md](./commit-map.md#d13)。
 
 ## D14 留言管理列表
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
