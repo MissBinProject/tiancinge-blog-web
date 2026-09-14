@@ -84,8 +84,12 @@ function App() {
   const explicitSignOut = useRef(false);
   useEffect(() => {
     if (!adminSupabase) return;
+    let disposed = false;
+    let sessionRequest = 0;
     const handleSession = async (session: Parameters<typeof verifyAdminSession>[0]) => {
+      const requestId = ++sessionRequest;
       const result = await verifyAdminSession(session);
+      if (disposed || requestId !== sessionRequest) return;
       if (result.status === 'signed-out') {
         sessionStorage.removeItem('tian-admin');
         setLogged(false);
@@ -111,7 +115,8 @@ function App() {
       setAuthNotice('');
       setLogged(true);
     };
-    return subscribeAuthChanges((event, session) => { if (event === 'PASSWORD_RECOVERY') setRecovering(true); if (event === 'INITIAL_SESSION') void handleSession(session); if (event === 'SIGNED_OUT') void handleSession(null); });
+    const unsubscribe = subscribeAuthChanges((event, session) => { if (event === 'PASSWORD_RECOVERY') setRecovering(true); if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN') void handleSession(session); if (event === 'SIGNED_OUT') void handleSession(null); });
+    return () => { disposed = true; unsubscribe(); };
   }, []);
   const logout = async () => { explicitSignOut.current = true; await signOutAdmin(); sessionStorage.removeItem('tian-admin'); setLogged(false); };
   if (recovering) return <ResetPassword onDone={() => { setRecovering(false); void logout(); }} />;
