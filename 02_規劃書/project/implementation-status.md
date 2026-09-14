@@ -49,6 +49,7 @@
 - 分類公開讀取政策只暴露仍被已發布文章使用的分類；只存在於草稿的分類也由本機 RLS 驗證拒絕匿名讀取。
 - Supabase migration 另以資料庫 constraint 限制 slug／分類／留言欄位長度、特色列最多 4 筆，文章正文最多 100 個安全 block 且每個清單最多 100 個項目；同一套 URL／正文／特色列驗證規則也由 `packages/contracts` 提供給後台使用。
 - Supabase migration 另外限制服務圖片、文章封面、網站設定圖片及文章正文圖片只能使用安全的 HTTPS 或站內路徑，LINE 與地圖 Embed URL 必須是 HTTPS；`pnpm db:verify` 覆蓋惡意服務圖片、文章封面、正文圖片及 LINE URL 案例。
+- Supabase migration 也限制服務圖示只能使用契約定義的 lotus、oil、stone、foot、flower；暫存 PostgreSQL 直接寫入未知圖示會被 constraint 拒絕。
 - `scripts/export-crops.sh` 可依裁切座標重建服務／消息／部落格暫用卡片，不會修改原始設計稿。
 - `scripts/generate-visual-diffs.sh` 可將五張設計稿與本機截圖輸出 overlay／difference 圖，供逐區差異定位。
 - 視覺截圖腳本會等待字型載入並停用 animation／transition／caret，確保五張基準圖可重複產生。
