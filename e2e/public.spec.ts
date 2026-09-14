@@ -46,6 +46,16 @@ test('首頁桌機與手機版可操作且沒有水平溢出', async ({ page }, 
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
     expect(overflow, `horizontal overflow at ${width}px`).toBe(false);
   }
+
+  await page.setViewportSize({ width: 768, height: 844 });
+  for (const route of ['/services', '/news', '/blog']) {
+    await page.goto(route);
+    await expect.poll(() => page.locator('.inner-grid').evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length), { timeout: 5000 }).toBe(2);
+  }
+  await page.goto('/services/full-body');
+  await expect.poll(() => page.locator('.detail-layout').evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length), { timeout: 5000 }).toBe(1);
+  await page.goto('/#contact');
+  await expect.poll(() => page.locator('.contact-layout').evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length), { timeout: 5000 }).toBe(1);
 });
 
 test('最新消息手動輪播不會切到空白頁', async ({ page }) => {
