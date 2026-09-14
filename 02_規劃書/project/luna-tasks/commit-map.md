@@ -49,9 +49,9 @@
 | <a id="d06"></a>D06 | 3759e6e | 本機 fixture 驗收通過。 |
 | <a id="d07"></a>D07 | 3759e6e, b0a0a40 | 本機 fixture 驗收通過。 |
 | <a id="d08"></a>D08 | 3759e6e | 本機 fixture 驗收通過。 |
-| <a id="d09"></a>D09 | 3759e6e, e255377 | 本機 fixture 驗收通過。 |
+| <a id="d09"></a>D09 | 3759e6e, e255377, bae4651 | 本機 fixture 驗收通過。 |
 | <a id="d10"></a>D10 | 3759e6e, b0a0a40, 6df61dc | 本機 fixture 驗收通過。 |
-| <a id="d11"></a>D11 | 3759e6e | 本機 fixture 驗收通過。 |
+| <a id="d11"></a>D11 | 3759e6e, bae4651 | 本機 fixture 驗收通過。 |
 | <a id="d12"></a>D12 | 3759e6e | 本機 fixture 驗收通過。 |
 | <a id="d13"></a>D13 | 3759e6e, b0a0a40 | 本機 fixture 驗收通過。 |
 | <a id="d14"></a>D14 | 3759e6e | 本機 fixture 驗收通過。 |
