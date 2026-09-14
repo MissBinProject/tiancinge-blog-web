@@ -1,18 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight, Flower2, Gift, Heart, Megaphone } from 'lucide-react';
 import { getPublished, settings } from '@/lib/data';
 import type { Article, SiteSettings } from '@tian-xin-ge/contracts';
 import { SafeImage } from './SafeImage';
 
 export function NewsSection({ items = getPublished('news'), siteSettings = settings }: { items?: Article[]; siteSettings?: SiteSettings }) {
-  const pageSize = 3;
-  const pageCount = Math.max(1, items.length);
-  const showControls = items.length >= pageSize;
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 700px)');
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener?.('change', update);
+    return () => media.removeEventListener?.('change', update);
+  }, []);
+  const pageSize = isMobile ? 1 : 3;
+  const pageCount = isMobile ? Math.max(1, Math.ceil(items.length / pageSize)) : Math.max(1, items.length);
+  const showControls = isMobile ? items.length > pageSize : items.length >= pageSize;
   const dotCount = pageCount;
   const [page, setPage] = useState(0);
-  const visible = items.length <= pageSize ? items : Array.from({ length: pageSize }, (_, offset) => items[(page + offset) % items.length]);
+  useEffect(() => { setPage((current) => Math.min(current, pageCount - 1)); }, [pageCount]);
+  const visible = items.length <= pageSize
+    ? items
+    : isMobile
+      ? items.slice(page * pageSize, page * pageSize + pageSize)
+      : Array.from({ length: pageSize }, (_, offset) => items[(page + offset) % items.length]);
   const move = (direction: -1 | 1) => setPage((current) => (current + direction + pageCount) % pageCount);
 
   return <section id="news" className="articles news section">

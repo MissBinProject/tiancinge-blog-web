@@ -20,6 +20,9 @@ test('首頁桌機與手機版可操作且沒有水平溢出', async ({ page }, 
   await page.screenshot({ path: testInfo.outputPath('home-desktop.png'), fullPage: true });
 
   await page.setViewportSize({ width: 390, height: 844 });
+  for (const selector of ['.service-grid', '.price-grid', '#blog .article-grid', '.trust-row', '.benefit-row']) {
+    await expect.poll(() => page.locator(selector).evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length), { timeout: 5000 }).toBe(1);
+  }
   await expect(page.locator('main#main-content')).toHaveCSS('scroll-margin-top', '66px');
   await page.getByRole('button', { name: '開啟選單' }).click();
   const header = page.getByRole('banner');
@@ -56,6 +59,11 @@ test('最新消息手動輪播不會切到空白頁', async ({ page }) => {
   await expect(dots.nth(1)).toBeEnabled();
   await dots.nth(1).click();
   await expect(news.locator('.article-card')).toHaveCount(3);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.reload();
+  await expect(news.locator('.article-card')).toHaveCount(1);
+  await expect(news.locator('.slider-controls')).toBeVisible();
+  await expect(news.locator('.slider-controls .dot')).toHaveCount(3);
 });
 
 test('首頁部落格分類入口跟隨已發布文章分類', async ({ page }) => {
@@ -120,6 +128,9 @@ test('服務、文章、搜尋與政策內頁在手機版沒有水平溢出', as
       await page.goto(route);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
       expect(overflow, `horizontal overflow at ${width}px on ${route}`).toBe(false);
+      if (width === 390 && ['/services', '/news', '/blog'].includes(route)) {
+        await expect.poll(() => page.locator('.inner-grid').evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length), { timeout: 5000 }).toBe(1);
+      }
     }
   }
 });
