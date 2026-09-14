@@ -143,3 +143,8 @@ pnpm test:e2e --workers=1
 
 - 服務詳情的介紹段落加入 `detail-description`，以 `white-space: pre-line` 保留後台內容換行，維持療程文案的排版節奏。
 - 提交 `61c8616`；驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm test:e2e --grep "公開文章與服務路由" --workers=1`（1／1 通過）。
+
+## 服務卡長文案排版
+
+- 服務卡摘要移除固定單行限制，加入自然換行與長字串折行，避免後台文案變長時破壞手機版版面。
+- 提交 `b5e7471`；驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm test:e2e --grep "首頁桌機與手機版" --workers=1`（1／1 通過）。

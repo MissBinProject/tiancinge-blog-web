@@ -160,7 +160,7 @@
 - 步驟：實測截圖 → 修正欄數/字級/裁切 → 檢查 scroll。
 - 驗收：兩寬度可操作、無溢出；交接：附截圖及差異。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 CSS／截圖流程通過；原始手機稿、字型及照片到位後需完成正式疊圖確認。 提交索引見 [commit-map.md](./commit-map.md#c16)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --grep "首頁桌機與手機版" --workers=1；390／768／1440／1672px 溢出檢查通過，服務摘要可自然換行。 本機 CSS／截圖流程通過；原始手機稿、字型及照片到位後需完成正式疊圖確認。 提交索引見 [commit-map.md](./commit-map.md#c16)。
 
 ## C17 下半頁手機排版
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
