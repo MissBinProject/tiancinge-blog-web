@@ -114,5 +114,6 @@ pnpm test:e2e --workers=1
 - `e2e/public.spec.ts` 新增 `main#main-content` 唯一性與連結目標檢查。
 - 驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm --filter @tian-xin-ge/web build`、`pnpm test:e2e --workers=1 e2e/public.spec.ts`（10 條）通過；相關提交為 `705d6dc`、`c3e2c35`、`234fbe7`。
 - 全站 `main#main-content` 增加固定 Header 高度相容的 `scroll-margin-top`，桌機 76px、手機 66px。
+- 各頁 `main#main-content` 加入 `tabIndex={-1}`，Playwright 驗證跳轉後 `document.activeElement` 為主要內容。
 - 後台 Dashboard 在 Supabase 資料載入完成前顯示 `aria-busy` 載入遮罩並暫不掛載內容編輯區，避免滑鼠或鍵盤使用初始 fixture 值覆寫正式資料；提交 `15123a6`。
 - 素材引用檢查函式撤銷 public 執行權限，僅保留 authenticated／service_role（本機驗證用 app_user）；`pnpm db:verify` 已確認匿名替身不能執行、app_user 仍可供 Storage policy 使用。

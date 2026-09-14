@@ -72,6 +72,7 @@
 - `pnpm db:verify` 另檢查匿名替身不能執行 `is_media_path_in_use(text)`，而 app_user 仍保有 Storage delete policy 所需的執行權限。
 - 導覽的鍵盤「跳到主要內容」連結現在直接指向各公開頁真正的 `main#main-content`，不會把使用者留在導覽列外層容器。
 - `main#main-content` 具備與固定 Header 對應的桌機／手機 `scroll-margin-top`，錨點定位時不會被導覽列遮住。
+- 各頁主要內容標記使用 `tabIndex={-1}`，跳轉後焦點會落在 `main`，鍵盤使用者可直接繼續閱讀。
 - 後台正式資料初次載入期間會以 `aria-busy` 與載入遮罩取代內容編輯區，避免滑鼠或鍵盤在遠端資料尚未完成同步前用 fixture／舊快照覆寫正式資料。
 
 ## 待正式資料／營運設定

@@ -24,7 +24,7 @@
 | <a id="b09"></a>B09 | 3759e6e, ef9283b | 程式與 fixture 驗證通過；正式資料與環境變數待接入。 |
 | <a id="b10"></a>B10 | 3759e6e, 89fd05c | 程式與 fixture 驗證通過；正式資料與環境變數待接入。 |
 | <a id="c01"></a>C01 | 3759e6e, 4c5016, cfddded | 本機 fixture 驗收通過。 |
-| <a id="c02"></a>C02 | 3759e6e, 705d6dc | 本機 fixture 驗收通過；跳至主要內容錨點已改為指向各頁 `main#main-content`。 |
+| <a id="c02"></a>C02 | 3759e6e, 705d6dc, eb761a3 | 本機 fixture 驗收通過；跳至主要內容錨點指向各頁 `main#main-content`，並可接收鍵盤焦點。 |
 | <a id="c03"></a>C03 | 3759e6e, 4c5016, f696054 | 本機 fixture 驗收通過。 |
 | <a id="c04"></a>C04 | 3759e6e, 551dc1d | 本機 fixture 驗收通過。 |
 | <a id="c05"></a>C05 | 3759e6e, 751ce69 | 本機 fixture 驗收通過。 |
