@@ -117,3 +117,9 @@ pnpm test:e2e --workers=1
 - 各頁 `main#main-content` 加入 `tabIndex={-1}`，Playwright 驗證跳轉後 `document.activeElement` 為主要內容。
 - 後台 Dashboard 在 Supabase 資料載入完成前顯示 `aria-busy` 載入遮罩並暫不掛載內容編輯區，避免滑鼠或鍵盤使用初始 fixture 值覆寫正式資料；提交 `15123a6`。
 - 素材引用檢查函式撤銷 public 執行權限，僅保留 authenticated／service_role（本機驗證用 app_user）；`pnpm db:verify` 已確認匿名替身不能執行、app_user 仍可供 Storage policy 使用。
+
+## 公開表單欄位可及性與輪播語意
+
+- 聯絡表單姓名、電話、Email 與留言欄位補上可讀 `aria-label`；姓名／電話／Email 分別提供瀏覽器可辨識的 `autocomplete` 值。
+- 最新消息手動輪播控制群組補上 `role="group"` 與中文 `aria-label`，保留原有上一頁／下一頁／圓點操作。
+- 提交 `21d8668`；驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm --filter @tian-xin-ge/web build`、`pnpm test:e2e --grep public --workers=1`（10／10 通過）。

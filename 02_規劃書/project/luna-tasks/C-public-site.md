@@ -60,7 +60,7 @@
 - 步驟：顯示前三筆 → 加手動切換 → 空清單隱藏多餘控制。
 - 驗收：三卡、分類、日期及控制符合原稿；交接：附互動驗收。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c06)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --grep public --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`，輪播控制群組具 `role="group"` 與中文標籤。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c06)。
 
 ## C07 首頁部落格區
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
@@ -90,7 +90,7 @@
 - 步驟：加入欄位驗證 → 顯示提交狀態 → 顯示錯誤 → 驗證重送。
 - 驗收：必填、成功、429、503 畫面明確；交接：附流程截圖。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c09)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --grep public --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`，聯絡表單欄位具 `aria-label` 並提供姓名／電話／Email 自動填寫屬性。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c09)。
 
 ## C10 頁尾
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。

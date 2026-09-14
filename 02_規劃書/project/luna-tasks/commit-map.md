@@ -28,10 +28,10 @@
 | <a id="c03"></a>C03 | 3759e6e, 4c5016, f696054 | 本機 fixture 驗收通過。 |
 | <a id="c04"></a>C04 | 3759e6e, 551dc1d | 本機 fixture 驗收通過。 |
 | <a id="c05"></a>C05 | 3759e6e, 751ce69 | 本機 fixture 驗收通過。 |
-| <a id="c06"></a>C06 | 3759e6e | 本機 fixture 驗收通過。 |
+| <a id="c06"></a>C06 | 3759e6e, 21d8668 | 本機 fixture 驗收通過；消息輪播控制群組補上可及性語意。 |
 | <a id="c07"></a>C07 | 3759e6e, d2258b4, c95472f, 5a56a70 | 本機 fixture 驗收通過。 |
 | <a id="c08"></a>C08 | 3759e6e, 5770785, c48acd7 | 本機 fixture 驗收通過。 |
-| <a id="c09"></a>C09 | 3759e6e, 89fd05c | 本機 fixture 驗收通過。 |
+| <a id="c09"></a>C09 | 3759e6e, 89fd05c, 21d8668 | 本機 fixture 驗收通過；聯絡表單欄位補上 aria-label 與自動填寫屬性。 |
 | <a id="c10"></a>C10 | 3759e6e | 本機 fixture 驗收通過。 |
 | <a id="c11"></a>C11 | 3759e6e, 751ce69 | 本機 fixture 驗收通過。 |
 | <a id="c12"></a>C12 | 3759e6e, d2258b4 | 本機 fixture 驗收通過。 |

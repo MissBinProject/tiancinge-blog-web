@@ -74,6 +74,7 @@
 - `main#main-content` 具備與固定 Header 對應的桌機／手機 `scroll-margin-top`，錨點定位時不會被導覽列遮住。
 - 各頁主要內容標記使用 `tabIndex={-1}`，跳轉後焦點會落在 `main`，鍵盤使用者可直接繼續閱讀。
 - 後台正式資料初次載入期間會以 `aria-busy` 與載入遮罩取代內容編輯區，避免滑鼠或鍵盤在遠端資料尚未完成同步前用 fixture／舊快照覆寫正式資料。
+- 聯絡表單欄位補上可讀 `aria-label` 與姓名／電話／Email 自動填寫提示；最新消息輪播控制以 `role="group"` 與中文標籤標示，方便輔助技術辨識控制範圍。
 
 ## 待正式資料／營運設定
 
@@ -94,6 +95,7 @@
 - `pnpm preflight:production`：檢查流程正常，因正式 Supabase、Vercel 網址與伺服器 key 尚未提供而依預期回報 7 個缺少欄位；未輸出任何 secret 值。
 - `pnpm db:verify`：暫存 PostgreSQL migration／seed、匿名／管理員 RLS、Storage 限制、素材引用保護、正文 schema、LINE URL 及留言 guard（含過期 digest 清理）通過。
 - `pnpm db:backup:verify`：暫存 PostgreSQL custom-format 備份、checksum、資料異動後回復及 5 項服務／7 篇已發布文章筆數驗證通過。
+- 針對聯絡表單自動填寫屬性與消息輪播控制語意執行 `pnpm test:e2e --grep public --workers=1`：公開流程 10／10 通過。
 - 本機 smoke test：首頁、服務、消息、部落格、分類、搜尋、政策、sitemap、robots、404 及留言 API 均已檢查；後台登入、服務、文章、分類、素材、留言及設定畫面可操作。
 - 1672px 主視覺／服務區段邊界及服務卡左右基準、價格區左側留白與卡片基準線均依原稿校正，並補回主視覺／聯繫區裝飾文案；重新產生五張 `visual-baseline/current-01..05.png`、overlay 及 difference；原始字型與照片差異仍保留在差異紀錄。
 - 價格區依 `首頁_02.png` 補回左側直排、右上與右下手寫及底部英文裝飾文案；1672px 區段高度與特色列內距同步對齊原稿。
