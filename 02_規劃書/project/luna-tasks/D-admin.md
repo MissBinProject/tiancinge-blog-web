@@ -118,7 +118,7 @@
 - 步驟：block add/reorder → validate → preview JSON → save。
 - 驗收：正文可重現，惡意 HTML 不渲染；交接：附 JSON fixture。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。正文圖片選擇器使用同一份已同步素材清單，發布前必須有至少一個正文區塊。本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d12)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。正文圖片選擇器使用同一份已同步素材清單，發布前必須有至少一個正文區塊；空正文勾選發布時會保留草稿狀態並顯示原因。本機 fixture 驗收通過。提交索引見 [commit-map.md](./commit-map.md#d12)。
 
 ## D13 文章預覽與發布
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -128,7 +128,7 @@
 - 步驟：save draft → preview → publish → unpublish → verify public。
 - 驗收：草稿網址/搜尋/sitemap 均不可見；交接：附流程紀錄。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。缺少正文的文章只能保存為草稿，端到端發布流程先建立正文區塊。本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d13)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。缺少正文的文章只能保存為草稿，勾選發布會即時顯示原因，端到端發布流程再建立正文區塊。本機 fixture 驗收通過。提交索引見 [commit-map.md](./commit-map.md#d13)。
 
 ## D14 留言管理列表
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。

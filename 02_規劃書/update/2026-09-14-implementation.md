@@ -184,3 +184,8 @@ pnpm test:e2e --workers=1
 
 - 修正文章發布邊界：正文為空時只能保存草稿，後台表單、repository 與 Supabase constraint 都會拒絕發布；端到端測試改為先建立正文區塊再發布。
 - 提交 `5154dbf`；驗證：`pnpm run typecheck`、`pnpm --filter @tian-xin-ge/admin build`、`pnpm test`（13／13）、`pnpm db:verify`、`pnpm test:e2e --grep "後台可建立草稿文章並發布|後台可登入" --workers=1 --reporter=line`（2／2 通過）。
+
+## 空正文發布互動驗收
+
+- 後台文章編輯器在勾選「已發布」時即時檢查正文，空正文會維持草稿並顯示可讀錯誤；端到端案例覆蓋拒絕後補上段落再發布的完整流程。
+- 提交 `2f61eaf`；驗證：`pnpm run typecheck`、`pnpm run build`、`pnpm test`（13／13）、`pnpm test:e2e --workers=1 --reporter=line`（23／23）、`pnpm db:verify`、`pnpm db:backup:verify`、`pnpm tasks:verify`、`git diff --check` 均通過。
