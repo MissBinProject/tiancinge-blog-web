@@ -66,6 +66,20 @@ test('後台文章狀態篩選與手機版不溢出', async ({ page }) => {
   expect(hasHorizontalOverflow).toBe(false);
 });
 
+test('後台主要模組在手機版沒有水平溢出', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('http://localhost:5173/');
+  await page.getByLabel('管理員帳號').fill('admin@example.com');
+  await page.getByLabel('密碼').fill('local-development-password');
+  await page.getByRole('button', { name: '登入後台' }).click();
+  await expect(page.getByRole('heading', { name: '總覽' })).toBeVisible();
+
+  for (const route of ['/', '/services', '/articles', '/media', '/messages', '/settings']) {
+    await page.goto(`http://localhost:5173${route}`);
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1), { timeout: 5000 }).toBe(false);
+  }
+});
+
 test('後台離開編輯頁前會提醒尚未儲存變更', async ({ page }) => {
   await page.goto('http://localhost:5173/articles');
   await page.getByLabel('管理員帳號').fill('admin@example.com');
