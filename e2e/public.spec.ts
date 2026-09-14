@@ -105,7 +105,10 @@ test('公開文章與服務路由及 404 狀態正確', async ({ page }) => {
   await expect(page.locator('.inner-card img').first()).toHaveAttribute('alt', /圖片暫缺/);
   await page.goto('/services/full-body');
   await expect(page.locator('.detail-description')).toHaveCSS('white-space', 'pre-line');
-  await expect((await page.goto('/news/missing'))?.status()).toBe(404);
+  const notFoundResponse = await page.goto('/news/missing');
+  expect(notFoundResponse?.status()).toBe(404);
+  await expect(page.getByRole('banner')).toBeVisible();
+  await expect(page.getByRole('contentinfo')).toBeVisible();
   await expect((await page.goto('/blog/healing-power-of-oils'))?.status()).toBe(200);
 });
 
