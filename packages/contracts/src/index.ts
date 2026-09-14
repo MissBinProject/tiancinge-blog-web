@@ -24,6 +24,11 @@ export function isValidArticleBody(value: unknown): value is ArticleBodyBlock[] 
   });
 }
 
+/** A published article must have at least one validated body block. */
+export function isPublishableArticleBody(value: unknown): value is ArticleBodyBlock[] {
+  return isValidArticleBody(value) && value.length > 0;
+}
+
 export function isValidBenefits(value: unknown): value is SiteBenefit[] {
   return Array.isArray(value) && value.length <= 4 && value.every((item: unknown) => {
     if (!item || typeof item !== 'object') return false;

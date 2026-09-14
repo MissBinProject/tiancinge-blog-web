@@ -260,6 +260,9 @@ do $$ begin
   if not exists (select 1 from pg_constraint where conname = 'articles_body_schema') then
     alter table articles add constraint articles_body_schema check (public.is_valid_article_body(body));
   end if;
+  if not exists (select 1 from pg_constraint where conname = 'articles_published_body_nonempty') then
+    alter table articles add constraint articles_published_body_nonempty check (status <> 'published' or jsonb_array_length(body) > 0);
+  end if;
   if not exists (select 1 from pg_constraint where conname = 'site_settings_benefits_schema') then
     alter table site_settings add constraint site_settings_benefits_schema check (public.is_valid_benefits(benefits));
   end if;

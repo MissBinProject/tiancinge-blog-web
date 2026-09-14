@@ -1,4 +1,4 @@
-import { fixtureArticles, fixtureServices, fixtureSettings, isSafeContentUrl, isValidArticleBody, isValidBenefits, type Service } from '@tian-xin-ge/contracts';
+import { fixtureArticles, fixtureServices, fixtureSettings, isSafeContentUrl, isPublishableArticleBody, isValidArticleBody, isValidBenefits, type Service } from '@tian-xin-ge/contracts';
 import { adminSupabase } from './supabase';
 
 const serviceIcons: Service['icon'][] = ['lotus', 'oil', 'stone', 'foot', 'flower'];
@@ -239,6 +239,7 @@ export async function saveArticle(article: ManagedArticle) {
   let body: unknown;
   try { body = JSON.parse(article.body || '[]'); } catch { return { ok: false, mode: 'local' as const, error: '正文必須是合法 JSON 陣列' }; }
   if (!isValidArticleBody(body)) return { ok: false, mode: 'local' as const, error: '正文只能使用合法的結構化區塊' };
+  if (article.status === 'published' && !isPublishableArticleBody(body)) return { ok: false, mode: 'local' as const, error: '文章必須先提供正文內容才能發布' };
   const coverValue = article.coverUrl?.trim() || '';
   if (coverValue && !isSafeContentUrl(coverValue, true)) return { ok: false, mode: 'local' as const, error: '封面圖片網址必須是 https:// 或網站內部路徑' };
   if (!adminSupabase) return { ok: true, mode: 'local' as const };

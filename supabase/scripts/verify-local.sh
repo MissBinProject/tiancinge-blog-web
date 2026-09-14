@@ -214,6 +214,12 @@ begin
   exception when raise_exception then null;
   end;
   begin
+    insert into public.articles (slug, type, category_id, title, status, body)
+      values ('published-without-body', 'news', (select id from public.article_categories where name = '活動訊息'), '沒有正文卻發布', 'published', '[]'::jsonb);
+    raise exception 'published empty article body constraint was not enforced';
+  exception when check_violation then null;
+  end;
+  begin
     insert into public.articles (slug, type, title, body)
       values ('too-many-list-items', 'blog', '清單上限測試', jsonb_build_array(jsonb_build_object('type', 'list', 'text', 'many', 'items', (select jsonb_agg(to_jsonb(value::text)) from generate_series(1, 101) as values(value)))));
     raise exception 'article list item limit was not enforced';
