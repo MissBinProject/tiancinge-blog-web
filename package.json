@@ -19,7 +19,8 @@
     "assets:export": "./scripts/export-crops.sh",
     "tasks:verify": "node scripts/verify-task-cards.mjs",
     "db:verify": "./supabase/scripts/verify-local.sh",
-    "preflight:production": "node scripts/check-production-env.mjs"
+    "preflight:production": "node scripts/check-production-env.mjs",
+    "db:backup:verify": "./supabase/scripts/verify-backup-restore.sh"
   },
   "packageManager": "pnpm@11.19.0",
   "devDependencies": {

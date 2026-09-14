@@ -15,7 +15,7 @@
 | E06–E07 | 基準截圖與 overlay 已產生，差異修正待店家確認 | `02_規劃書/project/visual-diff-log.md`、五張 current／overlay／difference PNG；原始照片／字型不足時不可宣稱像素完全一致 |
 | E08–E09 | 本機測試完成，正式權限待驗證 | Vitest 12、Playwright 16；需用匿名／唯一管理員帳號重跑 RLS、Storage 與完整營運流程 |
 | E10 | 待正式部署 | 正式輸入欄位見 `../production-input-form.md`；需正式網域、Vercel、Supabase、Auth 管理員與店家聯絡資料 |
-| E11 | 工具與手冊完成，演練待正式環境 | `supabase/scripts/backup.sh`、`restore.sh`、`supabase/backup-restore.md`；需指定資料庫後執行 backup／restore drill |
+| E11 | 本機演練完成，正式環境待驗證 | `supabase/scripts/backup.sh`、`restore.sh`、`verify-backup-restore.sh`、`supabase/backup-restore.md`；`pnpm db:backup:verify` 已驗證備份／checksum／回復，正式專案仍需依交接清單重跑 |
 
 ## 交接紀錄格式
 

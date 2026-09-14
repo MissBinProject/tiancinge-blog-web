@@ -14,6 +14,8 @@ pnpm run dev:admin     # http://localhost:5173
 
 資料庫備份與回復腳本位於 `supabase/scripts/`，完整流程與 Storage 備份注意事項請參考 [`supabase/backup-restore.md`](supabase/backup-restore.md)。
 
+可在本機執行 `pnpm db:backup:verify`，建立暫存資料庫並演練 custom-format 備份、checksum 驗證、資料異動與回復；正式 Supabase 仍需依交接清單另行演練。
+
 正式資料、帳號、網域與店家內容請依 [`production-input-form.md`](02_規劃書/project/production-input-form.md) 填寫，再執行上線清單。
 
 部署前可執行 `pnpm preflight:production`，檢查七個官網／後台環境變數是否存在、網址格式是否正確；檢查不會輸出任何 key 值。

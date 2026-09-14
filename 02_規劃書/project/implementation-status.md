@@ -61,6 +61,7 @@
 - `supabase/scripts/backup.sh`、`restore.sh` 與 `supabase/backup-restore.md` 提供資料庫備份、校驗、明確確認後還原及交接驗證步驟。
 - migration／seed 已在暫存 PostgreSQL（建立最小 `auth`／`storage` stub）實際執行，確認可建立 5 項服務、8 篇文章與 1 筆網站設定；另驗證文章正文圖片引用會被 `is_media_path_in_use()` 保護。這是 SQL 語法／constraint 檢查，正式 Supabase RLS／Storage 仍待專案驗證。
 - 新增 `pnpm db:verify`／`supabase/scripts/verify-local.sh`，可重複建立暫存 PostgreSQL 並驗證匿名／唯一管理員 RLS、隱藏服務與草稿不可見、Storage MIME 限制、文章正文圖片引用保護及價格 constraint；正式 Supabase 仍需以實際專案重跑。
+- 新增 `supabase/scripts/verify-backup-restore.sh` 與 `pnpm db:backup:verify`，已完成本機 custom-format 備份／checksum／異動／回復演練（5 項服務、7 篇已發布文章恢復）；正式 Supabase 仍待上線前演練。
 
 ## 待正式資料／營運設定
 

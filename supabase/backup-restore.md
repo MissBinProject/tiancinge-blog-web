@@ -16,6 +16,8 @@ SUPABASE_DB_URL='postgresql://...' ./supabase/scripts/backup.sh backups
 
 腳本會產生 custom-format `.dump` 與 `.sha256` 檔案。建議至少保留每日一份、異地保存最近 30 份，並在每次 migration 或正式資料大量變更前額外備份。
 
+本機可用 `pnpm db:backup:verify` 執行不連線正式環境的演練。腳本會建立暫存 PostgreSQL、套用 migration／seed、產生 `.dump` 與 checksum、清除服務／文章後回復，最後驗證 5 筆服務及 7 篇已發布文章仍存在。
+
 ## 素材備份
 
 在 Supabase Dashboard 的 Storage 頁面匯出 `site-media` 物件，或使用已驗證的 Storage CLI／管理 API 下載物件；同時保存 `media_assets` 的資料庫備份。回復後確認 `storage_path` 與內容管理頁的圖片網址一致。
