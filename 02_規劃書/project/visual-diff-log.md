@@ -42,3 +42,5 @@
 最新基線另記錄導覽預約行事曆圖示及 LINE／Instagram／Facebook 品牌色；這些是介面近似修正，仍受原始品牌 icon 素材缺件限制。
 
 社群入口目前使用可縮放的內嵌 SVG，確保 LINE／Instagram／Facebook 在桌機與手機不依賴系統字型；正式品牌 icon 到位後仍可替換。
+
+聯繫區 QR／社群面板也改用同一套 SVG 圖示，並重新產生 `current-05.png`、`overlay-05.png` 及 `difference-05.png`。
