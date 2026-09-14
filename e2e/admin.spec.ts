@@ -28,6 +28,19 @@ test('後台登入失敗輔助流程與登出會回到登入畫面', async ({ pa
   await expect(page.getByRole('heading', { name: '內容管理後台' })).toBeVisible();
 });
 
+test('後台收合側欄仍保留按鈕名稱與目前頁面語意', async ({ page }) => {
+  await page.goto('http://localhost:5173/');
+  await page.getByLabel('管理員帳號').fill('admin@example.com');
+  await page.getByLabel('密碼').fill('local-development-password');
+  await page.getByRole('button', { name: '登入後台' }).click();
+  const toggle = page.getByRole('button', { name: '收合選單' });
+  await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.getByRole('button', { name: '總覽' })).toHaveAttribute('aria-current', 'page');
+  await toggle.click();
+  await expect(page.getByRole('button', { name: '展開選單' })).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.getByRole('button', { name: '總覽' })).toHaveAttribute('aria-current', 'page');
+});
+
 test('文章正文圖片 block 可從共用素材選擇器帶入圖片', async ({ page }) => {
   await page.goto('http://localhost:5173/articles');
   await page.getByLabel('管理員帳號').fill('admin@example.com');
