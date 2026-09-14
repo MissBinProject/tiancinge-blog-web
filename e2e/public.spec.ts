@@ -48,6 +48,18 @@ test('最新消息手動輪播不會切到空白頁', async ({ page }) => {
   await expect(news.locator('.article-card')).toHaveCount(3);
 });
 
+test('首頁部落格分類入口跟隨已發布文章分類', async ({ page }) => {
+  await page.goto('/');
+  const blog = page.locator('#blog');
+  const cardCategories = await blog.locator('.article-card .article-image span').allTextContents();
+  const expected = [...new Set(cardCategories.map((value) => value.trim()).filter(Boolean))];
+  const categoryLinks = blog.locator('.category-row a');
+  await expect(categoryLinks).toHaveCount(expected.length);
+  for (const category of expected) {
+    await expect(categoryLinks.filter({ hasText: category })).toHaveAttribute('href', `/blog?category=${encodeURIComponent(category)}`);
+  }
+});
+
 test('價格卡的預約入口都使用官方 LINE', async ({ page }) => {
   await page.goto('/');
   const bookingLinks = page.locator('#pricing .price-card a.btn');

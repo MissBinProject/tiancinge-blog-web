@@ -32,6 +32,8 @@ export function NewsSection({ items = getPublished('news'), siteSettings = setti
 }
 
 export function BlogSection({ items = getPublished('blog').slice(0, 4), siteSettings = settings }: { items?: Article[]; siteSettings?: SiteSettings }) {
+  const categories = Array.from(new Set(items.map((article) => article.category.trim()).filter(Boolean))).slice(0, 5);
+  const glyphs = ['◉', '⌁', '♡', '☕', '▢'];
   return <section id="blog" className="articles blog section">
     <div className="article-backdrop blog-bg" style={siteSettings.blogBackgroundUrl ? { backgroundImage: `url(${siteSettings.blogBackgroundUrl})` } : undefined} />
     <p className="article-decor article-side-copy blog-side-copy" aria-hidden="true">生活的美好<br/>來自於<br/>對自己的溫柔<br/>每一天<br/>都是新的開始<br/><span>—<br/>A<br/>HEALTHIER<br/>HAPPIER<br/>YOU</span></p>
@@ -42,7 +44,7 @@ export function BlogSection({ items = getPublished('blog').slice(0, 4), siteSett
       <div className="section-title"><span className="eyebrow">OUR BLOG</span><h2>{siteSettings.blogTitle}</h2><p>{siteSettings.blogSubtitle}</p></div>
       <a className="article-more blog-more" href="/blog">查看更多文章 <ArrowRight size={16} /></a>
       <div className="article-grid blog-grid">{items.map((article) => <ArticleCard key={article.id} article={article} />)}{items.length === 0 && <p className="empty">目前沒有部落格文章。</p>}</div>
-      <div className="category-row"><a href="/blog?category=養生知識">◉　養生知識</a><a href="/blog?category=生活美學">⌁　生活美學</a><a href="/blog?category=心靈成長">♡　心靈成長</a><a href="/blog?category=健康飲食">☕　健康飲食</a><a href="/blog?category=館內日常">▢　館內日常</a></div>
+      {categories.length > 0 && <div className="category-row">{categories.map((category, index) => <a href={`/blog?category=${encodeURIComponent(category)}`} key={category}>{glyphs[index]}　{category}</a>)}</div>}
     </div>
   </section>;
 }
