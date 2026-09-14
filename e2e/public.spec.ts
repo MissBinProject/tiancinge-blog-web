@@ -6,7 +6,9 @@ test('首頁桌機與手機版可操作且沒有水平溢出', async ({ page }, 
   const skipLink = page.getByRole('link', { name: '跳到主要內容' });
   await skipLink.focus();
   await expect(skipLink).toHaveCSS('left', '16px');
-  await expect(page.locator('#main-content')).toBeVisible();
+  await expect(skipLink).toHaveAttribute('href', '#main-content');
+  await expect(page.locator('main#main-content')).toHaveCount(1);
+  await expect(page.locator('main#main-content')).toBeVisible();
   await expect(page.locator('.hero-mark')).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath('home-desktop.png'), fullPage: true });
 
