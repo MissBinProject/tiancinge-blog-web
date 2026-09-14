@@ -106,3 +106,4 @@ pnpm test:e2e --workers=1
 - 首頁部落格卡片維持四張設計版型，分類入口則取全部已發布文章，避免第五篇文章的分類遺失。
 - 正式 Supabase 的文章／分類 adapter 改為拒絕跨類型同名分類，避免保存文章時改寫既有分類類型。
 - 留言限流與防重送 guard 表新增兩天保留期清理，並通過本機 migration／備份回復演練。
+- `supabase/scripts/verify-local.sh` 新增過期 guard 清理探針，先由 owner 建立測試資料，再以 app role 驗證交易函式可清理且不放寬 RLS。
