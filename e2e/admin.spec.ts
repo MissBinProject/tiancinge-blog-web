@@ -134,6 +134,10 @@ test('後台可建立草稿文章並發布', async ({ page }) => {
   await editor.getByRole('button', { name: '儲存' }).click();
   await expect(editor.getByText('文章已儲存')).toBeVisible();
   await expect(editor.getByRole('button', { name: /春日放鬆指南/ })).toContainText('已發布');
+  await editor.getByLabel('已發布').uncheck();
+  await editor.getByRole('button', { name: '儲存' }).click();
+  await expect(editor.getByText('文章已儲存')).toBeVisible();
+  await expect(editor.getByRole('button', { name: /春日放鬆指南/ })).toContainText('草稿');
 });
 
 test('後台刪除文章後會從編輯列表移除', async ({ page }) => {
