@@ -9,10 +9,11 @@
 - Firebase Web App：`1:214942104752:web:81a5fcbda817bf70c48f75`。
 - Email/Password Authentication 已啟用。
 - Fixture 已匯入 Firestore：5 services、8 articles、23 media metadata、2 messages；服務與文章代碼已轉為 10 位亂碼。
-- Cloud Run `tiancinge-web` 已部署 revision `tiancinge-web-00002-vnm`，Firebase Hosting rewrite 已發布。
+- Cloud Run `tiancinge-web` 已部署 revision `tiancinge-web-00005-mhs`，Firebase Hosting rewrite 已發布。
 - 後台 Vite build 已發布至 Firebase Hosting `tiancinge-admin`。
 - 公開 smoke test：首頁、服務、最新消息、部落格與直接 Cloud Run URL 均 HTTP 200；`POST /api/contact` 空資料 HTTP 400。
 - 管理員 `ouyangtaisen@gmail.com` 已建立 Authentication user 與 `admins/{uid}` allowlist；首次使用請按「忘記密碼」。
+- 程式提交：`9f61c45`（feat: deploy dynamic firebase website and admin）。
 
 ## 待完成
 
