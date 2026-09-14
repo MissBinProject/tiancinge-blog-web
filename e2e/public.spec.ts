@@ -9,10 +9,12 @@ test('首頁桌機與手機版可操作且沒有水平溢出', async ({ page }, 
   await expect(skipLink).toHaveAttribute('href', '#main-content');
   await expect(page.locator('main#main-content')).toHaveCount(1);
   await expect(page.locator('main#main-content')).toBeVisible();
+  await expect(page.locator('main#main-content')).toHaveCSS('scroll-margin-top', '76px');
   await expect(page.locator('.hero-mark')).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath('home-desktop.png'), fullPage: true });
 
   await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator('main#main-content')).toHaveCSS('scroll-margin-top', '66px');
   await page.getByRole('button', { name: '開啟選單' }).click();
   const header = page.getByRole('banner');
   await expect(page.getByRole('button', { name: '關閉選單' })).toHaveAttribute('aria-expanded', 'true');
