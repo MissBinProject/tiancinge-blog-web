@@ -299,6 +299,28 @@ $$;
 drop trigger if exists only_one_site_settings on public.site_settings;
 create trigger only_one_site_settings before insert or update on public.site_settings for each row execute function public.enforce_single_site_settings();
 
+-- Keep the editorial boundary enforced even when an administrator writes via
+-- SQL or another client instead of using the category selector in the UI.
+create or replace function public.enforce_article_category_type() returns trigger
+language plpgsql security definer set search_path = public
+as $$
+declare
+  category_type text;
+begin
+  if new.category_id is null then return new; end if;
+  select type into category_type from public.article_categories where id = new.category_id;
+  if category_type is null then
+    raise exception 'article category does not exist';
+  end if;
+  if category_type <> new.type then
+    raise exception 'article type must match category type';
+  end if;
+  return new;
+end;
+$$;
+drop trigger if exists articles_category_type on public.articles;
+create trigger articles_category_type before insert or update of category_id, type on public.articles for each row execute function public.enforce_article_category_type();
+
 alter table site_settings enable row level security; alter table services enable row level security; alter table article_categories enable row level security; alter table articles enable row level security; alter table media_assets enable row level security; alter table contact_messages enable row level security; alter table admin_users enable row level security;
 alter table storage.objects enable row level security;
 drop policy if exists "public read visible services" on services;

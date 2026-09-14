@@ -208,6 +208,12 @@ begin
   exception when check_violation then null;
   end;
   begin
+    insert into public.articles (slug, type, category_id, title, body)
+      values ('mismatched-category-type', 'blog', (select id from public.article_categories where name = '活動訊息'), '分類類型不一致', '[]'::jsonb);
+    raise exception 'article/category type guard was not enforced';
+  exception when raise_exception then null;
+  end;
+  begin
     insert into public.articles (slug, type, title, body)
       values ('too-many-list-items', 'blog', '清單上限測試', jsonb_build_array(jsonb_build_object('type', 'list', 'text', 'many', 'items', (select jsonb_agg(to_jsonb(value::text)) from generate_series(1, 101) as values(value)))));
     raise exception 'article list item limit was not enforced';
