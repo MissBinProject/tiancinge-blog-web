@@ -100,3 +100,4 @@ pnpm test:e2e --workers=1
 - 新增 `02_規劃書/project/luna-tasks/commit-map.md`，逐卡列出相關提交 SHA，並明確標示群組提交與正式環境待辦。
 - `scripts/verify-task-cards.mjs` 現在會拒絕仍保留未填寫交接範本的卡片。
 - 驗證：`pnpm tasks:verify`、`git diff --check` 通過。
+- 後台文章新增刪除操作，Supabase 與 local fixture adapter 均支援；Playwright 回歸流程增至 20 條。

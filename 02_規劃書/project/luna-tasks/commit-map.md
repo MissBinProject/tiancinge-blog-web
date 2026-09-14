@@ -50,7 +50,7 @@
 | <a id="d07"></a>D07 | 3759e6e, b0a0a40 | 本機 fixture 驗收通過。 |
 | <a id="d08"></a>D08 | 3759e6e | 本機 fixture 驗收通過。 |
 | <a id="d09"></a>D09 | 3759e6e, e255377 | 本機 fixture 驗收通過。 |
-| <a id="d10"></a>D10 | 3759e6e, b0a0a40 | 本機 fixture 驗收通過。 |
+| <a id="d10"></a>D10 | 3759e6e, b0a0a40, 6df61dc | 本機 fixture 驗收通過。 |
 | <a id="d11"></a>D11 | 3759e6e | 本機 fixture 驗收通過。 |
 | <a id="d12"></a>D12 | 3759e6e | 本機 fixture 驗收通過。 |
 | <a id="d13"></a>D13 | 3759e6e, b0a0a40 | 本機 fixture 驗收通過。 |
@@ -75,6 +75,6 @@
 - `pnpm tasks:verify`：確認 63 張卡均有必要欄位。
 - `pnpm typecheck`、`pnpm build`：官網與後台型別及建置。
 - `pnpm test`：Vitest 13 個測試。
-- `pnpm test:e2e --workers=1`：Playwright 19 個公開／後台流程。
+- `pnpm test:e2e --workers=1`：Playwright 20 個公開／後台流程。
 - `pnpm db:verify`：暫存 PostgreSQL migration、RLS、Storage 與引用保護。
 - `pnpm db:backup:verify`：本機備份、checksum、異動與回復演練。
