@@ -1,4 +1,4 @@
-import { isSafeContentUrl, isValidArticleBody, isValidBenefits, type Service } from '@tian-xin-ge/contracts';
+import { fixtureArticles, fixtureServices, fixtureSettings, isSafeContentUrl, isValidArticleBody, isValidBenefits, type Service } from '@tian-xin-ge/contracts';
 import { adminSupabase } from './supabase';
 
 const serviceIcons: Service['icon'][] = ['lotus', 'oil', 'stone', 'foot', 'flower'];
@@ -67,20 +67,32 @@ function localStorageJson<T>(key: string): T | null {
 }
 
 function localMediaIsInUse(url: string): boolean {
-  const services = localStorageJson<Array<{ imageUrl?: unknown }>>('txg-services') || [];
+  // Before the first persistence effect runs there may be no localStorage
+  // snapshot yet. In that case use the same fixture references shown in the
+  // editor so a just-opened media screen cannot delete an in-use asset.
+  const services = localStorageJson<Array<{ imageUrl?: unknown }>>('txg-services') ?? fixtureServices;
   if (services.some((service) => service.imageUrl === url)) return true;
-  const articles = localStorageJson<Array<{ coverUrl?: unknown; body?: unknown }>>('txg-articles') || [];
+  const articles = localStorageJson<Array<{ coverUrl?: unknown; body?: unknown }>>('txg-articles') ?? fixtureArticles;
   for (const article of articles) {
     if (article.coverUrl === url) return true;
-    if (typeof article.body !== 'string') continue;
+    const bodyValue = typeof article.body === 'string' ? article.body : JSON.stringify(article.body ?? []);
     try {
-      const blocks = JSON.parse(article.body) as unknown;
+      const blocks = JSON.parse(bodyValue) as unknown;
       if (Array.isArray(blocks) && blocks.some((block) => Boolean(block && typeof block === 'object' && (block as Record<string, unknown>).type === 'image' && (block as Record<string, unknown>).url === url))) return true;
     } catch {
       // Invalid local drafts are handled by the editor validator and are not references.
     }
   }
-  const settings = localStorageJson<Record<string, unknown>>('txg-settings') || {};
+  const settings = localStorageJson<Record<string, unknown>>('txg-settings') ?? {
+    logoUrl: fixtureSettings.logoUrl,
+    heroBackgroundUrl: fixtureSettings.heroBackgroundUrl,
+    servicesBackgroundUrl: fixtureSettings.servicesBackgroundUrl,
+    pricingBackgroundUrl: fixtureSettings.pricingBackgroundUrl,
+    newsBackgroundUrl: fixtureSettings.newsBackgroundUrl,
+    blogBackgroundUrl: fixtureSettings.blogBackgroundUrl,
+    contactBackgroundUrl: fixtureSettings.contactBackgroundUrl,
+    ogImageUrl: fixtureSettings.ogImageUrl,
+  };
   return ['logoUrl', 'heroBackgroundUrl', 'servicesBackgroundUrl', 'pricingBackgroundUrl', 'newsBackgroundUrl', 'blogBackgroundUrl', 'contactBackgroundUrl', 'ogImageUrl'].some((key) => settings[key] === url);
 }
 
