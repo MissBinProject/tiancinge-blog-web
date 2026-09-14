@@ -8,7 +8,7 @@
 - 步驟：建立 scripts → 設定 path alias → 加入 build/typecheck。
 - 驗收：兩個 dev server、兩個 build 及型別檢查通過；交接：附命令與版本。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm typecheck && pnpm build && pnpm db:verify；資料證據見 `supabase/` 與 `packages/contracts/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#b01)。
 
 ## B02 建立共用契約與 fixture adapter
 - 參考圖：無新增視覺稿；依 A07 固定資料契約、`packages/contracts/` 與 `supabase/` 實作。
@@ -18,7 +18,7 @@
 - 步驟：匯出型別 → 建立 fixture → 實作 adapter → 加入測試。
 - 驗收：無環境變數時官網與後台正常；交接：附 adapter API。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm typecheck && pnpm build && pnpm db:verify；資料證據見 `supabase/` 與 `packages/contracts/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#b02)。
 
 ## B03 建立網站設定與服務 migration
 - 參考圖：無新增視覺稿；依 A07 固定資料契約、`packages/contracts/` 與 `supabase/` 實作。
@@ -28,7 +28,7 @@
 - 步驟：寫 migration → 加 RLS → 加測試 seed → 以空資料庫執行。
 - 驗收：migration 可重跑，首頁服務及價格共用資料；交接：附 SQL 輸出。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm typecheck && pnpm build && pnpm db:verify；資料證據見 `supabase/` 與 `packages/contracts/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#b03)。
 
 ## B04 建立文章、分類與素材 migration
 - 參考圖：無新增視覺稿；依 A07 固定資料契約、`packages/contracts/` 與 `supabase/` 實作。
@@ -38,7 +38,7 @@
 - 步驟：建表 → 加類型與狀態 check → 建索引 → 加 seed 分類。
 - 驗收：無效類型、重複 slug、刪除使用中分類均被拒絕；交接：附 SQL 測試。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm typecheck && pnpm build && pnpm db:verify；資料證據見 `supabase/` 與 `packages/contracts/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#b04)。
 
 ## B05 建立留言與管理員 migration
 - 參考圖：無新增視覺稿；依 A07 固定資料契約、`packages/contracts/` 與 `supabase/` 實作。
@@ -48,7 +48,7 @@
 - 步驟：建表 → 建 `admin_users` → 建 `is_admin()` → 寫 seed/設定說明。
 - 驗收：欄位、狀態與 FK 正常；交接：附管理員建立步驟。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm typecheck && pnpm build && pnpm db:verify；資料證據見 `supabase/` 與 `packages/contracts/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#b05)。
 
 ## B06 建立公開／管理員資料權限
 - 參考圖：無新增視覺稿；依 A07 固定資料契約、`packages/contracts/` 與 `supabase/` 實作。
@@ -58,7 +58,7 @@
 - 步驟：啟用 RLS → 加 select/insert/update/delete policies → 以匿名及 admin 驗證。
 - 驗收：越權、草稿網址及留言讀取均被拒絕；交接：附測試矩陣。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm typecheck && pnpm build && pnpm db:verify；資料證據見 `supabase/` 與 `packages/contracts/`。 本機驗證通過；正式 Supabase／Storage 權限或營運演練待執行。 提交索引見 [commit-map.md](./commit-map.md#b06)。
 
 ## B07 建立 Storage 與素材 adapter
 - 參考圖：無新增視覺稿；依 A07 固定資料契約、`packages/contracts/` 與 `supabase/` 實作。
@@ -68,7 +68,7 @@
 - 步驟：建立 bucket → 寫 policies → 實作 upload/list/alt → 檢查格式及大小。
 - 驗收：非法檔案拒絕、上傳後可預覽、非 admin 不能寫；交接：附限制測試。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm typecheck && pnpm build && pnpm db:verify；資料證據見 `supabase/` 與 `packages/contracts/`。 本機驗證通過；正式 Supabase／Storage 權限或營運演練待執行。 提交索引見 [commit-map.md](./commit-map.md#b07)。
 
 ## B08 實作設定與服務 repository
 - 參考圖：無新增視覺稿；依 A07 固定資料契約、`packages/contracts/` 與 `supabase/` 實作。
@@ -78,7 +78,7 @@
 - 步驟：寫 mapper → 實作 list/get/upsert → 接 fixture fallback → 驗證空資料。
 - 驗收：排序、洽詢價格、隱藏服務規則通過；交接：附 API 與測試。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm typecheck && pnpm build && pnpm db:verify；資料證據見 `supabase/` 與 `packages/contracts/`。 程式與 fixture 驗證通過；正式資料與環境變數待接入。 提交索引見 [commit-map.md](./commit-map.md#b08)。
 
 ## B09 實作文章與分類 repository
 - 參考圖：無新增視覺稿；依 A07 固定資料契約、`packages/contracts/` 與 `supabase/` 實作。
@@ -88,7 +88,7 @@
 - 步驟：寫 mapper → 實作 list/detail/search/upsert → 驗證 JSON block。
 - 驗收：草稿不出現在公開列表、搜尋或 sitemap；交接：附查詢測試。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm typecheck && pnpm build && pnpm db:verify；資料證據見 `supabase/` 與 `packages/contracts/`。 程式與 fixture 驗證通過；正式資料與環境變數待接入。 提交索引見 [commit-map.md](./commit-map.md#b09)。
 
 ## B10 實作留言 repository
 - 參考圖：無新增視覺稿；依 A07 固定資料契約、`packages/contracts/` 與 `supabase/` 實作。
@@ -97,4 +97,4 @@
 - 固定契約：訪客只透過 POST /api/contact；後台才可讀、改 status/note。
 - 步驟：寫 mapper → list/detail/update → 接 UI fallback → 驗證空列表與錯誤。
 - 驗收：處理狀態可保存，匿名讀取拒絕；交接：附資料流及錯誤碼。
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm typecheck && pnpm build && pnpm db:verify；資料證據見 `supabase/` 與 `packages/contracts/`。 程式與 fixture 驗證通過；正式資料與環境變數待接入。 提交索引見 [commit-map.md](./commit-map.md#b10)。

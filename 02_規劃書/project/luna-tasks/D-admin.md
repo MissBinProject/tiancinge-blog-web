@@ -8,7 +8,7 @@
 - 步驟：登入表單 → session listener → logout → reset flow。
 - 驗收：錯誤、逾時及登出狀態清楚；交接：附流程截圖。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d01)。
 
 ## D02 後台框架及路由保護
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -18,7 +18,7 @@
 - 步驟：建立 layout → 選單切換 → responsive sidebar → guard。
 - 驗收：重新整理、逾時及手機寬度均正確；交接：附路由矩陣。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d02)。
 
 ## D03 素材列表及上傳
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -28,7 +28,7 @@
 - 步驟：list → file validation → upload → alt save → error state。
 - 驗收：非法檔案拒絕、成功可預覽、RLS 生效；交接：附測試。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d03)。
 
 ## D04 共用圖片選擇器
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -38,7 +38,7 @@
 - 步驟：建立選擇器 → 接 service/article → 替換預覽 → 清除選取。
 - 驗收：各表單可替換且無引用斷裂；交接：附操作截圖。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d04)。
 
 ## D05 網站基本設定
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -48,7 +48,7 @@
 - 步驟：欄位 → validation → save feedback → reload persistence。
 - 驗收：官網重新整理讀到新值；交接：附前後資料。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d05)。
 
 ## D06 首頁區塊設定
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -58,7 +58,7 @@
 - 步驟：欄位分組 → 圖片選擇 → 儲存 → 官網驗證。
 - 驗收：主視覺/聯絡區同步更新；交接：附截圖。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d06)。
 
 ## D07 服務管理列表
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -68,7 +68,7 @@
 - 步驟：列表 → 新增 draft → 排序欄位 → visible toggle。
 - 驗收：列表與官網順序一致；交接：附 CRUD 流程。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d07)。
 
 ## D08 服務編輯表單
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -78,7 +78,7 @@
 - 步驟：欄位驗證 → 儲存 → 錯誤回饋 → 官網同步。
 - 驗收：價格只改一處且三個前台位置同步；交接：附測試。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d08)。
 
 ## D09 文章分類管理
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -88,7 +88,7 @@
 - 步驟：list → add/edit → usage check → delete refusal。
 - 驗收：分類查詢及刪除保護正確；交接：附錯誤畫面。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d09)。
 
 ## D10 文章管理列表
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -98,7 +98,7 @@
 - 步驟：tabs → status filter → keyword → pagination。
 - 驗收：消息/部落格與草稿數量正確；交接：附篩選矩陣。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d10)。
 
 ## D11 文章基本資料表單
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -108,7 +108,7 @@
 - 步驟：欄位 → slug validation → category picker → save。
 - 驗收：重新整理資料不遺失；交接：附欄位驗證。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d11)。
 
 ## D12 文章正文編輯器
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -118,7 +118,7 @@
 - 步驟：block add/reorder → validate → preview JSON → save。
 - 驗收：正文可重現，惡意 HTML 不渲染；交接：附 JSON fixture。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d12)。
 
 ## D13 文章預覽與發布
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -128,7 +128,7 @@
 - 步驟：save draft → preview → publish → unpublish → verify public。
 - 驗收：草稿網址/搜尋/sitemap 均不可見；交接：附流程紀錄。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d13)。
 
 ## D14 留言管理列表
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -138,7 +138,7 @@
 - 步驟：load → filter → pagination → empty/error states。
 - 驗收：狀態數量及分頁正確；交接：附測試截圖。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d14)。
 
 ## D15 留言詳情與處理
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -148,7 +148,7 @@
 - 步驟：detail → note → mark handled → delete confirmation。
 - 驗收：官網送出的留言可在後台正確處理；交接：附流程。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d15)。
 
 ## D16 政策內容管理
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -158,7 +158,7 @@
 - 步驟：輸入 → 儲存 → 官網 reload → policy link check。
 - 驗收：兩頁顯示最新內容；交接：附前後截圖。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d16)。
 
 ## D17 後台操作整理
 - 參考圖：無原始後台設計稿；依 `02_規劃書/project/ui-templates.md` 與既有官網設計變數建立樣板。
@@ -167,4 +167,4 @@
 - 固定契約：所有儲存按鈕、錯誤、空狀態與 loading 文案一致。
 - 步驟：盤點流程 → 抽 feedback component → dirty guard → 全頁驗證。
 - 驗收：各模組可理解且無靜默失敗；交接：附 UX checklist。
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；後台操作證據見 `e2e/admin.spec.ts` 與 `apps/admin/src/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#d17)。

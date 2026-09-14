@@ -10,7 +10,7 @@
 - 步驟：還原間距 → 對齊 Logo/按鈕 → 加 hover/focus → 截圖比對。
 - 驗收：1440/1672 px 構圖、顏色與位置符合原稿；交接：附截圖及差異。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c01)。
 
 ## C02 導覽互動與手機選單
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
@@ -20,7 +20,7 @@
 - 步驟：IntersectionObserver → 手機 menu → focus/escape 測試 → 檢查溢出。
 - 驗收：390/768 px 可觸控、無水平滾動；交接：附操作錄影或截圖。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c02)。
 
 ## C03 首頁主視覺
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
@@ -30,7 +30,7 @@
 - 步驟：套背景裁切 → 對齊文字 → 加 responsive 版 → 疊圖。
 - 驗收：五張圖上半頁與 1440 px 截圖差異可記錄；交接：附 before/after。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c03)。
 
 ## C04 首頁服務區
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
@@ -40,7 +40,7 @@
 - 步驟：套裁切圖 → 還原五欄 → 加 hover/手機欄數 → 空資料狀態。
 - 驗收：五卡構圖、圖片裁切及連結正確；交接：附卡片截圖。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c04)。
 
 ## C05 首頁價格區
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
@@ -50,7 +50,7 @@
 - 步驟：套同一服務資料 → 顯示 NT$ 或洽詢 → 加 LINE/聯絡按鈕。
 - 驗收：服務改價後此區同步；交接：附資料來源與截圖。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c05)。
 
 ## C06 首頁消息區
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
@@ -60,7 +60,7 @@
 - 步驟：顯示前三筆 → 加手動切換 → 空清單隱藏多餘控制。
 - 驗收：三卡、分類、日期及控制符合原稿；交接：附互動驗收。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c06)。
 
 ## C07 首頁部落格區
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
@@ -70,7 +70,7 @@
 - 步驟：載入四筆 → 建分類列 → 驗證卡片連結與空狀態。
 - 驗收：四欄桌機及手機重排符合規格；交接：附分類連結清單。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c07)。
 
 ## C08 聯絡資訊與地圖區
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
@@ -80,7 +80,7 @@
 - 步驟：接 settings → 產生 QR → 檢查電話/LINE href → 地圖載入。
 - 驗收：連結可用、QR 可掃描、示意資料有註記；交接：附檢查結果。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c08)。
 
 ## C09 聯絡表單畫面
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
@@ -90,7 +90,7 @@
 - 步驟：加入欄位驗證 → 顯示提交狀態 → 顯示錯誤 → 驗證重送。
 - 驗收：必填、成功、429、503 畫面明確；交接：附流程截圖。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c09)。
 
 ## C10 頁尾
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
@@ -100,7 +100,7 @@
 - 步驟：還原桌機排版 → 手機換行 → 驗證所有 href。
 - 驗收：無死鏈、品牌與版權完整；交接：附 link check。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c10)。
 
 ## C11 服務列表與詳情
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
@@ -110,7 +110,7 @@
 - 步驟：建列表 → 建詳情 → 接預約 → 測試隱藏/缺 slug。
 - 驗收：首頁、列表、詳情資料一致；交接：附 URL 流程。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c11)。
 
 ## C12 文章列表樣板
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
@@ -120,7 +120,7 @@
 - 步驟：抽共用卡 → 加分類 filter → 加分頁 → 空狀態。
 - 驗收：兩種 type 均可操作，草稿不出現；交接：附 query 測試。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c12)。
 
 ## C13 文章詳情樣板
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
@@ -130,7 +130,7 @@
 - 步驟：渲染各 block → 加封面/日期/分類 → 測試 draft/404。
 - 驗收：正文結構正確且草稿不可讀；交接：附安全測試。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c13)。
 
 ## C14 搜尋頁
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
@@ -140,7 +140,7 @@
 - 步驟：正規化關鍵字 → 合併結果 → 無結果 → 連結驗證。
 - 驗收：服務/消息/部落格均可找到，草稿不可找到；交接：附搜尋矩陣。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c14)。
 
 ## C15 政策頁與 404
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
@@ -150,7 +150,7 @@
 - 步驟：接設定 → 還原版型 → 測試不存在路由與政策 href。
 - 驗收：內容可讀、返回首頁有效；交接：附路由檢查。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c15)。
 
 ## C16 上半頁手機排版
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
@@ -160,7 +160,7 @@
 - 步驟：實測截圖 → 修正欄數/字級/裁切 → 檢查 scroll。
 - 驗收：兩寬度可操作、無溢出；交接：附截圖及差異。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 CSS／截圖流程通過；原始手機稿、字型及照片到位後需完成正式疊圖確認。 提交索引見 [commit-map.md](./commit-map.md#c16)。
 
 ## C17 下半頁手機排版
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
@@ -170,7 +170,7 @@
 - 步驟：逐區截圖 → 修正 grid/flex → 驗證表單 focus。
 - 驗收：390/768 px 無溢出且狀態可見；交接：附差異清單。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 CSS／截圖流程通過；原始手機稿、字型及照片到位後需完成正式疊圖確認。 提交索引見 [commit-map.md](./commit-map.md#c17)。
 
 ## C18 內頁手機排版
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。
@@ -179,4 +179,4 @@
 - 固定契約：返回/分頁/分類連結可觸控，圖片不變形。
 - 步驟：測試所有內頁 → 修正排版 → 檢查長標題及空狀態。
 - 驗收：無水平溢出、404 與分頁正常；交接：附 URL/截圖。
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。 本機 CSS／截圖流程通過；原始手機稿、字型及照片到位後需完成正式疊圖確認。 提交索引見 [commit-map.md](./commit-map.md#c18)。

@@ -38,6 +38,7 @@ for (const file of files) {
     for (const [label, pattern] of fields) {
       if (!pattern.test(card)) missing.push(`${id}:${label}`);
     }
+    if (/交接紀錄：完成後記錄執行日期/.test(card)) missing.push(`${id}:交接紀錄尚未填寫`);
   });
 }
 

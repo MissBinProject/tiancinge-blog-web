@@ -94,3 +94,9 @@ pnpm test:e2e --workers=1
 - Supabase project、唯一 Auth 管理員 user id、Vercel 專案與正式網域。
 - 正式電話、地址、LINE、社群、地圖、政策、文章、字型及原始卡片照片。
 - 以正式資料執行 RLS／Storage 越權測試、完整 Playwright 流程與設計稿疊圖；目前裁切卡片仍是由設計稿裁切的暫用素材。
+## Luna 任務交接索引補齊
+
+- 63 張 A01–E11 任務卡的 `交接紀錄` 已填入 2026-09-14 執行者、驗證命令、證據路徑與本機／正式狀態。
+- 新增 `02_規劃書/project/luna-tasks/commit-map.md`，逐卡列出相關提交 SHA，並明確標示群組提交與正式環境待辦。
+- `scripts/verify-task-cards.mjs` 現在會拒絕仍保留未填寫交接範本的卡片。
+- 驗證：`pnpm tasks:verify`、`git diff --check` 通過。

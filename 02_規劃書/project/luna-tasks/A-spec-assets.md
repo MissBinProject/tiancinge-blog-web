@@ -10,7 +10,7 @@
 - 步驟：檢查原圖尺寸 → 以檔名建立對應 → 標記無原始照片、字型及手機稿。
 - 驗收：五張圖及長圖均有紀錄，缺件可追溯；交接：附 `asset-map.md` 及檢查命令。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm tasks:verify；素材／基準證據見 `03_UI設計圖/asset-map.md`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#a01)。
 
 ## A02 定義裁切座標與素材匯出流程
 - 參考圖：`03_UI設計圖/01_首頁設計圖/`；素材：`03_UI設計圖/02_素材/`。
@@ -20,7 +20,7 @@
 - 步驟：記錄原圖座標 → 使用 `sips` 或等效流程輸出 → 記錄尺寸與來源。
 - 驗收：可重複執行且不覆蓋原始檔；交接：附座標表、輸出尺寸及差異。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm tasks:verify；素材／基準證據見 `03_UI設計圖/asset-map.md`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#a02)。
 
 ## A03 處理 Logo、背景、裝飾及照片
 - 參考圖：`03_UI設計圖/01_首頁設計圖/`；素材：`03_UI設計圖/02_素材/`。
@@ -30,7 +30,7 @@
 - 步驟：複製原素材 → 清理檔名及路徑 → 檢查透明度、尺寸、清晰度。
 - 驗收：Logo、四個背景、聯絡背景與裁切卡均可載入；交接：附清單及失真註記。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm tasks:verify；素材／基準證據見 `03_UI設計圖/asset-map.md`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#a03)。
 
 ## A04 比對字型與建立設計變數
 - 參考圖：`03_UI設計圖/01_首頁設計圖/`；素材：`03_UI設計圖/02_素材/`。
@@ -40,7 +40,7 @@
 - 步驟：從設計圖取色 → 建立桌機 token → 記錄原字型缺失及替代方案。
 - 驗收：1440 px 截圖可重現 token，字型差異列入清單；交接：附 token 表及截圖。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm tasks:verify；素材／基準證據見 `03_UI設計圖/asset-map.md`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#a04)。
 
 ## A05 建立手機版配置規格
 - 參考圖：`03_UI設計圖/01_首頁設計圖/`；素材：`03_UI設計圖/02_素材/`。
@@ -50,7 +50,7 @@
 - 步驟：標記桌機到手機的重排 → 設定互動觸控尺寸 → 記錄無手機稿的推定。
 - 驗收：每一區有配置表及未知項目；交接：附尺寸矩陣。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm tasks:verify；素材／基準證據見 `03_UI設計圖/asset-map.md`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#a05)。
 
 ## A06 建立列表、詳情與後台樣板
 - 參考圖：`03_UI設計圖/01_首頁設計圖/`；素材：`03_UI設計圖/02_素材/`。
@@ -60,7 +60,7 @@
 - 步驟：繪製 wireframe → 定義空資料、錯誤與載入狀態 → 記錄可重用元件。
 - 驗收：服務、文章、搜尋、後台六模組均有樣板；交接：附 [`ui-templates.md`](../ui-templates.md) wireframe 與元件清單。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm tasks:verify；素材／基準證據見 `03_UI設計圖/asset-map.md`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#a06)。
 
 ## A07 固定資料契約與測試內容
 - 參考圖：`03_UI設計圖/01_首頁設計圖/`；素材：`03_UI設計圖/02_素材/`。
@@ -69,4 +69,4 @@
 - 固定契約：文章正文只允許 heading、paragraph、list、link、image block；連結及圖片網址需通過安全協定驗證；狀態為 draft/published。
 - 步驟：定義欄位及 nullable 規則 → 建立 fixture → 撰寫 Vitest 驗證排序、狀態及價格。
 - 驗收：型別檢查及測試通過；交接：附欄位表、fixture 及 repository signature。
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm tasks:verify；素材／基準證據見 `03_UI設計圖/asset-map.md`、`02_規劃書/project/visual-baseline/`。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#a07)。

@@ -8,7 +8,7 @@
 - 步驟：設定 env → migration/seed → 修改後台 → reload 官網。
 - 驗收：一次改價三處一致；交接：附 env key 清單與截圖。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test && pnpm test:e2e --workers=1 && pnpm tasks:verify；串接、疊圖及備份證據見 `02_規劃書/project/`、`supabase/backup-restore.md`。 程式與 fixture 驗證通過；正式資料與環境變數待接入。 提交索引見 [commit-map.md](./commit-map.md#e01)。
 
 ## E02 消息、文章及搜尋接正式資料
 - 參考圖：`02_規劃書/project/visual-baseline/`、`validation-checklist.md`、`release-checklist.md` 與正式資料輸入表。
@@ -18,7 +18,7 @@
 - 步驟：建立資料 → 發布/下架 → 測試公開 query → 檢查 sitemap。
 - 驗收：發布狀態及分類一致；交接：附 URL 矩陣。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test && pnpm test:e2e --workers=1 && pnpm tasks:verify；串接、疊圖及備份證據見 `02_規劃書/project/`、`supabase/backup-restore.md`。 程式與 fixture 驗證通過；正式資料與環境變數待接入。 提交索引見 [commit-map.md](./commit-map.md#e02)。
 
 ## E03 留言提交 API
 - 參考圖：`02_規劃書/project/visual-baseline/`、`validation-checklist.md`、`release-checklist.md` 與正式資料輸入表。
@@ -28,7 +28,7 @@
 - 步驟：驗證 trim/length/email → rate limit → insert → response。
 - 驗收：成功、空欄位、重送、資料庫錯誤均有明確狀態；交接：附 request/response。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test && pnpm test:e2e --workers=1 && pnpm tasks:verify；串接、疊圖及備份證據見 `02_規劃書/project/`、`supabase/backup-restore.md`。 程式與 fixture 驗證通過；正式資料與環境變數待接入。 提交索引見 [commit-map.md](./commit-map.md#e03)。
 
 ## E04 聯絡表單串接
 - 參考圖：`02_規劃書/project/visual-baseline/`、`validation-checklist.md`、`release-checklist.md` 與正式資料輸入表。
@@ -38,7 +38,7 @@
 - 步驟：填表 → submit → 查後台 → 備註/標記處理。
 - 驗收：欄位、時間、狀態正確；交接：附端到端截圖。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test && pnpm test:e2e --workers=1 && pnpm tasks:verify；串接、疊圖及備份證據見 `02_規劃書/project/`、`supabase/backup-restore.md`。 程式與 fixture 驗證通過；正式資料與環境變數待接入。 提交索引見 [commit-map.md](./commit-map.md#e04)。
 
 ## E05 SEO 與分享資訊
 - 參考圖：`02_規劃書/project/visual-baseline/`、`validation-checklist.md`、`release-checklist.md` 與正式資料輸入表。
@@ -48,7 +48,7 @@
 - 步驟：設定 metadata → 動態 title/description → 產 sitemap/robots → 驗證 head。
 - 驗收：每一公開路由有標題描述且 URL 正確；交接：附 head 檢查。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test && pnpm test:e2e --workers=1 && pnpm tasks:verify；串接、疊圖及備份證據見 `02_規劃書/project/`、`supabase/backup-restore.md`。 程式與 fixture 驗證通過；正式資料與環境變數待接入。 提交索引見 [commit-map.md](./commit-map.md#e05)。
 
 ## E06 上半頁視覺校正
 - 參考圖：`02_規劃書/project/visual-baseline/`、`validation-checklist.md`、`release-checklist.md` 與正式資料輸入表。
@@ -58,7 +58,7 @@
 - 步驟：截圖 → 疊圖 → 修正座標/裁切/顏色 → 回歸測試。
 - 驗收：每區有 before/after/diff；交接：附差異紀錄。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test && pnpm test:e2e --workers=1 && pnpm tasks:verify；串接、疊圖及備份證據見 `02_規劃書/project/`、`supabase/backup-restore.md`。 本機 CSS／截圖流程通過；原始手機稿、字型及照片到位後需完成正式疊圖確認。 提交索引見 [commit-map.md](./commit-map.md#e06)。
 
 ## E07 下半頁視覺校正
 - 參考圖：`02_規劃書/project/visual-baseline/`、`validation-checklist.md`、`release-checklist.md` 與正式資料輸入表。
@@ -68,7 +68,7 @@
 - 步驟：截圖 → 疊圖 → 修正 → 檢查表單與連結。
 - 驗收：各區差異均有紀錄與確認；交接：附截圖。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test && pnpm test:e2e --workers=1 && pnpm tasks:verify；串接、疊圖及備份證據見 `02_規劃書/project/`、`supabase/backup-restore.md`。 本機 CSS／截圖流程通過；原始手機稿、字型及照片到位後需完成正式疊圖確認。 提交索引見 [commit-map.md](./commit-map.md#e07)。
 
 ## E08 權限與輸入安全測試
 - 參考圖：`02_規劃書/project/visual-baseline/`、`validation-checklist.md`、`release-checklist.md` 與正式資料輸入表。
@@ -78,7 +78,7 @@
 - 步驟：匿名/非 admin request → XSS fixture → bad file → rate limit。
 - 驗收：所有越權及非法輸入被拒；交接：附測試報告。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test && pnpm test:e2e --workers=1 && pnpm tasks:verify；串接、疊圖及備份證據見 `02_規劃書/project/`、`supabase/backup-restore.md`。 本機驗證通過；正式 Supabase／Storage 權限或營運演練待執行。 提交索引見 [commit-map.md](./commit-map.md#e08)。
 
 ## E09 完整營運流程測試
 - 參考圖：`02_規劃書/project/visual-baseline/`、`validation-checklist.md`、`release-checklist.md` 與正式資料輸入表。
@@ -88,7 +88,7 @@
 - 步驟：建立/編輯 → 公開驗證 → 回復原值 → 記錄失敗。
 - 驗收：Playwright 流程及截圖通過；交接：附流程清單。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test && pnpm test:e2e --workers=1 && pnpm tasks:verify；串接、疊圖及備份證據見 `02_規劃書/project/`、`supabase/backup-restore.md`。 本機驗證通過；正式 Supabase／Storage 權限或營運演練待執行。 提交索引見 [commit-map.md](./commit-map.md#e09)。
 
 ## E10 正式資料與部署
 - 參考圖：`02_規劃書/project/visual-baseline/`、`validation-checklist.md`、`release-checklist.md` 與正式資料輸入表。
@@ -98,7 +98,7 @@
 - 步驟：建立 project → 設 env → deploy web/admin → smoke test。
 - 驗收：正式 URL、Auth、Storage、LINE、地圖可用；交接：附部署與回退資訊。
 
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test && pnpm test:e2e --workers=1 && pnpm tasks:verify；串接、疊圖及備份證據見 `02_規劃書/project/`、`supabase/backup-restore.md`。 尚未通過：正式網域、Vercel、Supabase、Auth 管理員與店家資料尚未提供。 提交索引見 [commit-map.md](./commit-map.md#e10)。
 
 ## E11 備份、回復與交接
 - 參考圖：`02_規劃書/project/visual-baseline/`、`validation-checklist.md`、`release-checklist.md` 與正式資料輸入表。
@@ -107,4 +107,4 @@
 - 固定契約：保留 migration 版本、備份週期、回復責任人及聯絡方式。
 - 步驟：執行備份 → 建暫存資料 → 還原 → 驗證公開/後台 → 撰寫手冊。
 - 驗收：回復成功且無資料遺失；交接：附操作手冊、檢查表及已知限制。
-- 交接紀錄：完成後記錄執行日期、操作者、命令或 URL、截圖位置、結果與已知差異。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test && pnpm test:e2e --workers=1 && pnpm tasks:verify；串接、疊圖及備份證據見 `02_規劃書/project/`、`supabase/backup-restore.md`。 本機驗證通過；正式 Supabase／Storage 權限或營運演練待執行。 提交索引見 [commit-map.md](./commit-map.md#e11)。
