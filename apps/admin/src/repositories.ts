@@ -173,13 +173,16 @@ export async function saveSettings(value: { brandName?: string; phone: string; l
 }
 
 export async function markMessageHandled(id: string, note?: string) {
-  if (!adminSupabase) return { ok: true, mode: 'local' as const };
+  if (!adminSupabase || id.startsWith('local-')) return { ok: true, mode: 'local' as const };
   const { error } = await adminSupabase.from('contact_messages').update({ status: 'handled', note: note || null }).eq('id', id);
   return error ? { ok: false, mode: 'supabase' as const, error: error.message } : { ok: true, mode: 'supabase' as const };
 }
 
 export async function saveMessage(message: { id: string; status: 'unread' | 'handled'; note?: string }) {
-  if (!adminSupabase || !message.id.includes('-')) return { ok: true, mode: 'local' as const };
+  // A local snapshot can be shown when a configured Supabase connection is
+  // unavailable. Keep those synthetic records local instead of attempting a
+  // remote update with an ID such as `local-message-1`.
+  if (!adminSupabase || message.id.startsWith('local-')) return { ok: true, mode: 'local' as const };
   const { error } = await adminSupabase.from('contact_messages').update({ status: message.status, note: message.note || null }).eq('id', message.id);
   return error ? { ok: false, mode: 'supabase' as const, error: error.message } : { ok: true, mode: 'supabase' as const };
 }
