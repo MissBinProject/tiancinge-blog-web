@@ -18,8 +18,8 @@
 | <a id="b03"></a>B03 | 3759e6e | 本機 fixture 驗收通過。 |
 | <a id="b04"></a>B04 | 3759e6e | 本機 fixture 驗收通過。 |
 | <a id="b05"></a>B05 | 3759e6e | 本機 fixture 驗收通過。 |
-| <a id="b06"></a>B06 | 3759e6e, 1de1a07 | 本機驗證通過；正式 Supabase／Storage 權限或營運演練待執行。 |
-| <a id="b07"></a>B07 | 3759e6e, 1de1a07 | 本機驗證通過；正式 Supabase／Storage 權限或營運演練待執行。 |
+| <a id="b06"></a>B06 | 3759e6e, 1de1a07, 90fcd1f | 本機驗證通過；素材引用 guard 已限制函式執行角色，正式 Supabase／Storage 權限或營運演練待執行。 |
+| <a id="b07"></a>B07 | 3759e6e, 1de1a07, 90fcd1f | 本機驗證通過；素材引用 guard 已限制函式執行角色，正式 Supabase／Storage 權限或營運演練待執行。 |
 | <a id="b08"></a>B08 | 3759e6e, ef9283b | 程式與 fixture 驗證通過；正式資料與環境變數待接入。 |
 | <a id="b09"></a>B09 | 3759e6e, ef9283b | 程式與 fixture 驗證通過；正式資料與環境變數待接入。 |
 | <a id="b10"></a>B10 | 3759e6e, 89fd05c | 程式與 fixture 驗證通過；正式資料與環境變數待接入。 |
