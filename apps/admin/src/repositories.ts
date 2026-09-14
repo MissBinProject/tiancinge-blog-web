@@ -214,7 +214,10 @@ export async function deleteCategory(category: string | Pick<AdminCategory, 'id'
   const id = typeof category === 'string' ? category : category.id;
   if (!adminSupabase || id.startsWith('local-')) {
     if (typeof category !== 'string') {
-      const articles = localStorageJson<Array<{ category?: unknown }>>('txg-articles') || [];
+      // The first render may run before useStored writes its snapshot. Use the
+      // same fixture references shown in the editor so an in-use category
+      // cannot be deleted during that short window.
+      const articles = localStorageJson<Array<{ category?: unknown }>>('txg-articles') ?? fixtureArticles;
       if (articles.some((article) => article.category === category.name)) return { ok: false, mode: 'local' as const, error: '使用中的分類無法刪除，請先移動或移除文章。' };
     }
     return { ok: true, mode: 'local' as const };
