@@ -107,3 +107,9 @@ pnpm test:e2e --workers=1
 - 正式 Supabase 的文章／分類 adapter 改為拒絕跨類型同名分類，避免保存文章時改寫既有分類類型。
 - 留言限流與防重送 guard 表新增兩天保留期清理，並通過本機 migration／備份回復演練。
 - `supabase/scripts/verify-local.sh` 新增過期 guard 清理探針，先由 owner 建立測試資料，再以 app role 驗證交易函式可清理且不放寬 RLS。
+
+## 鍵盤主要內容錨點修正
+
+- 將根 layout 的外層 `#main-content` 改為各公開頁真正的 `main#main-content`，讓 Header 的「跳到主要內容」不會把焦點留在導覽列之前。
+- `e2e/public.spec.ts` 新增 `main#main-content` 唯一性與連結目標檢查。
+- 驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm --filter @tian-xin-ge/web build`、`pnpm test:e2e --workers=1 e2e/public.spec.ts`（10 條）通過；提交 `705d6dc`。
