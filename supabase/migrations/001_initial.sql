@@ -271,6 +271,9 @@ create or replace function public.enforce_single_admin() returns trigger
 language plpgsql security definer set search_path = public
 as $$
 begin
+  -- Serialize concurrent inserts/updates so two transactions cannot both
+  -- observe an empty table and create separate administrators.
+  perform pg_advisory_xact_lock(hashtextextended('tian-xin-ge-admin-singleton', 0));
   if exists (select 1 from public.admin_users where user_id <> new.user_id) then
     raise exception 'only one administrator is allowed';
   end if;
@@ -284,6 +287,8 @@ create or replace function public.enforce_single_site_settings() returns trigger
 language plpgsql security definer set search_path = public
 as $$
 begin
+  -- Keep the one-row settings invariant safe under concurrent upserts.
+  perform pg_advisory_xact_lock(hashtextextended('tian-xin-ge-settings-singleton', 0));
   if exists (select 1 from public.site_settings where id <> new.id) then
     raise exception 'only one site settings record is allowed';
   end if;
