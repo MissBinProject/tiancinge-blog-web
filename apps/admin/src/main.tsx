@@ -5,6 +5,7 @@ import { LayoutDashboard, LogOut, Image as ImageIcon, Settings, Sparkles, Newspa
 import { fixtureArticles, fixtureCategories, fixtureMedia, fixtureMessages, fixtureServices, fixtureSettings, isPublishableArticleBody, isSafeContentUrl, isValidArticleBody, isValidBenefits, type Article, type Service } from '@tian-xin-ge/contracts';
 import './styles.css';
 import { adminSupabase } from './supabase';
+import { requestPasswordReset, signInAdmin, signOutAdmin, subscribeAuthChanges, updateAdminPassword, verifyAdminSession } from './auth';
 import { deleteArticle, deleteCategory, deleteMedia, deleteMessage, deleteService, loadArticles, loadCategories, loadMedia, loadMessages, loadServices, loadSettings, saveArticle, saveCategory, saveMediaAlt, saveMessage, saveService, saveSettings, uploadMedia, type AdminCategory, type ManagedArticle, type AdminMessage, type AdminMedia } from './repositories';
 
 const webOrigin = (import.meta.env.VITE_WEB_URL || 'http://localhost:3000').replace(/\/+$/, '');
@@ -83,42 +84,46 @@ function App() {
   const explicitSignOut = useRef(false);
   useEffect(() => {
     if (!adminSupabase) return;
-    const client = adminSupabase;
-    const verifySession = async (session: Awaited<ReturnType<typeof client.auth.getSession>>['data']['session']) => {
-      if (!session) {
+    const handleSession = async (session: Parameters<typeof verifyAdminSession>[0]) => {
+      const result = await verifyAdminSession(session);
+      if (result.status === 'signed-out') {
         sessionStorage.removeItem('tian-admin');
         setLogged(false);
         if (!explicitSignOut.current) setAuthNotice('登入已逾時，請重新登入。');
         explicitSignOut.current = false;
         return;
       }
-      const { data } = await client.from('admin_users').select('user_id').eq('user_id', session.user.id).maybeSingle();
-      if (!data) {
+      if (result.status === 'forbidden') {
         explicitSignOut.current = true;
-        await client.auth.signOut();
+        await signOutAdmin();
         sessionStorage.removeItem('tian-admin');
         setLogged(false);
         setAuthNotice('此帳號沒有後台管理權限，請使用管理員帳號登入。');
+        return;
+      }
+      if (result.status === 'error') {
+        sessionStorage.removeItem('tian-admin');
+        setLogged(false);
+        setAuthNotice('目前無法驗證管理員權限，請稍後再試。');
         return;
       }
       sessionStorage.setItem('tian-admin', '1');
       setAuthNotice('');
       setLogged(true);
     };
-    const { data } = client.auth.onAuthStateChange((event, session) => { if (event === 'PASSWORD_RECOVERY') setRecovering(true); if (event === 'INITIAL_SESSION') void verifySession(session); if (event === 'SIGNED_OUT') void verifySession(null); });
-    return () => data.subscription.unsubscribe();
+    return subscribeAuthChanges((event, session) => { if (event === 'PASSWORD_RECOVERY') setRecovering(true); if (event === 'INITIAL_SESSION') void handleSession(session); if (event === 'SIGNED_OUT') void handleSession(null); });
   }, []);
-  const logout = async () => { explicitSignOut.current = true; if (adminSupabase) await adminSupabase.auth.signOut(); sessionStorage.removeItem('tian-admin'); setLogged(false); };
+  const logout = async () => { explicitSignOut.current = true; await signOutAdmin(); sessionStorage.removeItem('tian-admin'); setLogged(false); };
   if (recovering) return <ResetPassword onDone={() => { setRecovering(false); void logout(); }} />;
   return logged ? <Dashboard onLogout={logout} /> : <Login notice={authNotice} onLogin={() => { sessionStorage.setItem('tian-admin', '1'); setAuthNotice(''); setLogged(true); }} />;
 }
 
-function ResetPassword({ onDone }: { onDone: () => void }) { const [password, setPassword] = useState(''); const [confirmPassword, setConfirmPassword] = useState(''); const [error, setError] = useState(''); const [message, setMessage] = useState(''); const submit = async (event: React.FormEvent) => { event.preventDefault(); if (password.length < 8 || password !== confirmPassword) { setError(password.length < 8 ? '密碼至少需要 8 個字元' : '兩次密碼不一致'); return; } if (!adminSupabase) { setMessage('開發模式無法重設密碼'); return; } const result = await adminSupabase.auth.updateUser({ password }); if (result.error) setError('密碼更新失敗，請重新申請重設信件'); else setMessage('密碼已更新，請重新登入'); }; return <div className="login-page"><div className="login-card"><h1>設定新密碼</h1><form onSubmit={submit}><label>新密碼<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="new-password" /></label><label>確認新密碼<input type="password" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} autoComplete="new-password" /></label>{error && <small className="error">{error}</small>}{message && <small className="muted">{message}</small>}{message ? <button type="button" className="primary" onClick={onDone}>回到登入</button> : <button className="primary">更新密碼</button>}</form></div></div>; }
+function ResetPassword({ onDone }: { onDone: () => void }) { const [password, setPassword] = useState(''); const [confirmPassword, setConfirmPassword] = useState(''); const [error, setError] = useState(''); const [message, setMessage] = useState(''); const submit = async (event: React.FormEvent) => { event.preventDefault(); if (password.length < 8 || password !== confirmPassword) { setError(password.length < 8 ? '密碼至少需要 8 個字元' : '兩次密碼不一致'); return; } const result = await updateAdminPassword(password); if (!result.ok) setError(result.reason === 'unconfigured' ? '開發模式無法重設密碼' : '密碼更新失敗，請重新申請重設信件'); else setMessage('密碼已更新，請重新登入'); }; return <div className="login-page"><div className="login-card"><h1>設定新密碼</h1><form onSubmit={submit}><label>新密碼<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="new-password" /></label><label>確認新密碼<input type="password" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} autoComplete="new-password" /></label>{error && <small className="error">{error}</small>}{message && <small className="muted">{message}</small>}{message ? <button type="button" className="primary" onClick={onDone}>回到登入</button> : <button className="primary">更新密碼</button>}</form></div></div>; }
 
 function Login({ onLogin, notice }: { onLogin: () => void; notice?: string }) {
   const [email, setEmail] = useState(''); const [password, setPassword] = useState(''); const [error, setError] = useState(''); const [message, setMessage] = useState(''); const [busy, setBusy] = useState(false);
-  const submit = async (event: React.FormEvent) => { event.preventDefault(); setError(''); if (!email.trim() || !password.trim()) { setError('請輸入管理員帳號與密碼'); return; } setBusy(true); if (adminSupabase) { const result = await adminSupabase.auth.signInWithPassword({ email: email.trim(), password }); if (result.error || !result.data.user) { setError('帳號或密碼不正確'); setBusy(false); return; } const admin = await adminSupabase.from('admin_users').select('user_id').eq('user_id', result.data.user.id).maybeSingle(); if (admin.error || !admin.data) { await adminSupabase.auth.signOut(); setError('此帳號沒有後台管理權限'); setBusy(false); return; } } else if (import.meta.env.PROD) { setError('正式環境尚未設定 Supabase Auth'); setBusy(false); return; } onLogin(); setBusy(false); };
-  const reset = async () => { setError(''); setMessage(''); if (!email.trim()) { setError('請先輸入管理員 Email'); return; } if (!adminSupabase) { setMessage(import.meta.env.PROD ? '正式環境尚未設定 Supabase Auth' : '開發模式不會寄送重設信件，正式環境請設定 Supabase Auth'); return; } const result = await adminSupabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: window.location.origin }); if (result.error) setError('目前無法寄送重設信件'); else setMessage('重設密碼信件已寄出，請查看信箱'); };
+  const submit = async (event: React.FormEvent) => { event.preventDefault(); setError(''); if (!email.trim() || !password.trim()) { setError('請輸入管理員帳號與密碼'); return; } setBusy(true); const result = await signInAdmin(email.trim(), password); if (!result.ok) { if (result.reason === 'unconfigured' && !import.meta.env.PROD) { onLogin(); setBusy(false); return; } const messages = { unconfigured: '正式環境尚未設定 Supabase Auth', invalid: '帳號或密碼不正確', forbidden: '此帳號沒有後台管理權限', error: '目前無法驗證管理員權限，請稍後再試' } as const; setError(messages[result.reason]); setBusy(false); return; } onLogin(); setBusy(false); };
+  const reset = async () => { setError(''); setMessage(''); if (!email.trim()) { setError('請先輸入管理員 Email'); return; } const result = await requestPasswordReset(email.trim(), window.location.origin); if (!result.ok) setMessage(result.reason === 'unconfigured' ? (import.meta.env.PROD ? '正式環境尚未設定 Supabase Auth' : '開發模式不會寄送重設信件，正式環境請設定 Supabase Auth') : ''); else setMessage('重設密碼信件已寄出，請查看信箱'); if (!result.ok && result.reason === 'error') setError('目前無法寄送重設信件'); };
   return <div className="login-page"><div className="login-card"><img src={`${webOrigin}/assets/logo/logo_1_去背.png`} alt="天心閣" /><p>天心閣養生會館</p><h1>內容管理後台</h1>{notice && <p className="auth-notice" role="status">{notice}</p>}<form onSubmit={submit}><label>管理員帳號<input value={email} onChange={(e) => setEmail(e.target.value)} type="email" autoComplete="username" placeholder="admin@example.com" /></label><label>密碼<input value={password} onChange={(e) => setPassword(e.target.value)} type="password" autoComplete="current-password" placeholder="••••••••" /></label>{error && <small className="error">{error}</small>}{message && <small className="muted">{message}</small>}<button className="primary" disabled={busy}>{busy ? '登入中…' : '登入後台'}</button><button type="button" className="text-btn" onClick={() => void reset()}>忘記密碼？寄送重設信件</button></form><small>{adminSupabase ? '登入由 Supabase Auth 驗證，並檢查管理員權限' : import.meta.env.PROD ? '正式環境必須設定 Supabase Auth' : '尚未設定 Supabase，開發模式允許測試帳號登入'}</small></div></div>;
 }
 
