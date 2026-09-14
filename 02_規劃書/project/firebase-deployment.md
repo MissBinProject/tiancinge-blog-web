@@ -15,7 +15,7 @@
 - 公開 smoke test：首頁、服務、最新消息、部落格與直接 Cloud Run URL 均 HTTP 200；`POST /api/contact` 空資料 HTTP 400。
 - Firebase smoke test：管理員 custom claim 驗證、Firestore 服務新增／讀取／更新／刪除、Storage 合法圖片上傳／下載／刪除及 Contact API 成功寫入後清理均通過。
 - 管理員 `ouyangtaisen@gmail.com` 已建立 Authentication user 與 `admins/{uid}` allowlist；首次使用請按「忘記密碼」。
-- 程式提交：`9f61c45`（feat: deploy dynamic firebase website and admin）；規劃／Rules／測試同步提交：`e956f4d`。
+- 程式提交：`9f61c45`（feat: deploy dynamic firebase website and admin）；規劃／Rules／測試同步提交：`c79c4e5`。
 
 ## 待完成
 
