@@ -253,3 +253,9 @@ export async function saveArticle(article: ManagedArticle) {
   const { data, error } = await adminSupabase.from('articles').insert(payload).select('id').single();
   return error || !data ? { ok: false, mode: 'supabase' as const, error: error?.message || '新增文章失敗' } : { ok: true, mode: 'supabase' as const, id: String(data.id) };
 }
+
+export async function deleteArticle(id: string) {
+  if (!adminSupabase || id.startsWith('local-')) return { ok: true, mode: 'local' as const };
+  const { error } = await adminSupabase.from('articles').delete().eq('id', id);
+  return error ? { ok: false, mode: 'supabase' as const, error: error.message } : { ok: true, mode: 'supabase' as const };
+}

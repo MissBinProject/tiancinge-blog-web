@@ -118,6 +118,19 @@ test('後台可建立草稿文章並發布', async ({ page }) => {
   await expect(editor.getByRole('button', { name: /春日放鬆指南/ })).toContainText('已發布');
 });
 
+test('後台刪除文章後會從編輯列表移除', async ({ page }) => {
+  await page.goto('http://localhost:5173/articles');
+  await page.getByLabel('管理員帳號').fill('admin@example.com');
+  await page.getByLabel('密碼').fill('local-development-password');
+  await page.getByRole('button', { name: '登入後台' }).click();
+  const editor = page.locator('.article-editor');
+  await expect(editor.getByLabel('文章標題')).toHaveValue('中秋限定優惠活動');
+  page.once('dialog', (dialog) => dialog.accept());
+  await editor.getByRole('button', { name: '刪除文章' }).click();
+  await expect(editor.getByRole('button', { name: /中秋限定優惠活動/ })).not.toBeVisible();
+  await expect(page.getByText('文章已刪除')).toBeVisible();
+});
+
 test('後台留言可篩選、保存備註並標記處理', async ({ page }) => {
   await page.goto('http://localhost:5173/messages');
   await page.getByLabel('管理員帳號').fill('admin@example.com');
