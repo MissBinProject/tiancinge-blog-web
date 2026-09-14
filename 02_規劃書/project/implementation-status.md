@@ -65,7 +65,7 @@
 
 ## 待正式資料／營運設定
 
-- 正式輸入欄位已整理至 [`production-input-form.md`](production-input-form.md)，填妥後才能進行 E10／E11。
+- 正式輸入欄位已整理至 [`production-input-form.md`](production-input-form.md)，填妥後才能進行 E10 與正式環境的 E11 演練。
 - `pnpm preflight:production` 已提供部署前環境變數檢查；目前未設定正式值，因此預期會回報缺少欄位。
 - 建立 Supabase Auth 單一管理員帳號、將 user id 寫入 `admin_users` 並在 Vercel 設定環境變數。
 - 完成前台 Supabase repository 的正式資料填入與欄位確認（程式已具 fixture fallback）。
