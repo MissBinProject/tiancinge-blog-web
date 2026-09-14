@@ -67,6 +67,7 @@
 - fixture 素材已記錄目前處理檔案的實際 byte 大小；後台網站設定在正式資料只有 `line_url` 時也能正確載入並保存該連結。
 - 首頁部落格分類入口改由已發布文章的實際分類產生，後台分類異動不會留下失效的硬編碼連結。
 - 首頁部落格分類入口完整列出所有已發布文章分類，不再以固定數量截斷；每個分類仍連到對應的 `/blog?category=` 列表。
+- 隱私權與服務條款頁改由正式網站設定產生頁面標題、描述、canonical 與 Open Graph 分享資訊，與其他公開內容頁維持同一 SEO 契約。
 - 正式 Supabase 儲存文章或新增分類時會先檢查同名分類的 `type`，拒絕跨消息／部落格類型覆寫，維持分類資料完整性。
 - 留言限流與防重送交易函式會清理超過兩天的 digest guard 紀錄，避免正式資料庫長期累積內部狀態。
 - 素材引用檢查函式已撤銷匿名執行權限，只授予 authenticated／service_role（及本機驗證用 app_user），避免公開 RPC 暴露內容引用判斷。
@@ -97,6 +98,7 @@
 - `pnpm db:verify`：暫存 PostgreSQL migration／seed、匿名／管理員 RLS、Storage 限制、素材引用保護、正文 schema、LINE URL 及留言 guard（含過期 digest 清理）通過。
 - `pnpm db:backup:verify`：暫存 PostgreSQL custom-format 備份、checksum、資料異動後回復及 5 項服務／7 篇已發布文章筆數驗證通過。
 - 針對聯絡表單自動填寫屬性與消息輪播控制語意執行 `pnpm test:e2e --grep public --workers=1`：公開流程 10／10 通過。
+- 政策頁 SEO 回歸測試：`pnpm test:e2e --grep "政策頁提供" --workers=1` 1／1 通過，確認標題、description 與 `og:title` 由設定資料輸出。
 - 本機 smoke test：首頁、服務、消息、部落格、分類、搜尋、政策、sitemap、robots、404 及留言 API 均已檢查；後台登入、服務、文章、分類、素材、留言及設定畫面可操作。
 - 1672px 主視覺／服務區段邊界及服務卡左右基準、價格區左側留白與卡片基準線均依原稿校正，並補回主視覺／聯繫區裝飾文案；重新產生五張 `visual-baseline/current-01..05.png`、overlay 及 difference；原始字型與照片差異仍保留在差異紀錄。
 - 價格區依 `首頁_02.png` 補回左側直排、右上與右下手寫及底部英文裝飾文案；1672px 區段高度與特色列內距同步對齊原稿。

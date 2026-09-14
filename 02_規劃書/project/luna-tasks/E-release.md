@@ -48,7 +48,7 @@
 - 步驟：設定 metadata → 動態 title/description → 產 sitemap/robots → 驗證 head。
 - 驗收：每一公開路由有標題描述且 URL 正確；交接：附 head 檢查。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm test && pnpm test:e2e --workers=1 && pnpm tasks:verify；串接、疊圖及備份證據見 `02_規劃書/project/`、`supabase/backup-restore.md`。 程式與 fixture 驗證通過；正式資料與環境變數待接入。 提交索引見 [commit-map.md](./commit-map.md#e05)。
+- 交接紀錄：2026-09-14｜Codex｜pnpm test && pnpm test:e2e --workers=1 && pnpm tasks:verify；串接、疊圖及備份證據見 `02_規劃書/project/`、`supabase/backup-restore.md`，政策頁 metadata 回歸見 `e2e/public.spec.ts`。 程式與 fixture 驗證通過；正式資料與環境變數待接入。 提交索引見 [commit-map.md](./commit-map.md#e05)。
 
 ## E06 上半頁視覺校正
 - 參考圖：`02_規劃書/project/visual-baseline/`、`validation-checklist.md`、`release-checklist.md` 與正式資料輸入表。

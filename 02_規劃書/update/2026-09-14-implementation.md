@@ -128,3 +128,8 @@ pnpm test:e2e --workers=1
 
 - 首頁分類入口改為列出所有已發布文章分類，避免固定五筆上限造成後台新增分類後入口遺失。
 - 提交 `c9001d4`；驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm test:e2e --grep "首頁部落格分類入口" --workers=1`（1／1 通過）。
+
+## 政策頁 SEO 分享資訊
+
+- 隱私權與服務條款頁改用 `generateMetadata` 讀取網站設定，輸出動態標題、描述、canonical 與 Open Graph 分享資訊。
+- 提交 `6329f57`；驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm --filter @tian-xin-ge/web build`、`pnpm test:e2e --grep "政策頁提供" --workers=1`（1／1 通過）。
