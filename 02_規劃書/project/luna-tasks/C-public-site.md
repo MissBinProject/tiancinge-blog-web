@@ -150,7 +150,7 @@
 - 步驟：接設定 → 還原版型 → 測試不存在路由與政策 href。
 - 驗收：內容可讀、返回首頁有效；交接：附路由檢查。
 
-- 交接紀錄：2026-09-14｜Codex｜pnpm test:e2e --grep "政策頁提供" --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`，隱私權／服務條款頁輸出動態標題、描述與分享資訊。 本機 fixture 驗收通過。 提交索引見 [commit-map.md](./commit-map.md#c15)。
+- 交接紀錄：2026-09-15｜Codex｜pnpm test:e2e --grep "公開文章與服務路由及 404 狀態正確" --workers=1；公開路由及四種 viewport 證據見 `e2e/public.spec.ts`、`02_規劃書/project/visual-baseline/`。政策頁具動態 metadata，404 頁也保留固定 Header／Footer 與返回首頁連結。本機 fixture 驗收通過。提交索引見 [commit-map.md](./commit-map.md#c15)。
 
 ## C16 上半頁手機排版
 - 參考圖：`03_UI設計圖/01_首頁設計圖/首頁_01.png`～`首頁_05.png`；素材：`03_UI設計圖/02_素材/`。

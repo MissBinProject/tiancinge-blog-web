@@ -199,3 +199,8 @@ pnpm test:e2e --workers=1
 
 - 官網 Header、Hero、服務／價格、消息／部落格、聯繫與頁尾元件改為必須接收頁面取得的設定與內容；client component 不再直接匯入 `@/lib/data`，讓 Supabase repository 保持在伺服器邊界。
 - 提交 `cff19b4`；驗證：`pnpm run typecheck`、`pnpm --filter @tian-xin-ge/web build`、`pnpm test`（13／13）、`pnpm test:e2e --workers=1 --reporter=line`（23／23）通過。
+
+## 404 導覽一致性
+
+- 404 頁改為讀取網站設定並沿用固定 Header、Footer 與主要內容錨點；即使詳細頁找不到，訪客仍可使用全站導覽。
+- 提交 `5ccca0f`；驗證：`pnpm --filter @tian-xin-ge/web typecheck`、`pnpm --filter @tian-xin-ge/web build`、`pnpm test:e2e --grep "公開文章與服務路由及 404 狀態正確" --workers=1 --reporter=line`（1／1 通過）。
