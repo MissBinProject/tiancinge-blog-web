@@ -21,7 +21,10 @@
     {
       "target": "admin",
       "public": "apps/admin/dist",
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        { "source": "/api/admin/**", "run": { "serviceId": "tiancinge-web", "region": "asia-east1" } }
+      ]
     }
   ]
 }
