@@ -85,6 +85,7 @@ function App() {
   const [recovering, setRecovering] = useState(false);
   const [authNotice, setAuthNotice] = useState('');
   const explicitSignOut = useRef(false);
+  const sessionInitialized = useRef(false);
   useEffect(() => {
     if (!firebaseConfigured) return;
     let disposed = false;
@@ -96,10 +97,12 @@ function App() {
       if (result.status === 'signed-out') {
         sessionStorage.removeItem('tian-admin');
         setLogged(false);
-        if (!explicitSignOut.current) setAuthNotice('登入已逾時，請重新登入。');
+        if (sessionInitialized.current && !explicitSignOut.current) setAuthNotice('登入已逾時，請重新登入。');
+        sessionInitialized.current = true;
         explicitSignOut.current = false;
         return;
       }
+      sessionInitialized.current = true;
       if (result.status === 'forbidden') {
         explicitSignOut.current = true;
         await signOutAdmin();
