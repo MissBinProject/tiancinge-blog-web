@@ -95,9 +95,10 @@ function App() {
       const result = await verifyAdminSession(session);
       if (disposed || requestId !== sessionRequest) return;
       if (result.status === 'signed-out') {
+        const hadSession = sessionStorage.getItem('tian-admin') === '1';
         sessionStorage.removeItem('tian-admin');
         setLogged(false);
-        if (sessionInitialized.current && !explicitSignOut.current) setAuthNotice('登入已逾時，請重新登入。');
+        if (hadSession && !explicitSignOut.current) setAuthNotice('登入已逾時，請重新登入。');
         sessionInitialized.current = true;
         explicitSignOut.current = false;
         return;
