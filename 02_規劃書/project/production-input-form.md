@@ -30,7 +30,8 @@
 |---|---|
 | Firebase project ID | `tiancinge` |
 | Firebase／GCP region | `asia-east1` |
-| Auth 唯一管理員 Email | `ouyangtaisen@gmail.com` |
+| 後台登入帳號 | `tiancinge` |
+| Auth 管理員恢復信箱（僅供 Firebase 驗證／重設密碼） | `ouyangtaisen@gmail.com` |
 | Auth 管理員 UID／`admins/{uid}` |  |
 | 官網 Firebase Hosting URL | `https://tiancinge-web.web.app` |
 | 後台 Firebase Hosting URL | `https://tiancinge-admin.web.app` |

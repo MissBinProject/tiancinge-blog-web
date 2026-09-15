@@ -7,7 +7,7 @@
 - GCP/Firebase project：`tiancinge`，region：`asia-east1`。
 - 官網：Cloud Run `tiancinge-web`，Firebase Hosting rewrite：<https://tiancinge-web.web.app>。
 - 後台：Firebase Hosting：<https://tiancinge-admin.web.app>。
-- Firestore、Storage Rules 已發布；管理員為 `ouyangtaisen@gmail.com`，密碼透過後台「忘記密碼」設定。
+- Firestore、Storage Rules 已發布；後台登入帳號為 `tiancinge`，Firebase 恢復信箱為 `ouyangtaisen@gmail.com`，密碼透過後台「忘記密碼」設定。
 - Cloud Build image：`asia-east1-docker.pkg.dev/tiancinge/tiancinge/web:20260915-v3`。
 
 目前已完成第一個可驗收切片：Next.js 官網、React/Vite 後台、共享 TypeScript 契約、設計素材匯入與裁切、公開路由及首頁全區塊。

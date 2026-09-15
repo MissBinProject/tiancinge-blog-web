@@ -3,7 +3,7 @@
 ## 現行正式環境
 
 - Firebase/GCP project `tiancinge` 已建立；官網以 Cloud Run 動態 SSR，後台以 Firebase Hosting 發布。
-- Firestore、Storage Rules、Email/Password Authentication 與 `admins/{uid}` allowlist 已發布；管理員為 `ouyangtaisen@gmail.com`。
+- Firestore、Storage Rules、Email/Password Authentication 與 `admins/{uid}` allowlist 已發布；後台登入帳號為 `tiancinge`，Firebase 恢復信箱為 `ouyangtaisen@gmail.com`。
 - 公開站：<https://tiancinge-web.web.app>；後台：<https://tiancinge-admin.web.app>。
 - 服務、最新消息與部落格的公開 URL 已改為 10 位小寫英數亂碼；管理後台提供新聞／部落格獨立分頁、清單搜尋分頁、Tiptap 編輯器與圖片上傳選擇器。
 - 最終 Cloud Run revision：`tiancinge-web-00005-mhs`；提交：`76113be`。
