@@ -9,9 +9,9 @@ export async function signInWithUsername(username: string, password: string): Pr
   return signInAdmin(email, password);
 }
 
-export async function requestResetByUsername(username: string): Promise<AdminPasswordResult> {
+export async function requestResetByUsername(username: string, redirectTo: string): Promise<AdminPasswordResult> {
   const normalized = normalizeUsername(username);
   const email = isValidUsername(normalized) ? emailForUsername(normalized) : null;
   if (!email) return { ok: true };
-  return requestPasswordReset(email, window.location.origin);
+  return requestPasswordReset(email, redirectTo);
 }

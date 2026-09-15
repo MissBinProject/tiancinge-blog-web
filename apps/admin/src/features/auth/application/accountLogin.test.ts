@@ -7,7 +7,6 @@ import { requestResetByUsername, signInWithUsername } from './accountLogin';
 
 describe('account login use cases', () => {
   beforeEach(() => {
-    vi.stubGlobal('window', { location: { origin: 'http://test.local' } });
     signInAdmin.mockReset();
     requestPasswordReset.mockReset();
     signInAdmin.mockResolvedValue({ ok: true, session: { uid: 'admin-uid' } });
@@ -27,13 +26,13 @@ describe('account login use cases', () => {
   });
 
   it('uses a neutral reset response for an unknown username', async () => {
-    const result = await requestResetByUsername('unknown-account');
+    const result = await requestResetByUsername('unknown-account', 'http://test.local');
     expect(result).toEqual({ ok: true });
     expect(requestPasswordReset).not.toHaveBeenCalled();
   });
 
   it('sends reset through the mapped Firebase identity', async () => {
-    await requestResetByUsername('tiancinge');
+    await requestResetByUsername('tiancinge', 'http://test.local');
     expect(requestPasswordReset).toHaveBeenCalledWith('ouyangtaisen@gmail.com', 'http://test.local');
   });
 });
