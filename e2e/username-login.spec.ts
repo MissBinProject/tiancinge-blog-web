@@ -6,13 +6,15 @@ test('登入畫面使用一般帳號並拒絕未知帳號', async ({ page }) => 
   await page.goto('http://localhost:5173/');
   const username = page.getByLabel('管理員帳號');
   await expect(username).toHaveAttribute('type', 'text');
+  await expect(page.getByText('登入已逾時，請重新登入。')).not.toBeVisible();
   await username.fill('unknown-account');
   await page.getByLabel('密碼').fill('password123');
   await page.getByRole('button', { name: '登入後台' }).click();
   await expect(page.getByRole('alert')).toHaveText('帳號或密碼不正確');
 });
 
-test('開發模式可用 tiancinge 帳號進入後台', async ({ page }) => {
+test('可用 tiancinge 帳號進入後台', async ({ page }) => {
+  test.skip(!process.env.E2E_ADMIN_PASSWORD, '需要透過環境變數提供測試密碼');
   await page.goto('http://localhost:5173/');
   await page.getByLabel('管理員帳號').fill('tiancinge');
   await page.getByLabel('密碼').fill(testPassword);
