@@ -22,6 +22,8 @@ Firebase 部署與備份／回復策略請參考 [`02_規劃書/project/firebase
 
 後台一般帳號登入修改的規劃與進度見 [`02_規劃書/update/username-login/修改程式規劃書.md`](02_規劃書/update/username-login/修改程式規劃書.md)。本機可用下列命令驗證帳號畫面（會暫時清空 Firebase Vite 變數，避免連到正式資料）：
 
+正式 Firebase 登入與密碼重設的人工驗收步驟見 [`02_規劃書/update/username-login/正式Firebase驗收操作.md`](02_規劃書/update/username-login/正式Firebase驗收操作.md)。
+
 ```bash
 VITE_FIREBASE_API_KEY= VITE_FIREBASE_AUTH_DOMAIN= VITE_FIREBASE_PROJECT_ID= VITE_FIREBASE_APP_ID= pnpm exec playwright test --config=playwright.admin.config.ts --workers=1
 ```
