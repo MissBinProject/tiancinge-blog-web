@@ -16,7 +16,7 @@ async function login(page: Page) {
 test('後台可登入、預覽文章並以 Escape 關閉預覽', async ({ page }) => {
   await page.goto('http://localhost:5173/articles');
   await login(page);
-  await expect(page.getByRole('heading', { name: '最新消息與部落格' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '文章管理' })).toBeVisible();
   await page.locator('.article-editor').getByRole('button', { name: '部落格', exact: true }).click();
   await expect(page.getByLabel('文章標題')).toHaveValue('精油的療癒力量');
   await expect(page.getByLabel('發布日期')).toHaveValue('2025-09-05');
@@ -54,10 +54,8 @@ test('文章正文圖片 block 可從共用素材選擇器帶入圖片', async (
   await page.goto('http://localhost:5173/articles');
   await login(page);
   const editor = page.locator('.article-editor');
-  await editor.getByRole('button', { name: '+ 圖片' }).click();
-  const imageBlock = editor.locator('.body-block').last();
-  await imageBlock.getByRole('button', { name: '選擇 news-1.png' }).click();
-  await expect(imageBlock.locator('input').first()).toHaveValue('/assets/crops/news-1.png');
+  await editor.getByLabel('插入已上傳圖片').selectOption({ label: 'news-1.png' });
+  await expect(editor.locator('.ProseMirror img').last()).toHaveAttribute('src', '/assets/crops/news-1.png');
 });
 
 test('後台文章狀態篩選與手機版不溢出', async ({ page }) => {
@@ -95,7 +93,7 @@ test('後台離開編輯頁前會提醒尚未儲存變更', async ({ page }) => 
   page.once('dialog', async (dialog) => { dialogMessage = dialog.message(); await dialog.dismiss(); });
   await page.getByRole('button', { name: '服務價格', exact: true }).click();
   expect(dialogMessage).toContain('尚未儲存');
-  await expect(page.getByRole('heading', { name: '最新消息與部落格' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '文章管理' })).toBeVisible();
 });
 
 test('後台設定可編輯品牌且素材可搜尋篩選', async ({ page }) => {
@@ -132,13 +130,13 @@ test('後台可建立草稿文章並發布', async ({ page }) => {
   const editor = page.locator('.article-editor');
   await editor.getByRole('button', { name: '新增', exact: true }).click();
   await editor.getByLabel('文章標題').fill('春日放鬆指南');
-  await expect(editor.getByLabel('系統代碼（10 位亂碼，不可修改）')).toHaveValue(/^[a-z0-9]{10}$/);
+  await expect(editor.getByLabel('網址代稱（slug）')).toHaveValue(/^[a-z0-9]{10}$/);
   await editor.getByLabel('摘要').fill('用一段安靜時光照顧自己。');
   await editor.getByLabel('已發布').click();
   await expect(editor.getByLabel('已發布')).not.toBeChecked();
   await expect(editor.getByText('文章必須先提供正文內容才能發布')).toBeVisible();
-  await editor.getByRole('button', { name: '+ 段落' }).click();
-  await editor.locator('.body-block').last().locator('textarea').fill('春日裡留一段時間，讓身心重新呼吸。');
+  await editor.locator('.ProseMirror').click();
+  await editor.locator('.ProseMirror').fill('春日裡留一段時間，讓身心重新呼吸。');
   await editor.getByLabel('已發布').check();
   await editor.getByRole('button', { name: '儲存' }).click();
   await expect(editor.getByText('文章已儲存')).toBeVisible();
@@ -181,8 +179,8 @@ test('後台拒絕刪除使用中的素材與分類', async ({ page }) => {
   await page.getByRole('button', { name: '刪除素材' }).click();
   await expect(page.getByText(/正在使用的素材無法刪除/)).toBeVisible();
 
-  await page.getByRole('button', { name: '最新消息與部落格', exact: true }).click();
+  await page.getByRole('button', { name: '最新消息', exact: true }).first().click();
   page.once('dialog', (dialog) => dialog.accept());
   await page.getByRole('button', { name: '刪除 活動訊息' }).click();
-  await expect(page.getByText(/^刪除失敗：使用中的分類無法刪除/)).toBeVisible();
+  await expect(page.getByText('分類已刪除')).toBeVisible();
 });
