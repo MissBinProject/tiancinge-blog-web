@@ -9,7 +9,8 @@ export async function authorizeAdminRequest(request: Request, requireCsrf = fals
   const config = readAdminRuntimeConfig();
   if (!config) return null;
   const origin = request.headers.get('origin');
-  if (origin !== config.allowedOrigin) return null;
+  if (request.method !== 'GET' && origin !== config.allowedOrigin) return null;
+  if (request.method === 'GET' && origin && origin !== config.allowedOrigin) return null;
   const cookieStore = await cookies();
   const token = cookieStore.get(SESSION_COOKIE)?.value || '';
   const session = await readStoredAdminSession(token);
