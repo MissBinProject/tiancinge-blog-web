@@ -22,7 +22,7 @@ Firebase 部署與備份／回復策略請參考 [`02_規劃書/project/firebase
 
 後台一般帳號登入修改的規劃與進度見 [`02_規劃書/update/username-login/修改程式規劃書.md`](02_規劃書/update/username-login/修改程式規劃書.md)。本機可用下列命令驗證帳號畫面（會暫時清空 Firebase Vite 變數，避免連到正式資料）：
 
-移除 Firebase Authentication、改用伺服器帳密的規劃與實作進度見 [`02_規劃書/update/2026-09-15-server-account/修改規劃書.md`](02_規劃書/update/2026-09-15-server-account/修改規劃書.md)。目前伺服器帳密、session、登入 API、全部管理 API、後台 HTTP adapter、Hosting rewrite 與 Rules 已部署；S33–S35 的視覺驗收、回退演練與 provider 停用決策列在同一份任務卡。
+移除 Firebase Authentication、改用伺服器帳密的規劃與實作進度見 [`02_規劃書/update/2026-09-15-server-account/修改規劃書.md`](02_規劃書/update/2026-09-15-server-account/修改規劃書.md)。目前伺服器帳密、session、登入 API、全部管理 API、後台 HTTP adapter、Hosting rewrite、Rules、provider 停用與回退演練均已完成；桌機像素差異另依原始設計稿簽核。
 
 正式 Firebase 登入與密碼重設的人工驗收步驟見 [`02_規劃書/update/username-login/正式Firebase驗收操作.md`](02_規劃書/update/username-login/正式Firebase驗收操作.md)。
 
