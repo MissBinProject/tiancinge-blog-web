@@ -20,6 +20,12 @@ Firebase 部署與備份／回復策略請參考 [`02_規劃書/project/firebase
 
 正式資料、帳號、網域與店家內容請依 [`production-input-form.md`](02_規劃書/project/production-input-form.md) 填寫，再執行上線清單。每張 Luna 卡的提交與交接證據見 [`commit-map.md`](02_規劃書/project/luna-tasks/commit-map.md)。
 
+後台一般帳號登入修改的規劃與進度見 [`02_規劃書/update/username-login/修改程式規劃書.md`](02_規劃書/update/username-login/修改程式規劃書.md)。本機可用下列命令驗證帳號畫面（會暫時清空 Firebase Vite 變數，避免連到正式資料）：
+
+```bash
+VITE_FIREBASE_API_KEY= VITE_FIREBASE_AUTH_DOMAIN= VITE_FIREBASE_PROJECT_ID= VITE_FIREBASE_APP_ID= pnpm exec playwright test --config=playwright.admin.config.ts --workers=1
+```
+
 部署前可執行 `pnpm preflight:production`，檢查七個官網／後台環境變數是否存在、網址格式是否正確；檢查不會輸出任何 key 值。
 
 若要依設計稿座標重新產生暫用卡片素材，可執行 `pnpm assets:export`。
