@@ -134,7 +134,7 @@ test('後台可建立草稿文章並發布', async ({ page }) => {
   await list.getByRole('button', { name: '新增文章' }).click();
   const editor = page.locator('.article-edit-page');
   await editor.getByLabel('文章標題').fill('春日放鬆指南');
-  await expect(editor.getByLabel('網址代稱（slug）')).toHaveValue(/^[a-z0-9]{10}$/);
+  await expect(editor.getByLabel('網址代稱（slug）')).not.toBeVisible();
   await editor.getByLabel('摘要').fill('用一段安靜時光照顧自己。');
   await editor.getByLabel('已發布').click();
   await expect(editor.getByLabel('已發布')).not.toBeChecked();
@@ -213,6 +213,27 @@ test('文章編輯器提供字體、字級、顏色與完整格式工具', async
   const previewHeading = page.locator('.preview-body h2');
   await expect(previewHeading).toHaveCSS('text-align', 'center');
   await expect(previewHeading.locator('span[style*="font-size: 24px"]').first()).toBeVisible();
+});
+
+test('文章編輯頁隱藏網址代碼、上方操作橫向等寬並可直接上傳封面', async ({ page }) => {
+  await page.goto('http://localhost:5173/blog');
+  await login(page);
+  await page.getByRole('button', { name: '編輯 精油的療癒力量' }).click();
+  const editor = page.locator('.article-edit-page');
+  await expect(editor.getByText('系統網址代碼')).not.toBeVisible();
+  await expect(editor.getByText('文章內容會以安全的結構化格式儲存')).not.toBeVisible();
+  const actionButtons = [editor.getByRole('button', { name: '預覽' }), editor.getByRole('button', { name: '儲存' }), editor.getByRole('button', { name: '刪除文章' })];
+  const boxes = await Promise.all(actionButtons.map((button) => button.boundingBox()));
+  expect(boxes.every(Boolean)).toBe(true);
+  expect(new Set(boxes.map((box) => Math.round(box!.y))).size).toBe(1);
+  expect(new Set(boxes.map((box) => Math.round(box!.width))).size).toBe(1);
+  const publishBox = await editor.getByLabel('已發布').boundingBox();
+  const titleBox = await editor.getByLabel('文章標題').boundingBox();
+  expect(publishBox!.y).toBeLessThan(titleBox!.y);
+  await editor.getByLabel('上傳封面圖片').setInputFiles({ name: 'cover-upload.png', mimeType: 'image/png', buffer: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=', 'base64') });
+  await expect(editor.getByText('封面圖片已上傳並選用')).toBeVisible();
+  await expect(editor.locator('.selected-cover-preview')).toHaveAttribute('src', /^blob:/);
+  await expect(editor.getByRole('button', { name: '選擇 cover-upload.png' })).toBeVisible();
 });
 
 test('分類管理預設隱藏，開啟後只顯示部落格分類', async ({ page }) => {
