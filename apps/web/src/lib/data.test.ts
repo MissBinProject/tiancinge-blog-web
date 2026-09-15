@@ -56,6 +56,9 @@ describe('公開內容 fixture', () => {
     expect(isSafeContentUrl('javascript:alert(1)')).toBe(false);
     expect(isValidArticleBody(Array.from({ length: 101 }, () => ({ type: 'paragraph', text: 'x' })))).toBe(false);
     expect(isValidArticleBody([{ type: 'list', text: 'x', items: Array.from({ length: 101 }, () => 'item') }])).toBe(false);
+    expect(isValidArticleBody([{ type: 'paragraph', text: '格式文字', textAlign: 'center', content: [{ text: '格式', bold: true, color: '#c83f62', fontSize: '24px', fontFamily: 'Noto Serif TC' }, { text: '文字', underline: true }] }])).toBe(true);
+    expect(isValidArticleBody([{ type: 'paragraph', text: '危險格式', content: [{ text: '危險', color: 'red;background:url(javascript:alert(1))' }] }])).toBe(false);
+    expect(isValidArticleBody([{ type: 'paragraph', text: '危險連結', content: [{ text: '點我', href: 'javascript:alert(1)' }] }])).toBe(false);
     expect(isValidBenefits([{ title: '最新活動', caption: '不錯過優惠' }])).toBe(true);
     expect(isValidBenefits(Array.from({ length: 5 }, () => ({ title: 'x', caption: 'y' })))).toBe(false);
   });

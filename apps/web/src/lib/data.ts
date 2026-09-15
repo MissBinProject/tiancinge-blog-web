@@ -1,4 +1,4 @@
-import { fixtureArticles, fixtureServices, fixtureSettings, isSafeContentUrl, isValidBenefits, type Article, type ContactMessage, type Service, type SiteSettings } from '@tian-xin-ge/contracts';
+import { fixtureArticles, fixtureServices, fixtureSettings, isSafeContentUrl, isValidArticleBody, isValidBenefits, type Article, type ContactMessage, type Service, type SiteSettings } from '@tian-xin-ge/contracts';
 import { firebaseServer, firebaseServerExpected } from './firebase-admin';
 
 export const settings: SiteSettings = fixtureSettings;
@@ -48,11 +48,11 @@ function mapArticle(row: Record<string, unknown>): Article {
     if (!block || typeof block !== 'object') return null;
     const item = block as Record<string, unknown>;
     const type = String(item.type);
-    if (!['heading', 'paragraph', 'list', 'link', 'image'].includes(type) || typeof item.text !== 'string') return null;
-    if (type === 'list') return { type: 'list', text: item.text, items: Array.isArray(item.items) ? item.items.filter((entry): entry is string => typeof entry === 'string') : [] };
-    if (type === 'link') { const url = safeBodyUrl(item.url); return url ? { type: 'link', text: item.text, url } : null; }
-    if (type === 'image') { const url = safeBodyUrl(item.url, true); return url ? { type: 'image', text: item.text, url, alt: typeof item.alt === 'string' ? item.alt.slice(0, 160) : item.text } : null; }
-    return { type: type as 'heading' | 'paragraph', text: item.text };
+    if (!['heading', 'paragraph', 'list', 'quote', 'link', 'image'].includes(type) || typeof item.text !== 'string') return null;
+    const candidate = { ...item, type, text: item.text } as Article['body'][number];
+    if (type === 'link') { const url = safeBodyUrl(item.url); if (!url) return null; candidate.url = url; }
+    if (type === 'image') { const url = safeBodyUrl(item.url, true); if (!url) return null; candidate.url = url; candidate.alt = typeof item.alt === 'string' ? item.alt.slice(0, 160) : item.text; }
+    return isValidArticleBody([candidate]) ? candidate : null;
   }).filter((block): block is Article['body'][number] => block !== null) : [];
   return { id: String(row.id), slug: String(row.slug ?? ''), type: row.type as Article['type'], category, title: String(row.title ?? ''), excerpt: String(row.excerpt ?? ''), seoTitle: typeof (row.seoTitle ?? row.seo_title) === 'string' ? String(row.seoTitle ?? row.seo_title) : undefined, seoDescription: typeof (row.seoDescription ?? row.seo_description) === 'string' ? String(row.seoDescription ?? row.seo_description) : undefined, coverUrl: safeImageUrl(row.coverUrl ?? row.cover_url), body, publishedAt: String(row.publishedAt ?? row.published_at ?? ''), status: row.status as Article['status'] };
 }

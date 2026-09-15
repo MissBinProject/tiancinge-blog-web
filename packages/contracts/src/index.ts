@@ -1,6 +1,30 @@
 export type ContentStatus = 'draft' | 'published';
 export type ArticleType = 'news' | 'blog';
-export type ArticleBodyBlock = { type: 'heading' | 'paragraph' | 'list' | 'link' | 'image'; text: string; items?: string[]; url?: string; alt?: string };
+export const ARTICLE_FONT_SIZES = ['14px', '16px', '18px', '20px', '24px', '28px', '32px', '40px'] as const;
+export const ARTICLE_FONT_FAMILIES = ['Noto Sans TC', 'Noto Serif TC', 'Arial', 'Georgia'] as const;
+export type ArticleTextAlign = 'left' | 'center' | 'right' | 'justify';
+export type ArticleTextRun = {
+  text: string;
+  bold?: boolean;
+  italic?: boolean;
+  underline?: boolean;
+  strike?: boolean;
+  color?: string;
+  fontSize?: typeof ARTICLE_FONT_SIZES[number];
+  fontFamily?: typeof ARTICLE_FONT_FAMILIES[number];
+  href?: string;
+};
+export type ArticleBodyBlock = {
+  type: 'heading' | 'paragraph' | 'list' | 'quote' | 'link' | 'image';
+  text: string;
+  content?: ArticleTextRun[];
+  textAlign?: ArticleTextAlign;
+  items?: string[];
+  itemContent?: ArticleTextRun[][];
+  ordered?: boolean;
+  url?: string;
+  alt?: string;
+};
 export type SiteBenefit = { title: string; caption: string };
 
 const CONTENT_CODE_ALPHABET = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -26,12 +50,29 @@ export function isSafeContentUrl(value: unknown, image = false): value is string
 }
 
 export function isValidArticleBody(value: unknown): value is ArticleBodyBlock[] {
+  const validRun = (run: unknown) => {
+    if (!run || typeof run !== 'object') return false;
+    const record = run as Record<string, unknown>;
+    if (typeof record.text !== 'string' || record.text.length > 10000) return false;
+    for (const key of ['bold', 'italic', 'underline', 'strike']) if (record[key] !== undefined && typeof record[key] !== 'boolean') return false;
+    if (record.color !== undefined && (typeof record.color !== 'string' || !/^#[0-9a-f]{6}$/i.test(record.color))) return false;
+    if (record.fontSize !== undefined && !ARTICLE_FONT_SIZES.includes(record.fontSize as typeof ARTICLE_FONT_SIZES[number])) return false;
+    if (record.fontFamily !== undefined && !ARTICLE_FONT_FAMILIES.includes(record.fontFamily as typeof ARTICLE_FONT_FAMILIES[number])) return false;
+    if (record.href !== undefined && !isSafeContentUrl(record.href)) return false;
+    return true;
+  };
   return Array.isArray(value) && value.length <= 100 && value.every((block: unknown) => {
     if (!block || typeof block !== 'object') return false;
     const record = block as Record<string, unknown>;
     const type = record.type;
-    if (!['heading', 'paragraph', 'list', 'link', 'image'].includes(String(type)) || typeof record.text !== 'string' || record.text.length > 10000) return false;
-    if (type === 'list') return Array.isArray(record.items) && record.items.length <= 100 && record.items.every((item) => typeof item === 'string' && item.length <= 1000);
+    if (!['heading', 'paragraph', 'list', 'quote', 'link', 'image'].includes(String(type)) || typeof record.text !== 'string' || record.text.length > 10000) return false;
+    if (record.textAlign !== undefined && !['left', 'center', 'right', 'justify'].includes(String(record.textAlign))) return false;
+    if (record.content !== undefined && (!Array.isArray(record.content) || record.content.length > 500 || !record.content.every(validRun))) return false;
+    if (type === 'list') {
+      if (!Array.isArray(record.items) || record.items.length > 100 || !record.items.every((item) => typeof item === 'string' && item.length <= 1000)) return false;
+      if (record.itemContent !== undefined && (!Array.isArray(record.itemContent) || record.itemContent.length !== record.items.length || !record.itemContent.every((runs) => Array.isArray(runs) && runs.length <= 100 && runs.every(validRun)))) return false;
+      return record.ordered === undefined || typeof record.ordered === 'boolean';
+    }
     if (type === 'link') return isSafeContentUrl(record.url);
     if (type === 'image') return isSafeContentUrl(record.url, true) && (record.alt === undefined || (typeof record.alt === 'string' && record.alt.length <= 160));
     return true;
