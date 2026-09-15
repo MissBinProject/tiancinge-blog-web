@@ -39,7 +39,7 @@ pnpm test
 pnpm test:e2e
 ```
 
-`test:e2e` 會使用本機 Chrome 執行 `e2e/` 內的公開頁與後台流程；若兩個 dev server 已啟動會重用現有服務。後台 Firebase 流程需先設定 `E2E_ADMIN_EMAIL` 與 `E2E_ADMIN_PASSWORD`；未設定時後台案例會跳過，不把正式密碼寫入測試。
+`test:e2e` 會使用本機 Chrome 執行 `e2e/` 內的公開頁與後台流程；若兩個 dev server 已啟動會重用現有服務。後台 Firebase 流程需先設定 `E2E_ADMIN_PASSWORD`，帳號預設為 `tiancinge`，也可用 `E2E_ADMIN_USERNAME` 覆寫；未設定密碼時後台案例會跳過，不把正式密碼寫入測試。
 
 ## Firebase／GCP 部署
 
