@@ -20,6 +20,7 @@
     "tasks:verify": "node scripts/verify-task-cards.mjs",
     "db:verify": "./supabase/scripts/verify-local.sh",
     "preflight:production": "node scripts/check-production-env.mjs",
+    "admin:password-hash": "node scripts/create-admin-password-hash.mjs",
     "db:backup:verify": "./supabase/scripts/verify-backup-restore.sh"
   },
   "packageManager": "pnpm@11.19.0",
