@@ -1,6 +1,6 @@
 import { getApp, getApps, initializeApp, type FirebaseApp } from 'firebase/app';
-import { getAuth, type Auth } from 'firebase/auth';
-import { getFirestore, type Firestore } from 'firebase/firestore';
+import { connectAuthEmulator, getAuth, type Auth } from 'firebase/auth';
+import { connectFirestoreEmulator, getFirestore, type Firestore } from 'firebase/firestore';
 import { getStorage, type FirebaseStorage } from 'firebase/storage';
 
 const config = {
@@ -18,3 +18,12 @@ if (firebaseConfigured) app = getApps().length ? getApp() : initializeApp(config
 export const firebaseAuth: Auth | null = app ? getAuth(app) : null;
 export const firebaseDb: Firestore | null = app ? getFirestore(app) : null;
 export const firebaseStorage: FirebaseStorage | null = app ? getStorage(app) : null;
+
+if (firebaseAuth && import.meta.env.VITE_FIREBASE_AUTH_EMULATOR) {
+  connectAuthEmulator(firebaseAuth, import.meta.env.VITE_FIREBASE_AUTH_EMULATOR, { disableWarnings: true });
+}
+if (firebaseDb && import.meta.env.VITE_FIREBASE_FIRESTORE_EMULATOR) {
+  const [host, portText] = String(import.meta.env.VITE_FIREBASE_FIRESTORE_EMULATOR).split(':');
+  const port = Number(portText);
+  if (host && Number.isInteger(port) && port > 0) connectFirestoreEmulator(firebaseDb, host, port);
+}
