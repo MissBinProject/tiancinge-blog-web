@@ -14,6 +14,8 @@ pnpm run dev:admin     # http://localhost:5173
 
 Firebase 部署與備份／回復策略請參考 [`02_規劃書/project/firebase-deployment.md`](02_規劃書/project/firebase-deployment.md)。Firestore 匯出使用 Google Cloud export/import；Storage 使用 Cloud Storage lifecycle 與版本化策略。
 
+費用防護已在 Google Cloud Billing 設定：`tiancinge` 的 Cloud Run 每月 NT$100，Gemini API 與 Vertex AI 各每月 NT$1，使用原生 Preview 支出上限達標後暫停指定服務的新用量。上限可能受帳務延遲影響，解除需由帳單管理員在 [預算與警告](https://console.cloud.google.com/billing/016915-3B65AD-1A05CA/budgets?project=tiancinge) 手動操作；詳細 ID 與限制見 [`02_規劃書/update/2026-09-15-billing-guard.md`](02_規劃書/update/2026-09-15-billing-guard.md)。
+
 正式網站為動態渲染，後台儲存 Firestore 後重新整理官網即可看到更新，不需等待靜態頁面建置。Cloud Run 設為 min instances 0，低流量時不持續佔用執行個體。
 
 正式資料、帳號、網域與店家內容請依 [`production-input-form.md`](02_規劃書/project/production-input-form.md) 填寫，再執行上線清單。每張 Luna 卡的提交與交接證據見 [`commit-map.md`](02_規劃書/project/luna-tasks/commit-map.md)。
