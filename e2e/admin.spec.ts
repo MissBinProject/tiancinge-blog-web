@@ -4,7 +4,7 @@ const e2eAdminUsername = process.env.E2E_ADMIN_USERNAME || 'tiancinge';
 const e2eAdminPassword = process.env.E2E_ADMIN_PASSWORD;
 
 test.beforeEach(() => {
-  test.skip(!e2eAdminPassword, '設定 E2E_ADMIN_PASSWORD 才會執行 Firebase 後台端對端測試；帳號預設為 tiancinge');
+  test.skip(!e2eAdminPassword, '設定 E2E_ADMIN_PASSWORD 才會執行後台端對端測試；帳號預設為 tiancinge');
 });
 
 async function login(page: Page) {
@@ -30,8 +30,8 @@ test('後台可登入、預覽文章並以 Escape 關閉預覽', async ({ page }
 test('後台登入失敗輔助流程與登出會回到登入畫面', async ({ page }) => {
   await page.goto('http://localhost:5173/');
   await page.getByLabel('管理員帳號').fill(e2eAdminUsername);
-  await page.getByRole('button', { name: '忘記密碼？寄送重設信件' }).click();
-  await expect(page.getByText(/重設密碼信件已寄出|開發模式不會寄送重設信件/)).toBeVisible();
+  await page.getByRole('button', { name: '需要重設密碼？' }).click();
+  await expect(page.getByText('請聯絡網站維護者重設管理員密碼。')).toBeVisible();
   await page.getByLabel('密碼').fill(e2eAdminPassword!);
   await page.getByRole('button', { name: '登入後台' }).click();
   await expect(page.getByRole('heading', { name: '總覽' })).toBeVisible();

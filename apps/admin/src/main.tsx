@@ -1,20 +1,17 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { BrowserRouter, useLocation, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, LogOut, Image as ImageIcon, Settings, Sparkles, Newspaper, Mail, Menu, Save, Plus, Trash2, ExternalLink } from 'lucide-react';
 import { createContentCode, fixtureArticles, fixtureCategories, fixtureMedia, fixtureMessages, fixtureServices, fixtureSettings, isContentCode, isPublishableArticleBody, isSafeContentUrl, isValidArticleBody, isValidBenefits, type Article, type Service } from '@tian-xin-ge/contracts';
 import './styles.css';
-import { firebaseConfigured } from './firebase';
 import { RichTextEditor } from './components/RichTextEditor';
-import { signOutAdmin, subscribeAuthChanges, updateAdminPassword, verifyAdminSession } from './auth';
-import { requestResetByUsername, signInWithUsername } from './features/auth/application/accountLogin';
 import { restoreServerSession, signInWithServerAccount, signOutServerAccount } from './features/auth/infrastructure/serverAccountClient';
 import { isServerAdminApiEnabled } from './features/auth/infrastructure/adminApi';
 import { deleteArticle, deleteCategory, deleteMedia, deleteMessage, deleteService, loadArticles, loadCategories, loadMedia, loadMessages, loadServices, loadSettings, saveArticle, saveCategory, saveMediaAlt, saveMessage, saveService, saveSettings, uploadMedia, type AdminCategory, type ManagedArticle, type AdminMessage, type AdminMedia } from './repositories';
 
 const webOrigin = (import.meta.env.VITE_WEB_URL || 'http://localhost:3000').replace(/\/+$/, '');
 const serverAuthEnabled = isServerAdminApiEnabled();
-const adminRemoteEnabled = firebaseConfigured || serverAuthEnabled;
+const adminRemoteEnabled = serverAuthEnabled;
 const stableContentCode = (seed: string) => { let hash = 2166136261; for (const char of seed) hash = Math.imul(hash ^ char.charCodeAt(0), 16777619); const alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789'; let value = hash >>> 0; return Array.from({ length: 10 }, () => { value = Math.imul(value ^ (value >>> 13), 16777619) >>> 0; return alphabet[value % alphabet.length]; }).join(''); };
 const seedServices: Service[] = fixtureServices.map((service) => ({ ...service, slug: stableContentCode(`service:${service.id}`) }));
 const seedArticles: ManagedArticle[] = fixtureArticles.map((article) => ({ ...article, id: `local-${article.id}`, slug: stableContentCode(`article:${article.id}`), body: JSON.stringify(article.body) }));
@@ -85,71 +82,27 @@ function useUnsavedWarning(enabled: boolean, key: string) {
 }
 
 function App() {
-  const [logged, setLogged] = useState(() => !serverAuthEnabled && !firebaseConfigured && !import.meta.env.PROD && sessionStorage.getItem('tian-admin') === '1');
-  const [recovering, setRecovering] = useState(false);
+  const [logged, setLogged] = useState(() => !serverAuthEnabled && !import.meta.env.PROD && sessionStorage.getItem('tian-admin') === '1');
   const [authNotice, setAuthNotice] = useState('');
-  const explicitSignOut = useRef(false);
-  const sessionInitialized = useRef(false);
   useEffect(() => {
-    if (serverAuthEnabled) {
-      let disposed = false;
-      void restoreServerSession().then((result) => {
-        if (disposed) return;
-        if (result.ok) { sessionStorage.setItem('tian-admin', '1'); setLogged(true); setAuthNotice(''); }
-        else { sessionStorage.removeItem('tian-admin'); setLogged(false); if (result.reason === 'unavailable' || result.reason === 'network') setAuthNotice('目前無法驗證登入服務，請稍後再試'); }
-      });
-      return () => { disposed = true; };
-    }
-    if (!firebaseConfigured) return;
+    if (!serverAuthEnabled) return;
     let disposed = false;
-    let sessionRequest = 0;
-    const handleSession = async (session: Parameters<typeof verifyAdminSession>[0]) => {
-      const requestId = ++sessionRequest;
-      const result = await verifyAdminSession(session);
-      if (disposed || requestId !== sessionRequest) return;
-      if (result.status === 'signed-out') {
-        const hadSession = sessionStorage.getItem('tian-admin') === '1';
-        sessionStorage.removeItem('tian-admin');
-        setLogged(false);
-        if (hadSession && !explicitSignOut.current) setAuthNotice('登入已逾時，請重新登入。');
-        sessionInitialized.current = true;
-        explicitSignOut.current = false;
-        return;
-      }
-      sessionInitialized.current = true;
-      if (result.status === 'forbidden') {
-        explicitSignOut.current = true;
-        await signOutAdmin();
-        sessionStorage.removeItem('tian-admin');
-        setLogged(false);
-        setAuthNotice('此帳號沒有後台管理權限，請使用管理員帳號登入。');
-        return;
-      }
-      if (result.status === 'error') {
-        sessionStorage.removeItem('tian-admin');
-        setLogged(false);
-        setAuthNotice('目前無法驗證管理員權限，請稍後再試。');
-        return;
-      }
-      sessionStorage.setItem('tian-admin', '1');
-      setAuthNotice('');
-      setLogged(true);
-    };
-    const unsubscribe = subscribeAuthChanges((event, session) => { if (event === 'PASSWORD_RECOVERY') setRecovering(true); if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN') void handleSession(session); if (event === 'SIGNED_OUT') void handleSession(null); });
-    return () => { disposed = true; unsubscribe(); };
+    void restoreServerSession().then((result) => {
+      if (disposed) return;
+      if (result.ok) { sessionStorage.setItem('tian-admin', '1'); setLogged(true); setAuthNotice(''); }
+      else { sessionStorage.removeItem('tian-admin'); setLogged(false); if (result.reason === 'unavailable' || result.reason === 'network') setAuthNotice('目前無法驗證登入服務，請稍後再試'); }
+    });
+    return () => { disposed = true; };
   }, []);
-  const logout = async () => { explicitSignOut.current = true; if (serverAuthEnabled) await signOutServerAccount(); else await signOutAdmin(); sessionStorage.removeItem('tian-admin'); setLogged(false); };
-  if (recovering) return <ResetPassword onDone={() => { setRecovering(false); void logout(); }} />;
+  const logout = async () => { if (serverAuthEnabled) await signOutServerAccount(); sessionStorage.removeItem('tian-admin'); setLogged(false); };
   return logged ? <Dashboard onLogout={logout} /> : <Login notice={authNotice} onLogin={() => { sessionStorage.setItem('tian-admin', '1'); setAuthNotice(''); setLogged(true); }} />;
 }
 
-function ResetPassword({ onDone }: { onDone: () => void }) { const [password, setPassword] = useState(''); const [confirmPassword, setConfirmPassword] = useState(''); const [error, setError] = useState(''); const [message, setMessage] = useState(''); const submit = async (event: React.FormEvent) => { event.preventDefault(); if (password.length < 8 || password !== confirmPassword) { setError(password.length < 8 ? '密碼至少需要 8 個字元' : '兩次密碼不一致'); return; } const result = await updateAdminPassword(password); if (!result.ok) setError(result.reason === 'unconfigured' ? '開發模式無法重設密碼' : '密碼更新失敗，請重新申請重設信件'); else setMessage('密碼已更新，請重新登入'); }; return <div className="login-page"><div className="login-card"><h1>設定新密碼</h1><form onSubmit={submit}><label>新密碼<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="new-password" /></label><label>確認新密碼<input type="password" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} autoComplete="new-password" /></label>{error && <small className="error">{error}</small>}{message && <small className="muted">{message}</small>}{message ? <button type="button" className="primary" onClick={onDone}>回到登入</button> : <button className="primary">更新密碼</button>}</form></div></div>; }
-
 function Login({ onLogin, notice }: { onLogin: () => void; notice?: string }) {
   const [username, setUsername] = useState(''); const [password, setPassword] = useState(''); const [error, setError] = useState(''); const [message, setMessage] = useState(''); const [busy, setBusy] = useState(false);
-  const submit = async (event: React.FormEvent) => { event.preventDefault(); setError(''); setMessage(''); if (!username.trim() || !password) { setError('請輸入管理員帳號與密碼'); return; } setBusy(true); if (serverAuthEnabled) { const result = await signInWithServerAccount(username, password); if (!result.ok) { const messages: Record<string, string> = { invalid: '帳號或密碼不正確', rate_limited: '登入嘗試次數過多，請稍後再試', origin_denied: '請從後台網站登入', unavailable: '目前無法驗證登入服務，請稍後再試', network: '目前無法連線登入服務，請稍後再試' }; setError(messages[result.reason]); setBusy(false); return; } onLogin(); setBusy(false); return; } const result = await signInWithUsername(username, password); if (!result.ok) { if (result.reason === 'unconfigured' && !import.meta.env.PROD) { onLogin(); setBusy(false); return; } const messages = { unconfigured: '正式環境尚未設定 Firebase Authentication', invalid: '帳號或密碼不正確', forbidden: '此帳號沒有後台管理權限', error: '目前無法驗證登入服務，請稍後再試' } as const; setError(messages[result.reason]); setBusy(false); return; } onLogin(); setBusy(false); };
-  const reset = async () => { setError(''); setMessage(''); if (!username.trim()) { setError('請先輸入管理員帳號'); return; } if (serverAuthEnabled) { setMessage('請聯絡網站維護者重設管理員密碼。'); return; } const result = await requestResetByUsername(username, window.location.origin); if (!result.ok) { setError(result.reason === 'unconfigured' ? '正式環境尚未設定 Firebase Authentication' : '目前無法寄送重設信件'); return; } setMessage('若帳號有效，重設信件將寄至綁定信箱，請查看收件匣或垃圾郵件。'); };
-  return <div className="login-page"><div className="login-card"><img src={`${webOrigin}/assets/logo/logo_1_去背.png`} alt="天心閣" /><p>天心閣養生會館</p><h1>內容管理後台</h1>{notice && <p className="auth-notice" role="status">{notice}</p>}<form onSubmit={submit}><label>管理員帳號<input value={username} onChange={(e) => setUsername(e.target.value)} type="text" autoComplete="username" autoCapitalize="none" spellCheck={false} placeholder="請輸入帳號" /></label><label>密碼<input value={password} onChange={(e) => setPassword(e.target.value)} type="password" autoComplete="current-password" placeholder="••••••••" /></label>{error && <small className="error" role="alert">{error}</small>}{message && <small className="muted" role="status">{message}</small>}<button className="primary" disabled={busy}>{busy ? '登入中…' : '登入後台'}</button>{!serverAuthEnabled && <button type="button" className="text-btn" onClick={() => void reset()}>忘記密碼？寄送重設信件</button>}{serverAuthEnabled && <button type="button" className="text-btn" onClick={() => void reset()}>需要重設密碼？</button>}</form><small>{serverAuthEnabled ? '登入由網站伺服器驗證，資料操作使用安全 session' : firebaseConfigured ? '登入由 Firebase Authentication 驗證，並檢查管理員權限' : import.meta.env.PROD ? '正式環境必須設定登入服務' : '尚未設定 Firebase，開發模式允許測試帳號登入'}</small></div></div>;
+  const submit = async (event: React.FormEvent) => { event.preventDefault(); setError(''); setMessage(''); if (!username.trim() || !password) { setError('請輸入管理員帳號與密碼'); return; } setBusy(true); if (serverAuthEnabled) { const result = await signInWithServerAccount(username, password); if (!result.ok) { const messages: Record<string, string> = { invalid: '帳號或密碼不正確', rate_limited: '登入嘗試次數過多，請稍後再試', origin_denied: '請從後台網站登入', unavailable: '目前無法驗證登入服務，請稍後再試', network: '目前無法連線登入服務，請稍後再試' }; setError(messages[result.reason]); setBusy(false); return; } onLogin(); setBusy(false); return; } if (import.meta.env.PROD || username.trim().toLowerCase() !== 'tiancinge') { setError(import.meta.env.PROD ? '正式環境必須啟用伺服器登入服務' : '帳號或密碼不正確'); setBusy(false); return; } onLogin(); setBusy(false); };
+  const reset = () => { setError(''); setMessage('請聯絡網站維護者重設管理員密碼。'); };
+  return <div className="login-page"><div className="login-card"><img src={`${webOrigin}/assets/logo/logo_1_去背.png`} alt="天心閣" /><p>天心閣養生會館</p><h1>內容管理後台</h1>{notice && <p className="auth-notice" role="status">{notice}</p>}<form onSubmit={submit}><label>管理員帳號<input value={username} onChange={(e) => setUsername(e.target.value)} type="text" autoComplete="username" autoCapitalize="none" spellCheck={false} placeholder="請輸入帳號" /></label><label>密碼<input value={password} onChange={(e) => setPassword(e.target.value)} type="password" autoComplete="current-password" placeholder="••••••••" /></label>{error && <small className="error" role="alert">{error}</small>}{message && <small className="muted" role="status">{message}</small>}<button className="primary" disabled={busy}>{busy ? '登入中…' : '登入後台'}</button><button type="button" className="text-btn" onClick={reset}>需要重設密碼？</button></form><small>{serverAuthEnabled ? '登入由網站伺服器驗證，資料操作使用安全 session' : '僅限本機開發模式使用測試登入'}</small></div></div>;
 }
 
 function Dashboard({ onLogout }: { onLogout: () => void }) {
@@ -164,7 +117,7 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
   const remoteLoadError = servicesError || messagesError || settingsError || articlesError || categoriesError || mediaError;
   const labels: Record<string, string> = { overview: '總覽', services: '服務價格', articles: '文章管理', news: '最新消息', blog: '部落格', media: '素材管理', messages: '聯絡留言', settings: '網站設定' };
   const logout = () => { if (hasUnsavedChanges() && !window.confirm('有尚未儲存的變更，確定要登出嗎？')) return; onLogout(); };
-  return <div className={collapsed ? 'admin-shell collapsed' : 'admin-shell'}><aside><div className="admin-brand"><img src={`${webOrigin}/assets/logo/logo_1_去背.png`} alt="" /><span>天心閣<small>管理後台</small></span></div><nav><Nav icon={<LayoutDashboard />} label="總覽" id="overview" active={active} set={go} /><Nav icon={<Sparkles />} label="服務價格" id="services" active={active} set={go} /><Nav icon={<Newspaper />} label="最新消息" id="news" active={active} set={go} /><Nav icon={<Newspaper />} label="部落格" id="blog" active={active} set={go} /><Nav icon={<ImageIcon />} label="素材管理" id="media" active={active} set={go} /><Nav icon={<Mail />} label="聯絡留言" id="messages" active={active} set={go} /><Nav icon={<Settings />} label="網站設定" id="settings" active={active} set={go} /></nav><button className="logout" onClick={logout}><LogOut />登出</button></aside><section className="admin-main"><header><button className="icon-btn" aria-label={collapsed ? '展開選單' : '收合選單'} aria-expanded={!collapsed} onClick={() => setCollapsed(!collapsed)}><Menu /></button><div><h1>{labels[active]}</h1><small>天心閣養生會館 / 管理後台</small></div><a href={webOrigin} target="_blank" rel="noreferrer" className="view-site">查看網站 <ExternalLink size={15} /></a></header><div className="admin-content" aria-busy={remoteLoading}>{remoteLoading ? <div className="loading-overlay" role="status">正在載入 Firebase 正式資料…</div> : <>{remoteLoadError && <div className="error-banner" role="alert">正式資料讀取失敗，目前顯示本機快照；請檢查 Firebase 連線與權限後重新整理。</div>}{active === 'overview' && <Overview services={services} messages={messages} articles={articles} mediaCount={media.length} loading={servicesLoading || messagesLoading} />} {active === 'services' && <ServicesEditor values={services} setValues={setServices} media={media} />} {(active === 'articles' || active === 'news' || active === 'blog') && <><ArticlesEditor initialType={active === 'blog' ? 'blog' : 'news'} values={articles} setValues={setArticles} loading={articlesLoading} media={media} /><CategoryManager values={categories} setValues={setCategories} loading={categoriesLoading} articles={articles} initialType={active === 'blog' ? 'blog' : 'news'} /></>} {active === 'media' && <MediaEditor values={media} setValues={setMedia} loading={mediaLoading} />} {active === 'messages' && <MessagesEditor values={messages} setValues={setMessages} />} {active === 'settings' && <><SettingsEditor value={settings} setValue={setSettings} loading={settingsLoading} media={media} /><HomeContentEditor value={settings} setValue={setSettings} media={media} /></>}</>}</div></section></div>;
+  return <div className={collapsed ? 'admin-shell collapsed' : 'admin-shell'}><aside><div className="admin-brand"><img src={`${webOrigin}/assets/logo/logo_1_去背.png`} alt="" /><span>天心閣<small>管理後台</small></span></div><nav><Nav icon={<LayoutDashboard />} label="總覽" id="overview" active={active} set={go} /><Nav icon={<Sparkles />} label="服務價格" id="services" active={active} set={go} /><Nav icon={<Newspaper />} label="最新消息" id="news" active={active} set={go} /><Nav icon={<Newspaper />} label="部落格" id="blog" active={active} set={go} /><Nav icon={<ImageIcon />} label="素材管理" id="media" active={active} set={go} /><Nav icon={<Mail />} label="聯絡留言" id="messages" active={active} set={go} /><Nav icon={<Settings />} label="網站設定" id="settings" active={active} set={go} /></nav><button className="logout" onClick={logout}><LogOut />登出</button></aside><section className="admin-main"><header><button className="icon-btn" aria-label={collapsed ? '展開選單' : '收合選單'} aria-expanded={!collapsed} onClick={() => setCollapsed(!collapsed)}><Menu /></button><div><h1>{labels[active]}</h1><small>天心閣養生會館 / 管理後台</small></div><a href={webOrigin} target="_blank" rel="noreferrer" className="view-site">查看網站 <ExternalLink size={15} /></a></header><div className="admin-content" aria-busy={remoteLoading}>{remoteLoading ? <div className="loading-overlay" role="status">正在載入伺服器正式資料…</div> : <>{remoteLoadError && <div className="error-banner" role="alert">正式資料讀取失敗，目前顯示本機快照；請檢查網站伺服器連線後重新整理。</div>}{active === 'overview' && <Overview services={services} messages={messages} articles={articles} mediaCount={media.length} loading={servicesLoading || messagesLoading} />} {active === 'services' && <ServicesEditor values={services} setValues={setServices} media={media} />} {(active === 'articles' || active === 'news' || active === 'blog') && <><ArticlesEditor initialType={active === 'blog' ? 'blog' : 'news'} values={articles} setValues={setArticles} loading={articlesLoading} media={media} /><CategoryManager values={categories} setValues={setCategories} loading={categoriesLoading} articles={articles} initialType={active === 'blog' ? 'blog' : 'news'} /></>} {active === 'media' && <MediaEditor values={media} setValues={setMedia} loading={mediaLoading} />} {active === 'messages' && <MessagesEditor values={messages} setValues={setMessages} />} {active === 'settings' && <><SettingsEditor value={settings} setValue={setSettings} loading={settingsLoading} media={media} /><HomeContentEditor value={settings} setValue={setSettings} media={media} /></>}</>}</div></section></div>;
 }
 function Nav({ icon, label, id, active, set }: { icon: React.ReactNode; label: string; id: string; active: string; set: (id: string) => void }) { return <button className={active === id ? 'side-nav active' : 'side-nav'} aria-current={active === id ? 'page' : undefined} aria-label={label} onClick={() => set(id)}>{icon}<span>{label}</span></button>; }
 function Overview({ services, messages, articles, mediaCount, loading }: { services: Service[]; messages: AdminMessage[]; articles: ManagedArticle[]; mediaCount: number; loading: boolean }) { return <div><div className="welcome"><div><span className="eyebrow">WELCOME BACK</span><h2>今天也一起讓生活更美好</h2><p>從這裡管理網站內容，儲存後重新整理官網即可看見更新。</p></div><a className="primary" href={webOrigin} target="_blank" rel="noreferrer">前往官網 <ExternalLink size={15} /></a></div><div className="stats"><Stat label="上架服務" value={services.filter((s) => s.isVisible).length} /><Stat label="文章總數" value={articles.length} /><Stat label="未處理留言" value={messages.filter((m) => m.status === 'unread').length} /><Stat label="素材數量" value={mediaCount} /></div><div className="panel quick"><h3>快速操作</h3><p>{loading ? '正在載入資料…' : '使用左側選單編輯固定版型內容，所有表單都有儲存前驗證。'}</p><div><span>✓　公開頁面資料與後台分離</span><span>✓　草稿不會出現在官網</span><span>✓　圖片上限 10 MB</span></div></div></div>; }

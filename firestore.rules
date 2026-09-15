@@ -1,17 +1,10 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    function signedIn() { return request.auth != null; }
-    function isAdmin() { return signedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid)) && get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.active != false; }
-    match /{document=**} { allow read, write: if false; }
-    match /admins/{uid} { allow read: if signedIn() && request.auth.uid == uid; allow write: if false; }
-    match /site_settings/{id} { allow read, write: if isAdmin(); }
-    match /services/{id} { allow read, write: if isAdmin(); }
-    match /articles/{id} { allow read, write: if isAdmin(); }
-    match /article_categories/{id} { allow read, write: if isAdmin(); }
-    match /media_assets/{id} { allow read, write: if isAdmin(); }
-    match /contact_messages/{id} { allow read, write: if isAdmin(); }
-    match /contact_guards/{id} { allow read, write: if false; }
-    match /contact_duplicates/{id} { allow read, write: if false; }
+    // All reads and writes go through the Cloud Run server Admin SDK.
+    // There is no Firebase Authentication provider in the admin site.
+    match /{document=**} {
+      allow read, write: if false;
+    }
   }
 }

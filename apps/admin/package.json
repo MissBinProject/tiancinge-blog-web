@@ -12,7 +12,6 @@
   "dependencies": {
     "@tian-xin-ge/contracts": "file:../../packages/contracts",
     "@tian-xin-ge/design-tokens": "file:../../packages/design-tokens",
-    "firebase": "12.4.0",
     "@tiptap/react": "3.31.3",
     "@tiptap/core": "3.31.3",
     "@tiptap/starter-kit": "3.31.3",

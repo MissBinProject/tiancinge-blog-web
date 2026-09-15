@@ -1,11 +1,11 @@
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
-    function isAdmin() { return request.auth != null && request.auth.token.admin == true; }
     match /site-media/{allPaths=**} {
+      // Public pages can render published images; uploads and deletes use
+      // the Cloud Run server Admin SDK after a server-account session check.
       allow read: if true;
-      allow write: if isAdmin() && request.resource.size <= 10 * 1024 * 1024 && request.resource.contentType.matches('image/(jpeg|png|webp)');
-      allow delete: if isAdmin();
+      allow write, delete: if false;
     }
   }
 }

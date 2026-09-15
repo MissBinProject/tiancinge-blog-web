@@ -25,7 +25,7 @@ test('可用 tiancinge 帳號進入後台', async ({ page }) => {
 test('未知帳號的重設密碼回應不洩漏帳號存在狀態', async ({ page }) => {
   await page.goto('http://localhost:5173/');
   await page.getByLabel('管理員帳號').fill('unknown-account');
-  await page.getByRole('button', { name: '忘記密碼？寄送重設信件' }).click();
-  await expect(page.locator('small[role="status"]')).toHaveText(/若帳號有效/);
+  await page.getByRole('button', { name: '需要重設密碼？' }).click();
+  await expect(page.locator('small[role="status"]')).toHaveText('請聯絡網站維護者重設管理員密碼。');
   await expect(page.getByText('ouyangtaisen@gmail.com')).not.toBeVisible();
 });

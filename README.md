@@ -1,6 +1,6 @@
 # 天心閣養生會館
 
-天心閣養生會館官網與內容管理後台。前台以 Next.js 16／TypeScript 建置並以 Cloud Run 動態伺服器渲染，後台以 React／Vite／TypeScript 建置並發布至 Firebase Hosting；資料層使用 Firebase Authentication、Cloud Firestore 與 Cloud Storage。共用資料契約與驗證位於 `packages/contracts`，共用設計變數位於 `packages/design-tokens`。在尚未設定 Firebase 環境變數時，前台與後台使用共用 fixture／localStorage 方便設計驗收。完整 Luna 任務卡位於 [`02_規劃書/project/luna-tasks-firebase.md`](02_規劃書/project/luna-tasks-firebase.md)。
+天心閣養生會館官網與內容管理後台。前台以 Next.js 16／TypeScript 建置並以 Cloud Run 動態伺服器渲染，後台以 React／Vite／TypeScript 建置並發布至 Firebase Hosting；資料層使用 Cloud Firestore 與 Cloud Storage，後台登入由 Cloud Run 伺服器帳號密碼與安全 session 驗證。共用資料契約與驗證位於 `packages/contracts`，共用設計變數位於 `packages/design-tokens`。完整 Luna 任務卡位於 [`02_規劃書/update/2026-09-15-server-account/luna-tasks/README.md`](02_規劃書/update/2026-09-15-server-account/luna-tasks/README.md)。
 
 ## 啟動
 
@@ -10,7 +10,7 @@ pnpm run dev:web       # http://localhost:3000
 pnpm run dev:admin     # http://localhost:5173
 ```
 
-本機 Firebase 設定使用 `apps/web/.env.local` 的 `FIREBASE_PROJECT_ID`、`FIREBASE_STORAGE_BUCKET`，以及 `apps/admin/.env.local` 的 `VITE_FIREBASE_*` 與 `VITE_WEB_URL`。正式前台使用 Cloud Run 的 Firebase Admin ADC，後台使用 Firebase Web SDK；Firestore Rules 依 `admins/{uid}` allowlist，Storage Rules 依受信任 Admin SDK 設定的 `admin=true` custom claim，只允許管理員寫入。管理員帳號由 Firebase Authentication 建立，並同步 allowlist 與 custom claim，再替換聯絡資訊、LINE 連結、地圖、SEO 及政策文字。
+本機前台使用 `apps/web/.env.local` 的 `FIREBASE_PROJECT_ID`、`FIREBASE_STORAGE_BUCKET`；後台只需要 `VITE_WEB_URL` 與 `VITE_ADMIN_AUTH_SERVER`。正式前台與管理 API 使用 Cloud Run 的 Firebase Admin ADC，後台 Hosting 只提供靜態 React 檔案並將 `/api/admin/**` rewrite 至 Cloud Run。Firestore Rules 封鎖瀏覽器直接讀寫，Storage 僅開放公開圖片讀取，所有異動由伺服器完成。帳號與密碼雜湊分別存於 Cloud Run runtime env 與 Secret Manager，不進入前端或 Git。
 
 Firebase 部署與備份／回復策略請參考 [`02_規劃書/project/firebase-deployment.md`](02_規劃書/project/firebase-deployment.md)。Firestore 匯出使用 Google Cloud export/import；Storage 使用 Cloud Storage lifecycle 與版本化策略。
 
@@ -22,7 +22,7 @@ Firebase 部署與備份／回復策略請參考 [`02_規劃書/project/firebase
 
 後台一般帳號登入修改的規劃與進度見 [`02_規劃書/update/username-login/修改程式規劃書.md`](02_規劃書/update/username-login/修改程式規劃書.md)。本機可用下列命令驗證帳號畫面（會暫時清空 Firebase Vite 變數，避免連到正式資料）：
 
-移除 Firebase Authentication、改用伺服器帳密的最新規劃與實作進度見 [`02_規劃書/update/2026-09-15-server-account/修改規劃書.md`](02_規劃書/update/2026-09-15-server-account/修改規劃書.md)。目前已完成伺服器帳密 hash、session、登入 API 與服務 API 核心；後台資料操作仍在逐模組遷移。
+移除 Firebase Authentication、改用伺服器帳密的規劃與實作進度見 [`02_規劃書/update/2026-09-15-server-account/修改規劃書.md`](02_規劃書/update/2026-09-15-server-account/修改規劃書.md)。目前伺服器帳密、session、登入 API、全部管理 API、後台 HTTP adapter、Hosting rewrite 與 Rules 已部署；S33–S35 的視覺驗收、回退演練與 provider 停用決策列在同一份任務卡。
 
 正式 Firebase 登入與密碼重設的人工驗收步驟見 [`02_規劃書/update/username-login/正式Firebase驗收操作.md`](02_規劃書/update/username-login/正式Firebase驗收操作.md)。
 
@@ -56,5 +56,5 @@ pnpm test:e2e
 - Firebase project：`tiancinge`（region `asia-east1`）。
 - 官網：Cloud Run service `tiancinge-web`，Firebase Hosting site `tiancinge-web` 以 rewrite 導向 Cloud Run，維持動態 SSR 與 SEO。
 - 後台：Firebase Hosting site `tiancinge-admin`，建置輸出 `apps/admin/dist`。
-- 資料：Firestore Native default database、Firebase Authentication、Storage bucket `tiancinge.firebasestorage.app`。
+- 資料：Firestore Native default database、Storage bucket `tiancinge.firebasestorage.app`；管理登入由 Cloud Run server account 處理。
 - 不要把任何 `.env` 檔或 service account key 提交到 repository。
