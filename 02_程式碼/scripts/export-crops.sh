@@ -5,7 +5,7 @@ set -euo pipefail
 # The source screenshots are never modified.
 
 project_root="$(cd "$(dirname "$0")/.." && pwd)"
-source_dir="$project_root/03_UI設計圖/01_首頁設計圖"
+source_dir="$project_root/../03_UI設計圖/01_首頁設計圖"
 target_dir="$project_root/apps/web/public/assets/crops"
 mkdir -p "$target_dir"
 

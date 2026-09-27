@@ -11,8 +11,8 @@ playwright-report/
 
 .DS_Store
 .firebase/
-apps/.static-build-*/
+**/apps/.static-build-*/
 build/static-web/
 
 # Local build outputs and data snapshots
-/build/
+build/

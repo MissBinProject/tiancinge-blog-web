@@ -1,6 +1,6 @@
 # Sitemap 發布服務
 
-> `PUBLIC_RELEASE_MODE=static` 啟用後，本服務不再單獨發布 sitemap。它會合併 Firestore 事件，從指定的私有 Cloud Storage source archive 建立 Cloud Build；Cloud Build 產生同一份 HTML、sitemap 與 robots 的 Hosting candidate，再呼叫 `/deploy-static` 經原有佇列發布。詳細切換條件見 `02_規劃書/update/2026-09-19-static-hosting/`。
+> `PUBLIC_RELEASE_MODE=static` 啟用後，本服務不再單獨發布 sitemap。它會合併 Firestore 事件，從指定的私有 Cloud Storage source archive 建立 Cloud Build；Cloud Build 產生同一份 HTML、sitemap 與 robots 的 Hosting candidate，再呼叫 `/deploy-static` 經原有佇列發布。詳細切換條件見 `../../02_規劃書/update/2026-09-19-static-hosting/`。
 
 正式入口維持 `https://tiancinge-web.web.app/sitemap.xml`。Hosting 直接供應 XML 與 robots，不在每次爬取時查詢 Firestore。此服務為獨立 Node.js 程式，與 Next.js 的渲染生命週期分離。
 

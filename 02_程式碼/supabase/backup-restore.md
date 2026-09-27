@@ -41,4 +41,4 @@ CONFIRM_RESTORE=YES SUPABASE_DB_URL='postgresql://...' \
 
 ## 部署回退
 
-Vercel 以最後一個通過驗證的 deployment 執行 Promote to Production；回退後重新執行首頁、API、登入及草稿權限 smoke test。回復責任人、備份保存位置、正式網域與 Supabase 專案識別資訊，於上線交接時填入 `02_規劃書/project/release-checklist.md`。
+Vercel 以最後一個通過驗證的 deployment 執行 Promote to Production；回退後重新執行首頁、API、登入及草稿權限 smoke test。回復責任人、備份保存位置、正式網域與 Supabase 專案識別資訊，於上線交接時填入 `../../02_規劃書/project/release-checklist.md`。

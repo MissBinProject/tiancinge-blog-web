@@ -5,7 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
-const taskDir = path.join(root, '02_規劃書', 'project', 'luna-tasks');
+const taskDir = path.join(root, '..', '02_規劃書', 'project', 'luna-tasks');
 const expected = [];
 for (const phase of ['A', 'B', 'C', 'D', 'E']) {
   const max = phase === 'A' ? 7 : phase === 'B' ? 10 : phase === 'C' ? 18 : phase === 'D' ? 17 : 11;

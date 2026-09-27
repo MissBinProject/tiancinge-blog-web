@@ -44,7 +44,7 @@ if (process.env.ADMIN_PASSWORD_HASH?.trim() && !/^scrypt\$v1\$/.test(process.env
 if (failures.length) {
   console.error('Production environment preflight failed:');
   for (const failure of failures) console.error(`- ${failure}`);
-  console.error('請依 02_規劃書/project/production-input-form.md 設定，再重新執行。');
+  console.error('請依 ../02_規劃書/project/production-input-form.md 設定，再重新執行。');
   process.exit(1);
 }
 

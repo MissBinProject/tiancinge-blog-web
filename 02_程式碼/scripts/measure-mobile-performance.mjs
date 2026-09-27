@@ -5,7 +5,7 @@ import { chromium, devices } from '@playwright/test';
 const origin = process.env.PERF_ORIGIN || 'https://tiancinge-web.web.app';
 const routes = (process.env.PERF_ROUTES || '/,/services,/news,/blog').split(',').map((value) => value.trim()).filter(Boolean);
 const runs = Math.max(3, Number(process.env.PERF_RUNS || 3));
-const output = process.argv[2] || '02_規劃書/update/2026-09-18-seo-architecture/evidence/mobile-performance-2026-09-20.json';
+const output = process.argv[2] || '../02_規劃書/update/2026-09-18-seo-architecture/evidence/mobile-performance-2026-09-20.json';
 
 function median(values) {
   const sorted = values.filter((value) => Number.isFinite(value)).sort((a, b) => a - b);

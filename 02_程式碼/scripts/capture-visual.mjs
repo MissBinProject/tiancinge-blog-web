@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 const root = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
-const outputDir = path.join(root, '02_規劃書', 'project', 'visual-baseline');
+const outputDir = path.join(root, '..', '02_規劃書', 'project', 'visual-baseline');
 const baseUrl = process.env.VISUAL_BASE_URL || 'http://localhost:3000';
 const headerHeight = 70;
 const sections = [

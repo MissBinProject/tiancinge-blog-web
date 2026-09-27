@@ -2,8 +2,8 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-REFERENCE_DIR="$ROOT_DIR/03_UI設計圖/01_首頁設計圖"
-BASELINE_DIR="$ROOT_DIR/02_規劃書/project/visual-baseline"
+REFERENCE_DIR="$ROOT_DIR/../03_UI設計圖/01_首頁設計圖"
+BASELINE_DIR="$ROOT_DIR/../02_規劃書/project/visual-baseline"
 
 command -v ffmpeg >/dev/null 2>&1 || {
   echo "ffmpeg is required to generate visual overlays" >&2
