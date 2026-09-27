@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight, Flower2, Gift, Heart, Megaphone } from 'lucide-react';
 import type { Article, SiteSettings } from '@tian-xin-ge/contracts';
 import { SafeImage } from './SafeImage';
+import { DeferredBackground } from './DeferredBackground';
+import { displayDate } from '../lib/display-date';
 
 export function NewsSection({ items, siteSettings }: { items: Article[]; siteSettings: SiteSettings }) {
   const [isMobile, setIsMobile] = useState(false);
@@ -14,9 +16,11 @@ export function NewsSection({ items, siteSettings }: { items: Article[]; siteSet
     media.addEventListener?.('change', update);
     return () => media.removeEventListener?.('change', update);
   }, []);
-  const pageSize = isMobile ? 1 : 3;
-  const pageCount = isMobile ? Math.max(1, Math.ceil(items.length / pageSize)) : Math.max(1, items.length);
-  const showControls = isMobile ? items.length > pageSize : items.length >= pageSize;
+  const pageSize = isMobile ? 1 : 4;
+  const pageCount = isMobile
+    ? Math.max(1, Math.ceil(items.length / pageSize))
+    : Math.max(1, items.length - pageSize + 1);
+  const showControls = items.length > pageSize;
   const dotCount = pageCount;
   const [page, setPage] = useState(0);
   useEffect(() => { setPage((current) => Math.min(current, pageCount - 1)); }, [pageCount]);
@@ -28,11 +32,7 @@ export function NewsSection({ items, siteSettings }: { items: Article[]; siteSet
   const move = (direction: -1 | 1) => setPage((current) => (current + direction + pageCount) % pageCount);
 
   return <section id="news" className="articles news section">
-    <div className="article-backdrop news-bg" style={siteSettings.newsBackgroundUrl ? { backgroundImage: `url(${siteSettings.newsBackgroundUrl})` } : undefined} />
-    <p className="article-decor article-side-copy news-side-copy" aria-hidden="true">放慢腳步<br/>感受生活<br/>讓身心<br/>回到最純粹的自己<br/><span>—<br/>SLOW DOWN<br/>BREATHE<br/>HEAL<br/>BE A<br/>BETTER YOU</span></p>
-    <p className="article-decor article-handwritten news-top-copy" aria-hidden="true">美好的生活<br/>從照顧自己開始 <b>♥</b></p>
-    <p className="article-decor article-handwritten news-bottom-copy" aria-hidden="true">生活可以更溫柔<br/>你也值得被好好對待 <b>♥</b></p>
-    <p className="article-decor article-footer-copy news-footer-copy" aria-hidden="true">TIAN XIN GE WELLNESS SPA<br/>RELAX・RECHARGE・BE A BETTER YOU</p>
+    <DeferredBackground className="article-backdrop news-bg" src={siteSettings.newsBackgroundUrl} />
     <div className="container">
       <div className="section-title"><span className="eyebrow">LATEST NEWS</span><h2>{siteSettings.newsTitle}</h2><p>{siteSettings.newsSubtitle}</p></div>
       <a className="article-more news-more" href="/news">查看更多消息 <ArrowRight size={16} /></a>
@@ -48,11 +48,7 @@ export function BlogSection({ items, siteSettings }: { items: Article[]; siteSet
   const categories = Array.from(new Set(items.map((article) => article.category.trim()).filter(Boolean)));
   const glyphs = ['◉', '⌁', '♡', '☕', '▢'];
   return <section id="blog" className="articles blog section">
-    <div className="article-backdrop blog-bg" style={siteSettings.blogBackgroundUrl ? { backgroundImage: `url(${siteSettings.blogBackgroundUrl})` } : undefined} />
-    <p className="article-decor article-side-copy blog-side-copy" aria-hidden="true">生活的美好<br/>來自於<br/>對自己的溫柔<br/>每一天<br/>都是新的開始<br/><span>—<br/>A<br/>HEALTHIER<br/>HAPPIER<br/>YOU</span></p>
-    <p className="article-decor article-handwritten blog-top-copy" aria-hidden="true">療癒，<br/>從閱讀一篇好文章開始 <b>♥</b></p>
-    <p className="article-decor article-handwritten blog-bottom-copy" aria-hidden="true">閱讀，讓心更靠近幸福 <b>♥</b></p>
-    <p className="article-decor article-footer-copy blog-footer-copy" aria-hidden="true">TIAN XIN GE WELLNESS SPA<br/>RELAX・RECHARGE・BE A BETTER YOU</p>
+    <DeferredBackground className="article-backdrop blog-bg" src={siteSettings.blogBackgroundUrl} />
     <div className="container">
       <div className="section-title"><span className="eyebrow">OUR BLOG</span><h2>{siteSettings.blogTitle}</h2><p>{siteSettings.blogSubtitle}</p></div>
       <a className="article-more blog-more" href="/blog">查看更多文章 <ArrowRight size={16} /></a>
@@ -65,7 +61,7 @@ export function BlogSection({ items, siteSettings }: { items: Article[]; siteSet
 function ArticleCard({ article }: { article: Article }) {
   const isReferenceCrop = article.coverUrl.startsWith('/assets/crops/');
   return <a className="article-card" href={`/${article.type === 'news' ? 'news' : 'blog'}/${article.slug}`}>
-    <div className={isReferenceCrop ? 'article-image crop-image' : 'article-image'}><SafeImage src={article.coverUrl} alt={article.title} /><span>{article.category}</span></div>
-    <div className="article-body"><time dateTime={article.publishedAt}>{article.publishedAt.replaceAll('-', ' / ')}</time><h3>{article.title}</h3><p>{article.excerpt}</p><span className="read-more">閱讀更多 <ArrowRight size={15} /></span></div>
+    <div className={isReferenceCrop ? 'article-image crop-image' : 'article-image'}><SafeImage src={article.coverUrl} alt={`${article.type === 'news' ? '消息' : '文章'}封面：${article.coverAlt || article.title}`} /><span>{article.category}</span></div>
+    <div className="article-body"><time dateTime={article.publishedAt}>{displayDate(article.publishedAt)}</time><h3>{article.title}</h3><p>{article.excerpt}</p><span className="read-more">閱讀更多 <ArrowRight size={15} /></span></div>
   </a>;
 }

@@ -1,5 +1,7 @@
 # 2026-09-15 回歸補強與 Firebase 發布
 
+> 歷史紀錄：本檔案描述的是 2026-09-15 早期 Firebase Auth 版本。現行登入、資料寫入與雲端權限以 [`project/firebase-deployment.md`](../project/firebase-deployment.md) 及 [`update/data-security/`](data-security/README.md) 為準；不要依本檔案的 Auth／custom claim／allowlist 步驟重新設定正式環境。
+
 ## 現行正式環境
 
 - Firebase/GCP project `tiancinge` 已建立；官網以 Cloud Run 動態 SSR，後台以 Firebase Hosting 發布。

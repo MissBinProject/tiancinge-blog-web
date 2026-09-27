@@ -1,5 +1,7 @@
 # Firebase Luna 任務卡 A：基礎與安全
 
+> 歷史版本：本卡組以 Firebase Auth、`admins/{uid}` 與前端 SDK 權限為前提。現行正式登入及管理 API 改由 Cloud Run server account 處理，請以 `update/data-security/luna-tasks/` 為準。
+
 每張卡只處理一個責任範圍；Luna 執行時不可改動其他卡的檔案。所有卡完成後在「交接紀錄」補上命令、結果、URL／截圖、提交 SHA 與已知限制。
 
 ## FB-A01 固定 Firebase 環境契約與 fixture

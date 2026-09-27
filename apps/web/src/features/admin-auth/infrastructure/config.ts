@@ -5,6 +5,7 @@ export type AdminRuntimeConfig = {
   passwordHash: string;
   credentialVersion: string;
   allowedOrigin: string;
+  totpSecret: string;
 };
 
 export function readAdminRuntimeConfig(env: Record<string, string | undefined> = process.env): AdminRuntimeConfig | null {
@@ -13,5 +14,5 @@ export function readAdminRuntimeConfig(env: Record<string, string | undefined> =
   const credentialVersion = env.ADMIN_CREDENTIAL_VERSION?.trim() || '1';
   const allowedOrigin = env.ADMIN_ALLOWED_ORIGIN?.trim().replace(/\/$/, '') ?? '';
   if (!isValidAdminUsername(username) || !passwordHash || !/^\d+$/.test(credentialVersion) || !/^https:\/\/[^\s/]+(?:\/[^\s]*)?$/.test(allowedOrigin)) return null;
-  return { username, passwordHash, credentialVersion, allowedOrigin };
+  return { username, passwordHash, credentialVersion, allowedOrigin, totpSecret: env.ADMIN_TOTP_SECRET?.trim() || '' };
 }

@@ -1,0 +1,23 @@
+# Keep the API build context small and deterministic. Dockerfile only needs the
+# workspace manifests, shared packages, and the web application.
+.git/
+.gcloudignore.api
+02_規劃書/
+apps/admin/src/
+apps/admin/public/
+apps/admin/dist/
+apps/sitemap-worker/
+e2e/
+test-results/
+playwright-report/
+build/
+node_modules/
+**/node_modules/
+**/.next/
+**/out/
+**/dist/
+**/*.tsbuildinfo
+**/.env*
+.firebase/
+scripts/
+supabase/

@@ -57,7 +57,7 @@ test('文章正文圖片 block 可從共用素材選擇器帶入圖片', async (
   await page.getByRole('button', { name: '編輯 中秋限定優惠活動' }).click();
   const editor = page.locator('.article-edit-page');
   await editor.getByLabel('插入已上傳圖片').selectOption({ label: 'news-1.png' });
-  await expect(editor.locator('.ProseMirror img').last()).toHaveAttribute('src', 'https://tiancinge-web.web.app/assets/crops/news-1.png');
+  await expect(editor.locator('.ProseMirror img').last()).toHaveAttribute('src', 'https://tiancinge-web.web.app/assets/crops/news-1.webp');
 });
 
 test('後台文章狀態篩選與手機版不溢出', async ({ page }) => {
@@ -114,16 +114,17 @@ test('後台設定可編輯品牌且素材可搜尋篩選', async ({ page }) => 
 test('後台可新增服務並保存排序與顯示狀態', async ({ page }) => {
   await page.goto('http://localhost:5173/services');
   await login(page);
-  await page.getByRole('button', { name: '新增', exact: true }).click();
+  await page.getByRole('button', { name: '新增服務', exact: true }).click();
   const editor = page.locator('.form-panel');
   await editor.getByLabel('服務名稱').fill('深層放鬆體驗');
-  await expect(editor.getByLabel('系統代碼（10 位亂碼，不可修改）')).toHaveValue(/^[a-z0-9]{10}$/);
+  await expect(editor.getByLabel('系統代碼（10 位亂碼，不可修改）')).toHaveCount(0);
   await editor.getByLabel('卡片摘要').fill('沉浸式放鬆・找回平衡');
   await editor.getByLabel('介紹內容').fill('專業手技陪伴你放下日常壓力。');
   await editor.getByLabel('排序').fill('6');
   await editor.getByLabel('顯示於官網').check();
   await editor.getByRole('button', { name: '儲存' }).click();
   await expect(editor.getByText('服務已儲存')).toBeVisible();
+  await editor.getByRole('button', { name: /返回服務清單/ }).click();
   await expect(page.getByRole('button', { name: /深層放鬆體驗/ })).toBeVisible();
 });
 
@@ -178,15 +179,9 @@ test('後台留言可篩選、保存備註並標記處理', async ({ page }) => 
   await expect(page.getByRole('button', { name: /王小姐/ })).toBeVisible();
 });
 
-test('後台拒絕刪除使用中的素材與分類', async ({ page }) => {
-  await page.goto('http://localhost:5173/media');
+test('後台拒絕刪除使用中的分類', async ({ page }) => {
+  await page.goto('http://localhost:5173/articles');
   await login(page);
-  await page.getByLabel('搜尋素材').fill('service-1');
-  page.once('dialog', (dialog) => dialog.accept());
-  await page.getByRole('button', { name: '刪除素材' }).click();
-  await expect(page.getByText(/正在使用的素材無法刪除/)).toBeVisible();
-
-  await page.getByRole('button', { name: '最新消息', exact: true }).first().click();
   await page.getByRole('button', { name: '編輯分類' }).click();
   await page.getByRole('button', { name: '刪除 活動訊息' }).click();
   await expect(page.getByText('使用中的分類無法刪除', { exact: true })).toBeVisible();
@@ -203,6 +198,9 @@ test('文章編輯器提供字體、字級、顏色與完整格式工具', async
   await expect(toolbar.getByRole('button', { name: '底線' })).toBeVisible();
   await expect(toolbar.getByRole('button', { name: '置中對齊' })).toBeVisible();
   await expect(toolbar.getByRole('button', { name: '編號清單' })).toBeVisible();
+  await expect(toolbar.getByLabel('上傳文章圖片或影片')).toBeAttached();
+  await expect(toolbar.getByRole('button', { name: '插入 YouTube 影片' })).toBeVisible();
+  await expect(toolbar.locator('.toolbar-group')).toHaveCount(0);
   await page.locator('.ProseMirror h2').click({ clickCount: 3 });
   await toolbar.getByLabel('文字大小').selectOption('24px');
   await toolbar.getByRole('button', { name: '粗體' }).click();
@@ -213,6 +211,36 @@ test('文章編輯器提供字體、字級、顏色與完整格式工具', async
   const previewHeading = page.locator('.preview-body h2');
   await expect(previewHeading).toHaveCSS('text-align', 'center');
   await expect(previewHeading.locator('span[style*="font-size: 24px"]').first()).toBeVisible();
+});
+
+test('文章編輯器可在游標位置插入 YouTube 影片', async ({ page }) => {
+  await page.goto('http://localhost:5173/blog');
+  await login(page);
+  await page.getByRole('button', { name: '編輯 精油的療癒力量' }).click();
+  await page.locator('.ProseMirror').click();
+  await page.getByRole('button', { name: '插入 YouTube 影片' }).click();
+  await page.getByLabel('YouTube 影片網址').fill('https://youtu.be/dQw4w9WgXcQ');
+  await page.getByRole('button', { name: '插入影片' }).click();
+  await expect(page.locator('.ProseMirror iframe')).toHaveAttribute('src', 'https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ');
+  await expect(page.getByText('YouTube 影片已插入游標位置')).toBeVisible();
+});
+
+test('文章編輯器可將拖曳圖片上傳並插入放下的位置', async ({ page }) => {
+  await page.goto('http://localhost:5173/blog');
+  await login(page);
+  await page.getByRole('button', { name: '編輯 精油的療癒力量' }).click();
+  const editor = page.locator('.ProseMirror');
+  const initialImages = await editor.locator('img').count();
+  await editor.evaluate((element) => {
+    const binary = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y9ZQmcAAAAASUVORK5CYII=');
+    const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
+    const transfer = new DataTransfer();
+    transfer.items.add(new File([bytes], 'dragged-image.png', { type: 'image/png' }));
+    const bounds = element.getBoundingClientRect();
+    element.dispatchEvent(new DragEvent('drop', { bubbles: true, cancelable: true, dataTransfer: transfer, clientX: bounds.left + 20, clientY: bounds.top + 20 }));
+  });
+  await expect(editor.locator('img')).toHaveCount(initialImages + 1);
+  await expect(page.getByText('圖片已上傳並插入游標位置')).toBeVisible();
 });
 
 test('文章編輯頁隱藏網址代碼、上方操作橫向等寬並可直接上傳封面', async ({ page }) => {
@@ -233,7 +261,9 @@ test('文章編輯頁隱藏網址代碼、上方操作橫向等寬並可直接�
   await editor.getByLabel('上傳封面圖片').setInputFiles({ name: 'cover-upload.png', mimeType: 'image/png', buffer: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=', 'base64') });
   await expect(editor.getByText('封面圖片已上傳並選用')).toBeVisible();
   await expect(editor.locator('.selected-cover-preview')).toHaveAttribute('src', /^blob:/);
-  await expect(editor.getByRole('button', { name: '選擇 cover-upload.png' })).toBeVisible();
+  await editor.getByRole('button', { name: '選擇封面圖片' }).click();
+  await expect(page.getByRole('dialog', { name: '選擇封面圖片' })).toBeVisible();
+  await expect(page.getByRole('button', { name: '選擇 cover-upload.png' })).toBeVisible();
 });
 
 test('分類管理預設隱藏，開啟後只顯示部落格分類', async ({ page }) => {

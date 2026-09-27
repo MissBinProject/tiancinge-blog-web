@@ -1,5 +1,7 @@
 # Firebase／動態版 Luna 任務卡索引
 
+> 歷史版本：本組 38 張卡片以 Firebase Auth／前端 Firebase SDK 直連為前提，僅供變更追蹤。現行安全實作與待辦請改用 [`../update/data-security/luna-tasks/`](../update/data-security/luna-tasks/README.md)；不要依本組卡片重新設定正式權限。
+
 每卡只修改指定責任範圍，完成後必須回報：修改檔案、命令、結果、截圖／URL、提交 SHA、已知限制。不可自行改動共用契約或把多卡合併成「完成整個後台」。完整卡片已拆成四份，每張卡均包含參考圖、目標、前置任務、可修改範圍、固定資料契約、操作步驟、驗收方式與交接紀錄：
 
 - [A：基礎與安全（FB-A01～FB-A06）](luna-tasks-firebase-A.md)

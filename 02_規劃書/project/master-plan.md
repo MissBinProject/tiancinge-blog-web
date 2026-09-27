@@ -10,6 +10,6 @@
 2. Web/Admin 骨架：路由、資料庫 migration、權限及共用型別。
 3. 官網：依主視覺、服務、價格、消息、部落格、聯絡順序完成桌機與手機。
 4. 後台：登入、素材、服務、文章、留言、設定。
-5. 串接與上線：Firebase／GCP 正式資料、截圖校正、Cloud Run 動態部署、Hosting 發布及備份。
+5. 串接與上線：Firebase／GCP 正式資料、截圖校正、Cloud Run API／發布協調、Firebase Hosting 靜態 HTML 發布及備份。
 
 各里程碑以 `pnpm run build`、`pnpm run typecheck`、操作流程與設計稿截圖驗收後才進入下一階段。

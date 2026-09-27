@@ -5,7 +5,7 @@ const valid = { ADMIN_USERNAME: ' Tiancinge ', ADMIN_PASSWORD_HASH: 'hash', ADMI
 
 describe('admin runtime config', () => {
   it('normalizes a valid server-only configuration', () => {
-    expect(readAdminRuntimeConfig(valid)).toEqual({ username: 'tiancinge', passwordHash: 'hash', credentialVersion: '2', allowedOrigin: 'https://tiancinge-admin.web.app' });
+  expect(readAdminRuntimeConfig(valid)).toEqual({ username: 'tiancinge', passwordHash: 'hash', credentialVersion: '2', allowedOrigin: 'https://tiancinge-admin.web.app', totpSecret: '' });
   });
 
   it('fails closed when a required value is missing or unsafe', () => {

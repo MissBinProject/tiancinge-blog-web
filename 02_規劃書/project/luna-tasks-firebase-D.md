@@ -1,5 +1,7 @@
 # Firebase Luna 任務卡 D：動態官網與部署
 
+> 歷史版本：本卡組保留早期部署交接。現行 revision、IAM、Rules、備份與回退證據請以 `firebase-deployment.md` 及 `update/data-security/evidence/` 為準。
+
 官網使用 Next.js App Router 動態 SSR；Firebase Hosting 只作 TLS、CDN 與 rewrite。每卡只處理一個頁面資料邊界或一項部署能力。
 
 ## FB-D01 Next.js Firebase Admin data adapter

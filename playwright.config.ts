@@ -5,6 +5,9 @@ export default defineConfig({
   timeout: 45_000,
   expect: { timeout: 8_000 },
   fullyParallel: true,
+  // Next dev and Vite share workspace build artifacts; a single worker keeps
+  // local E2E runs deterministic instead of racing JSON manifest writes.
+  workers: 1,
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     baseURL: 'http://localhost:3000',

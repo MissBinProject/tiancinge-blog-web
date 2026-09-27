@@ -7,12 +7,14 @@
 const allowLocal = process.env.ALLOW_LOCAL_PREFLIGHT === '1';
 const required = [
   ['NEXT_PUBLIC_SITE_URL', '官網'],
-  ['NEXT_PUBLIC_SUPABASE_URL', '官網'],
-  ['NEXT_PUBLIC_SUPABASE_ANON_KEY', '官網'],
-  ['SUPABASE_SERVICE_ROLE_KEY', '官網伺服器'],
+  ['FIREBASE_PROJECT_ID', '官網伺服器'],
+  ['FIREBASE_STORAGE_BUCKET', '官網伺服器'],
+  ['ADMIN_USERNAME', '官網伺服器'],
+  ['ADMIN_PASSWORD_HASH', '官網伺服器'],
+  ['ADMIN_CREDENTIAL_VERSION', '官網伺服器'],
+  ['ADMIN_ALLOWED_ORIGIN', '官網伺服器'],
   ['VITE_WEB_URL', '後台'],
-  ['VITE_SUPABASE_URL', '後台'],
-  ['VITE_SUPABASE_ANON_KEY', '後台'],
+  ['VITE_ADMIN_AUTH_SERVER', '後台'],
 ];
 const failures = [];
 const placeholder = /(your-|change[-_ ]?me|replace[-_ ]?this|example(?:\.com)?)/i;
@@ -24,7 +26,7 @@ for (const [name, scope] of required) {
     continue;
   }
   if (placeholder.test(value)) failures.push(`${scope}${name} 仍是範例值`);
-  if (name.endsWith('_URL')) {
+  if (['NEXT_PUBLIC_SITE_URL', 'VITE_WEB_URL', 'ADMIN_ALLOWED_ORIGIN'].includes(name)) {
     try {
       const url = new URL(value);
       if (url.protocol !== 'https:' && !(allowLocal && url.hostname === 'localhost')) failures.push(`${name} 必須使用 https://`);
@@ -35,6 +37,9 @@ for (const [name, scope] of required) {
   }
   if (name.endsWith('_KEY') && value.length < 20) failures.push(`${name} 長度看起來不完整`);
 }
+
+if (process.env.VITE_ADMIN_AUTH_SERVER?.trim() !== 'true') failures.push('後台 VITE_ADMIN_AUTH_SERVER 必須設為 true');
+if (process.env.ADMIN_PASSWORD_HASH?.trim() && !/^scrypt\$v1\$/.test(process.env.ADMIN_PASSWORD_HASH.trim())) failures.push('ADMIN_PASSWORD_HASH 不是支援的 scrypt v1 格式');
 
 if (failures.length) {
   console.error('Production environment preflight failed:');

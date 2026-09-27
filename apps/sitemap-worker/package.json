@@ -1,0 +1,8 @@
+{
+  "name": "@tian-xin-ge/sitemap-worker",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test", "start": "node src/server.mjs" },
+  "dependencies": { "firebase-admin": "13.5.0", "google-auth-library": "9.15.1" },
+  "overrides": { "uuid": "11.1.1" }
+}

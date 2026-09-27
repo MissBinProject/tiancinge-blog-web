@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "digest": "fixture",
+  "generatedAt": "2026-09-19T00:00:00.000Z",
+  "services": [],
+  "articles": [],
+  "categories": [],
+  "settings": {
+    "brandName": "天心閣養生會館",
+    "tagline": "放鬆身心",
+    "phone": "02-2338-1111",
+    "line": "@tiancinge",
+    "address": "台北市萬華區桂林路2之5號",
+    "businessHours": "每日 10:00–22:00",
+    "heroTitle": "天心閣養生會館",
+    "heroSubtitle": "放鬆身心",
+    "servicesTitle": "服務項目",
+    "servicesSubtitle": "專業服務",
+    "pricingTitle": "服務價格",
+    "pricingSubtitle": "透明收費",
+    "newsTitle": "最新消息",
+    "newsSubtitle": "掌握最新活動",
+    "blogTitle": "部落格",
+    "blogSubtitle": "分享養生知識",
+    "contactTitle": "聯繫我們",
+    "contactLead": "歡迎與我們聯繫",
+    "benefits": [],
+    "pricingBenefits": [],
+    "seoTitle": "天心閣養生會館",
+    "seoDescription": "養生與按摩服務"
+  }
+}

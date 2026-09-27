@@ -1,4 +1,4 @@
-export type ServerAccountFailure = 'invalid' | 'rate_limited' | 'origin_denied' | 'unavailable' | 'network';
+export type ServerAccountFailure = 'invalid' | 'rate_limited' | 'origin_denied' | 'unavailable' | 'network' | 'mfa_required';
 export type ServerAccountResult = { ok: true; username: string; expiresAt: number; csrfToken: string } | { ok: false; reason: ServerAccountFailure };
 
 let csrfToken = '';
@@ -17,7 +17,15 @@ function failure(status: number): ServerAccountFailure {
 }
 
 async function readResult(response: Response): Promise<ServerAccountResult> {
-  if (!response.ok) return { ok: false, reason: failure(response.status) };
+  if (!response.ok) {
+    if (response.status === 401) {
+      try {
+        const payload = await response.clone().json() as { error?: { code?: unknown } };
+        if (payload.error?.code === 'mfa_required') return { ok: false, reason: 'mfa_required' };
+      } catch { /* keep generic failure */ }
+    }
+    return { ok: false, reason: failure(response.status) };
+  }
   try {
     const payload = await response.json() as { data?: { username?: unknown; expiresAt?: unknown; csrfToken?: unknown } };
     const data = payload.data;
@@ -29,9 +37,9 @@ async function readResult(response: Response): Promise<ServerAccountResult> {
   }
 }
 
-export async function signInWithServerAccount(username: string, password: string): Promise<ServerAccountResult> {
+export async function signInWithServerAccount(username: string, password: string, otp = '', recoveryCode = ''): Promise<ServerAccountResult> {
   try {
-    const response = await fetch(endpoint('/auth/login'), { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, password }) });
+    const response = await fetch(endpoint('/auth/login'), { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, password, ...(otp ? { otp } : {}), ...(recoveryCode ? { recoveryCode } : {}) }) });
     return await readResult(response);
   } catch {
     return { ok: false, reason: 'network' };

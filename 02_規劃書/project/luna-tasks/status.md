@@ -1,5 +1,7 @@
 # Luna 任務交接狀態
 
+> 歷史任務狀態：本表保留早期 Supabase／Vercel 任務的交接脈絡；現行 Firebase／Cloud Run／Firebase Hosting 的正式狀態與驗收，請以 [`firebase-deployment.md`](../firebase-deployment.md)、[`validation-checklist.md`](../validation-checklist.md) 及 [`update/data-security/`](../../update/data-security/README.md) 為準。
+
 狀態以「可在本機 fixture 驗收」與「需正式帳號／素材」分開記錄。每張卡的目標、固定契約、步驟與驗收已寫在同目錄的 A～E 任務文件；日期、命令、證據與提交 SHA 見 [`commit-map.md`](./commit-map.md)。
 
 | 任務 | 狀態 | 交接證據／下一步 |

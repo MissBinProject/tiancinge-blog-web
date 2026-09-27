@@ -1,0 +1,23 @@
+steps:
+  - name: node:22-bookworm
+    id: build-static-site
+    entrypoint: bash
+    args:
+      - -ceu
+      - |
+        corepack enable
+        pnpm install --frozen-lockfile --ignore-scripts
+        mkdir -p /workspace/.private /workspace/.firebase-tools
+        node scripts/export-public-snapshot.mjs /workspace/.private/public-snapshot.json
+        pnpm build:web:static /workspace/.private/public-snapshot.json /workspace/static-artifact
+        npm install --prefix /workspace/.firebase-tools firebase-tools@14.17.0
+        FIREBASE_BIN=/workspace/.firebase-tools/node_modules/.bin/firebase \
+        SITEMAP_WORKER_URL="https://tiancinge-sitemap-214942104752.asia-east1.run.app" \
+        STATIC_STAGE_ONLY="${_STATIC_STAGE_ONLY}" \
+        node scripts/deploy-static-site.mjs /workspace/static-artifact /workspace/.private/public-snapshot.json
+timeout: 1200s
+serviceAccount: projects/tiancinge/serviceAccounts/tiancinge-cloudbuild@tiancinge.iam.gserviceaccount.com
+substitutions:
+  _STATIC_STAGE_ONLY: '1'
+options:
+  logging: CLOUD_LOGGING_ONLY

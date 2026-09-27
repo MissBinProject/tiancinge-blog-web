@@ -1,0 +1,17 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    id: build-api-image
+    args:
+      - build
+      - -f
+      - apps/web/Dockerfile
+      - -t
+      - ${_IMAGE}
+      - .
+images:
+  - ${_IMAGE}
+timeout: 1200s
+options:
+  logging: CLOUD_LOGGING_ONLY
+substitutions:
+  _IMAGE: asia-east1-docker.pkg.dev/tiancinge/cloud-run-source-deploy/tiancinge-web:totp-replay-20260920

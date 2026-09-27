@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { mediaStoragePath, validateImageBuffer } from './media-utils';
+import sharp from 'sharp';
+import { isSupportedMediaMimeType, mediaStoragePath, normalizeImageBuffer, validateImageBuffer, validateVideoBuffer } from './media-utils';
 
 describe('media upload validation', () => {
   it('accepts a PNG with a valid header and dimensions', () => {
@@ -22,5 +23,29 @@ describe('media upload validation', () => {
     const path = mediaStoragePath('我的 圖片.png');
     expect(path).toMatch(/^site-media\/[0-9a-f-]+-[-a-zA-Z0-9.]+$/);
     expect(path).not.toContain(' ');
+  });
+
+  it('accepts MP4, MOV and WebM signatures while rejecting mismatched video data', () => {
+    const mp4 = new Uint8Array(12); mp4.set([0x66, 0x74, 0x79, 0x70], 4);
+    const webm = new Uint8Array([0x1a, 0x45, 0xdf, 0xa3, 0, 0, 0, 0, 0, 0, 0, 0]);
+    expect(validateVideoBuffer(mp4, 'video/mp4')).toBe(true);
+    expect(validateVideoBuffer(mp4, 'video/quicktime')).toBe(true);
+    expect(validateVideoBuffer(webm, 'video/webm')).toBe(true);
+    expect(validateVideoBuffer(mp4, 'video/webm')).toBe(false);
+    expect(isSupportedMediaMimeType('video/quicktime')).toBe(true);
+  });
+
+  it('decodes and re-encodes images as metadata-free WebP', async () => {
+    const source = await sharp({ create: { width: 10, height: 6, channels: 3, background: { r: 236, g: 88, b: 120 } } })
+      .withMetadata({ orientation: 6 })
+      .jpeg()
+      .toBuffer();
+    const normalized = await normalizeImageBuffer(source, 'image/jpeg');
+    expect(normalized).not.toBeNull();
+    if (!normalized) return;
+    const metadata = await sharp(normalized.data).metadata();
+    expect(metadata.format).toBe('webp');
+    expect(metadata.orientation).toBeUndefined();
+    expect(normalized.width * normalized.height).toBe(60);
   });
 });

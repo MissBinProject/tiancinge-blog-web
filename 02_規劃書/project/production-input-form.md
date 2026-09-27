@@ -6,10 +6,10 @@
 
 | 欄位 | 填寫值 | 用途 |
 |---|---|---|
-| 品牌正式名稱 |  | `site_settings.brand_name` |
-| 聯絡電話 |  | 首頁、服務詳情、SEO |
+| 品牌正式名稱 | 天心閣養生會館 | `site_settings.brand_name` |
+| 聯絡電話 | 02-2338-1111 | 首頁、服務詳情、SEO；已依使用者提供資料同步 |
 | LINE ID／正式加好友連結 |  | 預約按鈕、QR Code、社群 |
-| 正式地址 |  | 聯絡區與地圖 |
+| 正式地址 | 108台北市萬華區桂林路2之5號 | 聯絡區與地圖；已依使用者提供資料同步 |
 | 營業時間 |  | 聯絡區 |
 | Instagram |  | Header／聯絡區 |
 | Facebook |  | Header／聯絡區 |
@@ -31,15 +31,15 @@
 | Firebase project ID | `tiancinge` |
 | Firebase／GCP region | `asia-east1` |
 | 後台登入帳號 | `tiancinge` |
-| Auth 管理員恢復信箱（僅供 Firebase 驗證／重設密碼） | `ouyangtaisen@gmail.com` |
-| Auth 管理員 UID／`admins/{uid}` |  |
+| 管理員密碼維護者／聯絡信箱（不寫入網站） | `ouyangtaisen@gmail.com` |
+| Cloud Run `ADMIN_PASSWORD_HASH` Secret Manager secret | 已設定；值不可填入此表 |
 | 官網 Firebase Hosting URL | `https://tiancinge-web.web.app` |
 | 後台 Firebase Hosting URL | `https://tiancinge-admin.web.app` |
 | Cloud Run service／URL | `tiancinge-web`／  |
 | `NEXT_PUBLIC_SITE_URL` | `https://tiancinge-web.web.app` |
 | Cloud Run `FIREBASE_PROJECT_ID`／`FIREBASE_STORAGE_BUCKET` |  |
-| 後台 `VITE_FIREBASE_*`／`VITE_WEB_URL` | ☐ |
-| 已關閉 Firebase 公開註冊 | ☐ |
+| 後台 `VITE_WEB_URL`／`VITE_ADMIN_AUTH_SERVER=true` | ☐ |
+| Cloud Run `ADMIN_ALLOWED_ORIGIN` 與 session／CSRF | ☐ |
 | 已完成 Firestore seed／Rules／Storage Rules | ☐ |
 | 已設定 Firebase/GCP Budget 通知 | ☐ |
 

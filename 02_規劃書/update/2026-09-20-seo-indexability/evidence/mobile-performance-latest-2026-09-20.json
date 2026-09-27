@@ -1,0 +1,194 @@
+{
+  "origin": "https://tiancinge-web.web.app",
+  "device": "iPhone 13 emulation (390px viewport)",
+  "runs": 3,
+  "measuredAt": "2026-09-20T12:53:15.879Z",
+  "summary": [
+    {
+      "route": "/",
+      "runs": 3,
+      "median": {
+        "lcpMs": 508,
+        "cls": 0.0056857992675056115,
+        "tbtMs": 0,
+        "jsBytes": 119925,
+        "imageBytes": 27186,
+        "resourceCount": 23,
+        "elapsedMs": 2853
+      }
+    },
+    {
+      "route": "/services",
+      "runs": 3,
+      "median": {
+        "lcpMs": 416,
+        "cls": 0.008029104369284366,
+        "tbtMs": 0,
+        "jsBytes": 122260,
+        "imageBytes": 22468,
+        "resourceCount": 30,
+        "elapsedMs": 2624
+      }
+    },
+    {
+      "route": "/news",
+      "runs": 3,
+      "median": {
+        "lcpMs": 472,
+        "cls": 0.009239423809696619,
+        "tbtMs": 0,
+        "jsBytes": 122260,
+        "imageBytes": 30506,
+        "resourceCount": 37,
+        "elapsedMs": 2611
+      }
+    },
+    {
+      "route": "/blog",
+      "runs": 3,
+      "median": {
+        "lcpMs": 432,
+        "cls": 0.008333030918856149,
+        "tbtMs": 0,
+        "jsBytes": 122260,
+        "imageBytes": 0,
+        "resourceCount": 29,
+        "elapsedMs": 2669
+      }
+    }
+  ],
+  "samples": [
+    {
+      "route": "/",
+      "run": 1,
+      "elapsedMs": 3306,
+      "lcpMs": 832,
+      "cls": 0.007370480531951718,
+      "tbtMs": 0,
+      "jsBytes": 119925,
+      "imageBytes": 27186,
+      "resourceCount": 23
+    },
+    {
+      "route": "/",
+      "run": 2,
+      "elapsedMs": 2853,
+      "lcpMs": 508,
+      "cls": 0.0056857992675056115,
+      "tbtMs": 0,
+      "jsBytes": 119925,
+      "imageBytes": 27186,
+      "resourceCount": 23
+    },
+    {
+      "route": "/",
+      "run": 3,
+      "elapsedMs": 2587,
+      "lcpMs": 432,
+      "cls": 0,
+      "tbtMs": 0,
+      "jsBytes": 119925,
+      "imageBytes": 27186,
+      "resourceCount": 23
+    },
+    {
+      "route": "/services",
+      "run": 1,
+      "elapsedMs": 3497,
+      "lcpMs": 416,
+      "cls": 0.008029104369284366,
+      "tbtMs": 0,
+      "jsBytes": 122260,
+      "imageBytes": 22468,
+      "resourceCount": 30
+    },
+    {
+      "route": "/services",
+      "run": 2,
+      "elapsedMs": 2624,
+      "lcpMs": 464,
+      "cls": 0.008029104369284366,
+      "tbtMs": 0,
+      "jsBytes": 122260,
+      "imageBytes": 22468,
+      "resourceCount": 30
+    },
+    {
+      "route": "/services",
+      "run": 3,
+      "elapsedMs": 2545,
+      "lcpMs": 412,
+      "cls": 0.008029104369284366,
+      "tbtMs": 0,
+      "jsBytes": 122260,
+      "imageBytes": 22468,
+      "resourceCount": 30
+    },
+    {
+      "route": "/news",
+      "run": 1,
+      "elapsedMs": 3359,
+      "lcpMs": 456,
+      "cls": 0.009689359849034693,
+      "tbtMs": 0,
+      "jsBytes": 122260,
+      "imageBytes": 30506,
+      "resourceCount": 35
+    },
+    {
+      "route": "/news",
+      "run": 2,
+      "elapsedMs": 2582,
+      "lcpMs": 476,
+      "cls": 0.009239423809696619,
+      "tbtMs": 0,
+      "jsBytes": 122260,
+      "imageBytes": 30506,
+      "resourceCount": 37
+    },
+    {
+      "route": "/news",
+      "run": 3,
+      "elapsedMs": 2611,
+      "lcpMs": 472,
+      "cls": 0.009239423809696619,
+      "tbtMs": 0,
+      "jsBytes": 122260,
+      "imageBytes": 30506,
+      "resourceCount": 37
+    },
+    {
+      "route": "/blog",
+      "run": 1,
+      "elapsedMs": 3132,
+      "lcpMs": 432,
+      "cls": 0.008333030918856149,
+      "tbtMs": 0,
+      "jsBytes": 122260,
+      "imageBytes": 0,
+      "resourceCount": 29
+    },
+    {
+      "route": "/blog",
+      "run": 2,
+      "elapsedMs": 2669,
+      "lcpMs": 444,
+      "cls": 0,
+      "tbtMs": 0,
+      "jsBytes": 122260,
+      "imageBytes": 0,
+      "resourceCount": 29
+    },
+    {
+      "route": "/blog",
+      "run": 3,
+      "elapsedMs": 2534,
+      "lcpMs": 428,
+      "cls": 0.008333030918856149,
+      "tbtMs": 0,
+      "jsBytes": 122260,
+      "imageBytes": 0,
+      "resourceCount": 29
+    }
+  ]
+}

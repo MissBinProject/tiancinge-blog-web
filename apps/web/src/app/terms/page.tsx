@@ -1,4 +1,35 @@
-import type { Metadata } from 'next'; import { Header } from '@/components/Header'; import { Footer } from '@/components/Footer'; import { loadSettings } from '@/lib/data';
-export const dynamic = 'force-dynamic';
-export async function generateMetadata(): Promise<Metadata> { const site = await loadSettings(); return { title: `服務條款｜${site.brandName}`, description: site.termsText, alternates: { canonical: '/terms' }, openGraph: { title: `服務條款｜${site.brandName}`, description: site.termsText, url: '/terms', type: 'website', images: site.ogImageUrl ? [{ url: site.ogImageUrl, alt: site.brandName }] : undefined } }; }
-export default async function Terms(){const siteSettings=await loadSettings();return <><Header siteSettings={siteSettings}/><main id="main-content" tabIndex={-1} className="policy-page container"><span className="eyebrow">TERMS</span><h1>服務條款</h1><p className="policy-content">{siteSettings.termsText}</p></main><Footer siteSettings={siteSettings}/></>}
+import type { Metadata } from 'next';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
+import { loadSettings } from '@/lib/data';
+import { buildSeoMetadata } from '@/lib/seo-metadata';
+
+const description = '天心閣養生會館網站使用、預約、價格、服務安全、取消改期及消費爭議處理條款。';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const site = await loadSettings();
+  return buildSeoMetadata({ title: `服務條款｜${site.brandName}`, description, path: '/terms', siteName: site.brandName, imageUrl: site.ogImageUrl });
+}
+
+export default async function Terms() {
+  const site = await loadSettings();
+  return <><Header siteSettings={site} /><main id="main-content" tabIndex={-1} className="policy-page">
+    <article className="policy-document container">
+      <header className="policy-heading"><span className="eyebrow">TERMS OF SERVICE</span><h1>服務條款</h1><p>生效日期：2026 年 9 月 19 日</p></header>
+      <p>歡迎使用 {site.brandName}（以下稱「本會館」）官方網站。以下條款說明網站使用、聯絡預約及到店服務的基本權利義務。您使用本網站或向本會館提出預約時，請先閱讀本條款；依法不得限制或排除的消費者權利，仍依適用法令辦理。</p>
+      <section><h2>一、網站功能與條款適用範圍</h2><p>本網站提供會館資訊、服務項目、價格、文章內容與聯絡管道。目前網站不直接收取款項，也不會因您送出聯絡表單、點擊「立即預約」或傳送 LINE 訊息而自動成立服務契約。實際服務另依雙方確認的項目、日期、時間、價格與其他個別約定辦理；個別磋商的約定與本條款不同時，以個別約定為準。</p></section>
+      <section><h2>二、預約與契約成立</h2><ul><li>預約需求送出後，須由本會館工作人員回覆並確認服務項目、日期、時間及必要事項，才視為預約完成。</li><li>您應提供可供聯繫的正確資訊；資料不完整、無法聯繫或指定時段額滿時，本會館可能無法接受預約。</li><li>若服務時間、技師或項目因臨時狀況需要調整，本會館將儘速聯繫您，並與您協調改期、更換項目或取消。</li><li>未成年人預約或接受依法需由法定代理人同意的服務時，應先取得法定代理人同意。</li></ul></section>
+      <section><h2>三、服務內容與價格</h2><ul><li>網站刊載的服務名稱、時間、價格及優惠內容是交易資訊的一部分；預約確認後，本會館將依確認內容提供服務。</li><li>療程時間為服務安排的預估或標示時間，實際流程可能因諮詢、更衣、個別需求及安全評估略有差異，本會館會於服務前說明。</li><li>如網站資訊存在明顯誤植、技術錯誤或已失效的活動內容，本會館會在預約成立前向您說明正確內容，由您決定是否繼續預約；預約成立後，不會未經同意任意提高已確認的價格。</li><li>若您在服務現場要求增加或更換項目，新增費用須經雙方確認後才會計收。</li><li>付款方式、發票或收據及優惠適用條件，以預約確認或現場依法提供的資訊為準。</li></ul></section>
+      <section><h2>四、取消、改期、遲到與未到</h2><p>如需取消或改期，請儘早透過電話或本網站公布的聯絡方式通知。因遲到可能影響後續預約，本會館將依當日安排與您協調縮短服務時間或改期，並在處理前說明相關影響。</p><p>若特定方案、活動或預付服務另有取消、改期或費用規則，本會館會在您同意或付款前以清楚方式告知。未事先揭露的取消費、違約金或不利條件，不會僅以本條款概括加諸於您。法令另有強制規定時，依該規定辦理。</p></section>
+      <section><h2>五、健康告知與服務安全</h2><p>按摩與舒壓服務以放鬆及一般保健為目的，不是醫療診斷或治療，也不能取代醫師的專業意見。為維護安全，請在服務開始前主動告知技師懷孕、近期手術或受傷、骨折、皮膚狀況、心血管疾病、過敏、正在接受治療，或其他可能影響服務安全的情況。</p><p>本會館將依當時專業水準提供可合理期待的安全服務。若技師判斷特定部位或服務可能不適合，得向您說明後調整強度、避開部位、建議改期或停止服務。服務中如感到疼痛、暈眩、不適或有其他異常，請立即告知技師。緊急情況應優先尋求醫療協助。</p></section>
+      <section><h2>六、到店行為與環境</h2><p>為保障所有顧客及工作人員，請遵守現場安全、衛生、隱私與秩序規範。不得有騷擾、暴力、偷拍、非法要求、酒後失序或其他危害他人的行為。發生上述情況時，本會館得立即停止或拒絕服務，並視需要聯繫相關機關；費用與後續處理依實際情況及法令辦理。</p></section>
+      <section><h2>七、預付方案、禮券與優惠</h2><p>本網站目前不直接販售預付方案或禮券。如本會館另行提供會員方案、套票、禮券或其他預付型服務，將在購買前提供適用範圍、使用方式、退費規則、履約保障及其他依法應記載事項。相關約定不得低於主管機關公告的強制規範。</p></section>
+      <section><h2>八、網站內容與智慧財產</h2><p>本網站的文字、圖片、商標、標誌、版面與其他內容，除另有標示外，均由本會館或合法權利人提供。您可為個人、非商業目的正常瀏覽與分享網站連結；未經權利人同意，不得重製、修改、公開傳輸、散布、販售或以其他方式利用受保護內容。</p><p>健康與養生文章僅供一般資訊參考，無法取代針對個人狀況的醫療或其他專業判斷。</p></section>
+      <section><h2>九、第三方網站與服務</h2><p>本網站可能連結或嵌入 Google 地圖、YouTube、LINE、Instagram、Facebook 等第三方服務。第三方服務由各自營運者提供，其內容、可用性、交易及資料處理方式適用各營運者的條款與政策。第三方內容若由本會館製作或刊登廣告，本會館仍依法對自身提供的資訊負責。</p></section>
+      <section><h2>十、網站可用性與責任</h2><p>本會館會合理維護網站內容與服務，但網站可能因維護、網路、雲端供應商、不可抗力或其他技術原因暫時中斷。若發現內容錯誤，請通知我們處理。本條款不排除或限制本會館依消費者保護法及其他強制規定應負的服務安全、廣告真實、契約履行或損害賠償責任。</p></section>
+      <section><h2>十一、個人資料</h2><p>您使用聯絡表單、預約或與本會館聯繫時所提供的個人資料，依本網站的<a href="/privacy">隱私權政策</a>處理。請勿冒用他人身分或提供您無權提供的個人資料。</p></section>
+      <section><h2>十二、條款變更</h2><p>本會館可能因網站功能、服務內容或法令變更修訂本條款，修訂後會公布於本頁並更新生效日期。變更不會溯及降低您在修訂前已成立契約中的權利；重大變更將以合理方式提示。</p></section>
+      <section><h2>十三、申訴、準據法與管轄</h2><p>本條款及相關服務以中華民國法律為準據法。若發生消費爭議，請先透過網站聯絡表單、電話 <a href={`tel:${site.phone}`}>{site.phone}</a> 或本網站公布的 LINE 聯絡方式與我們聯繫，我們將依消費者保護法處理。您也可以向消費者保護團體、消費者服務中心或地方政府消費者保護官申訴。</p><p>如需進行訴訟，依民事訴訟法及消費者保護法所定管轄法院辦理；本條款不限制消費者依法可選擇的管轄法院。</p><p>法規內容可參閱<a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=J0170001" target="_blank" rel="noreferrer">全國法規資料庫—消費者保護法</a>。</p></section>
+    </article>
+  </main><Footer siteSettings={site} /></>;
+}

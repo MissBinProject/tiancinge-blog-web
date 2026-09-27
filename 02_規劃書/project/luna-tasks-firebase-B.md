@@ -1,5 +1,7 @@
 # Firebase Luna 任務卡 B：資料與 API
 
+> 歷史版本：本卡組的管理 repository／Rules 契約已被 Cloud Run Admin API 取代。現行資料邊界請以 [`firebase-data-api-plan.md`](firebase-data-api-plan.md) 的更新內容及 `update/data-security/` 為準。
+
 每卡固定交付：修改檔案、命令與結果、資料筆數／API 回應、提交 SHA、已知限制。Repository 是唯一資料邊界，畫面不可直接寫 Firestore query。
 
 ## FB-B01 設定 repository

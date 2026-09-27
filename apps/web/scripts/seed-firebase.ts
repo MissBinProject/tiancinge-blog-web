@@ -6,7 +6,6 @@ const projectId = process.env.FIREBASE_PROJECT_ID || 'tiancinge';
 const app = getApps()[0] ?? initializeApp({ credential: applicationDefault(), projectId, storageBucket: `${projectId}.firebasestorage.app` });
 const db = getFirestore(app);
 const now = new Date().toISOString();
-const stableContentCode = (seed: string) => { let hash = 2166136261; for (const char of seed) hash = Math.imul(hash ^ char.charCodeAt(0), 16777619); const alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789'; let value = hash >>> 0; return Array.from({ length: 10 }, () => { value = Math.imul(value ^ (value >>> 13), 16777619) >>> 0; return alphabet[value % alphabet.length]; }).join(''); };
 
 const settings = {
   brandName: fixtureSettings.brandName, phone: fixtureSettings.phone, line: fixtureSettings.lineId, lineId: fixtureSettings.lineId, lineUrl: fixtureSettings.lineUrl,
@@ -25,9 +24,9 @@ const settings = {
 async function seed() {
   const batch = db.batch();
   batch.set(db.collection('site_settings').doc('singleton'), settings, { merge: true });
-  for (const item of fixtureServices) batch.set(db.collection('services').doc(item.id), { ...item, slug: stableContentCode(`service:${item.id}`), createdAt: now, updatedAt: now });
+  for (const item of fixtureServices) batch.set(db.collection('services').doc(item.id), { ...item, createdAt: now, updatedAt: now });
   for (const item of fixtureCategories) batch.set(db.collection('article_categories').doc(item.id), item, { merge: true });
-  for (const item of fixtureArticles) batch.set(db.collection('articles').doc(item.id), { ...item, slug: stableContentCode(`article:${item.id}`), createdAt: now, updatedAt: now });
+  for (const item of fixtureArticles) batch.set(db.collection('articles').doc(item.id), { ...item, createdAt: now, updatedAt: now });
   for (const item of fixtureMedia) batch.set(db.collection('media_assets').doc(item.id), item, { merge: true });
   for (const item of fixtureMessages) batch.set(db.collection('contact_messages').doc(item.id), { ...item, updatedAt: now });
   await batch.commit();

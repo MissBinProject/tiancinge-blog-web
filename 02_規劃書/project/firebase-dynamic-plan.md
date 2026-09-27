@@ -5,13 +5,13 @@
 - 專案：`tiancinge`，帳號：`ouyangtaisen@gmail.com`，區域：`asia-east1`。
 - 官網保留 Next.js App Router 伺服器渲染，部署至 Cloud Run；Firebase Hosting 只作 HTTPS、CDN 與網域入口，所有動態請求 rewrite 至 Cloud Run。
 - 後台是 React/Vite 靜態站，獨立部署至 Firebase Hosting。
-- 資料改用 Firestore；登入使用 Firebase Authentication；圖片使用 Cloud Storage for Firebase。
+- 資料改用 Firestore；後台登入由 Cloud Run server account 驗證；圖片使用 Cloud Storage for Firebase。
 - 內容寫入後下一次官網請求立即讀取最新資料，不建立自動靜態建置流程。
 - 網址代碼由共用系統產生 10 碼小寫英數字，建立後固定；後台欄位唯讀，無法手動輸入。
 
 ## 執行邊界
 
-頁面元件只能呼叫 repository/use case；Firebase Admin SDK 只在 Cloud Run server code 使用，瀏覽器只使用 Firebase client SDK。Firestore 與 Storage 的直接瀏覽器讀寫只對通過 Firebase Authentication 且存在 `admins/{uid}` 的管理員開放，其他訪客一律由 Rules 拒絕。正式資料服務失敗時不得回退測試 fixture。
+頁面元件只能呼叫 repository/use case；Firebase Admin SDK 只在 Cloud Run server code 使用，瀏覽器透過同源 API 呼叫管理操作，不載入可寫入資料的 Firebase client SDK。Firestore 與 Storage 的直接瀏覽器讀寫一律由 Rules 拒絕；API 以 server account session、CSRF 與來源檢查授權。正式資料服務失敗時不得回退測試 fixture。
 
 ## 發布流程
 

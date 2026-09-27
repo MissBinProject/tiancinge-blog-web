@@ -63,12 +63,7 @@ test('最新消息手動輪播不會切到空白頁', async ({ page }) => {
   const news = page.locator('#news');
   await expect(news.locator('.article-card')).toHaveCount(3);
   const controls = news.locator('.slider-controls');
-  await expect(controls).toBeVisible();
-  const dots = controls.locator('button.dot');
-  await expect(dots).toHaveCount(3);
-  await expect(dots.nth(1)).toBeEnabled();
-  await dots.nth(1).click();
-  await expect(news.locator('.article-card')).toHaveCount(3);
+  await expect(controls).not.toBeVisible();
   await page.setViewportSize({ width: 390, height: 844 });
   await page.reload();
   await expect(news.locator('.article-card')).toHaveCount(1);
@@ -109,7 +104,10 @@ test('公開文章與服務路由及 404 狀態正確', async ({ page }) => {
   await page.goto('/news');
   await expect(page.getByRole('navigation', { name: '最新消息分類' })).toBeVisible();
   await page.getByRole('navigation', { name: '最新消息分類' }).getByRole('link', { name: '活動訊息', exact: true }).click();
-  await expect(page).toHaveURL(/\/news\?category=%E6%B4%BB%E5%8B%95%E8%A8%8A%E6%81%AF/);
+  await expect(page).toHaveURL(/\/news\/category\/%E6%B4%BB%E5%8B%95%E8%A8%8A%E6%81%AF$/);
+  await expect(page).toHaveTitle(/活動訊息/);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/news\/category\/%E6%B4%BB%E5%8B%95%E8%A8%8A%E6%81%AF$/);
+  await expect(page.locator('nav.breadcrumbs')).toBeVisible();
   await page.goto('/services');
   await page.locator('.inner-card img').first().evaluate((image) => { image.src = '/missing-inner-service-image.png'; });
   await expect(page.locator('.inner-card img').first()).toHaveAttribute('alt', /圖片暫缺/);
@@ -119,17 +117,17 @@ test('公開文章與服務路由及 404 狀態正確', async ({ page }) => {
   expect(notFoundResponse?.status()).toBe(404);
   await expect(page.getByRole('banner')).toBeVisible();
   await expect(page.getByRole('contentinfo')).toBeVisible();
-  await expect((await page.goto('/blog/edxei4o1pk'))?.status()).toBe(200);
+  await expect((await page.goto('/blog/lob01tcsx5'))?.status()).toBe(200);
 });
 
 test('政策頁提供動態標題、描述與分享資訊', async ({ page }) => {
   await page.goto('/privacy');
   await expect(page).toHaveTitle(/隱私權政策｜天心閣/);
-  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /重視您的隱私/);
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /蒐集、處理及利用個人資料/);
   await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', /隱私權政策｜天心閣/);
   await page.goto('/terms');
   await expect(page).toHaveTitle(/服務條款｜天心閣/);
-  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /使用本網站/);
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /網站使用/);
   await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', /服務條款｜天心閣/);
 });
 

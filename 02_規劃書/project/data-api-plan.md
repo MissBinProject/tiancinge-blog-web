@@ -11,7 +11,7 @@
 | `media_assets` | 透過公開 Storage URL | 是 | MIME 僅 JPEG／PNG／WebP、10 MB；被任何內容引用時不可刪除 |
 | `contact_messages` | 否 | 是 | 訪客只能呼叫 API；狀態為 `unread`／`handled` |
 
-Firestore Rules 與 Storage Rules 均以 Firebase Authentication UID 對應 `admins/{uid}` 判定權限；公開查詢不依賴後台畫面攔截。Cloud Run 使用 Firebase Admin ADC 讀取公開內容並繞過客戶端 Rules。
+Firestore Rules 對瀏覽器讀寫一律拒絕；Storage Rules 僅允許 `site-media` 公開讀取，寫入／刪除一律拒絕。所有管理操作透過 Cloud Run server account session、CSRF、來源檢查、欄位驗證與版本鎖授權；Cloud Run 使用 Firebase Admin SDK 讀寫資料並自行執行相同 domain 規則。
 
 ## 公開 repository
 
@@ -49,7 +49,7 @@ Firestore Rules 與 Storage Rules 均以 Firebase Authentication UID 對應 `adm
 
 ## 管理 repository
 
-`apps/admin/src/repositories.ts` 提供 settings／services／articles／categories／media／messages 的 list、upsert、update、delete adapter。畫面只傳遞 domain contract；Firestore 欄位映射、Storage 上傳／刪除及錯誤轉換集中在 adapter。未設定 `VITE_FIREBASE_*` 時使用 localStorage fixture 讓 Luna 可以獨立驗收畫面，該模式不代表正式資料同步。
+`apps/admin/src/repositories.ts` 提供 settings／services／articles／categories／media／messages 的 list、upsert、update、delete adapter，全部呼叫同源 Cloud Run Admin API。畫面只傳遞 domain contract；Firestore 欄位映射、Storage 上傳／刪除及錯誤轉換集中在 server adapter。開發模式可使用記憶體 fixture 讓 Luna 驗收畫面，但不使用 localStorage，也不代表正式資料同步。
 
 ## 正文與素材安全
 

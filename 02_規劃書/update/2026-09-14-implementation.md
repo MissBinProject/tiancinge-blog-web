@@ -1,5 +1,7 @@
 # 2026-09-14 實作更新
 
+> 歷史紀錄：本檔案包含 Supabase／Vercel 版本的實作步驟。現行正式環境改為 Cloud Run server account、Firestore／Storage 與 Firebase Hosting；安全設定請以 `update/data-security/` 與 `project/firebase-deployment.md` 為準。
+
 ## 本次完成
 
 - 建立 pnpm workspace、Next.js 官網、React/Vite 後台及共享契約。

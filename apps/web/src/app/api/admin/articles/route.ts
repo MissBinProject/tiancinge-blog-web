@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server';
-import { createContentCode } from '@tian-xin-ge/contracts';
+import { createContentCode, isPublicSlug } from '@tian-xin-ge/contracts';
 import { authorizeAdminRequest } from '@/features/admin-auth/application/authorize';
 import { articleMatches, decodeArticleCursor, encodeArticleCursor } from '@/features/admin-content/articles/article-list';
-import { articlePayload, validateArticleInput } from '@/features/admin-content/articles/article-schema';
+import { articlePayload, articleContentChanged, validateArticleInput } from '@/features/admin-content/articles/article-schema';
 import { firebaseServer } from '@/lib/firebase-admin';
+import { readJsonObject } from '@/lib/request-body';
+import { recordAdminAudit } from '@/features/admin-auth/infrastructure/audit';
+import { isDeleted } from '@/features/admin-content/deletion';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -21,10 +24,11 @@ export async function GET(request: Request) {
   const limit = Math.min(Math.max(Number(params.get('limit') || 20), 1), 100);
   const cursor = decodeArticleCursor(params.get('cursor'));
   if (type && type !== 'news' && type !== 'blog') return json({ ok: false, error: { code: 'invalid_request', message: '文章類型不正確' } }, 400);
-  if (status && status !== 'draft' && status !== 'published') return json({ ok: false, error: { code: 'invalid_request', message: '文章狀態不正確' } }, 400);
+  if (status && status !== 'draft' && status !== 'scheduled' && status !== 'published') return json({ ok: false, error: { code: 'invalid_request', message: '文章狀態不正確' } }, 400);
   try {
     const snapshot = await firebase.db.collection('articles').limit(MAX_SCAN).get();
     const matched = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }) as Record<string, unknown>)
+      .filter((row) => !isDeleted(row))
       .filter((row) => articleMatches(row, type as 'news' | 'blog' | null, status as 'draft' | 'published' | null, q))
       .sort((a, b) => { const date = String(b.publishedAt ?? '').localeCompare(String(a.publishedAt ?? '')); return date || String(b.id).localeCompare(String(a.id)); })
       .filter((row) => !cursor || String(row.publishedAt ?? '') < cursor.publishedAt || (String(row.publishedAt ?? '') === cursor.publishedAt && String(row.id) < cursor.id));
@@ -35,17 +39,26 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  if (!await authorizeAdminRequest(request, true)) return json({ ok: false, error: { code: 'forbidden', message: '無效的管理員 session 或請求驗證' } }, 403);
+  const admin = await authorizeAdminRequest(request, true);
+  if (!admin) return json({ ok: false, error: { code: 'forbidden', message: '無效的管理員 session 或請求驗證' } }, 403);
   const firebase = firebaseServer();
   if (!firebase) return json({ ok: false, error: { code: 'service_unavailable', message: '資料服務尚未完成伺服器設定' } }, 503);
-  let body: Record<string, unknown>;
-  try { body = await request.json() as Record<string, unknown>; } catch { return json({ ok: false, error: { code: 'invalid_request', message: '資料格式不正確' } }, 400); }
+  const parsed = await readJsonObject(request, 512 * 1024);
+  if (!parsed.ok) return json({ ok: false, error: { code: parsed.reason === 'too_large' ? 'too_large' : 'invalid_request', message: parsed.reason === 'too_large' ? '文章資料大小超過限制' : '資料格式不正確' } }, parsed.reason === 'too_large' ? 413 : 400);
+  const body = parsed.value;
   const validationError = validateArticleInput(body);
   if (validationError) return json({ ok: false, error: { code: 'invalid_request', message: validationError } }, 400);
   try {
-    let slug = createContentCode();
-    for (let attempt = 0; attempt < 5; attempt += 1) { const duplicate = await firebase.db.collection('articles').where('slug', '==', slug).limit(1).get(); if (duplicate.empty) break; slug = createContentCode(); }
-    const ref = await firebase.db.collection('articles').add({ ...articlePayload(body, slug), createdAt: new Date() });
-    return json({ ok: true, data: { id: ref.id, slug } }, 201);
+    const slug = typeof body.slug === 'string' && body.slug.trim() ? body.slug.trim().toLowerCase() : createContentCode();
+    if (!isPublicSlug(slug)) return json({ ok: false, error: { code: 'invalid_request', message: '文章網址格式不正確' } }, 400);
+    const [duplicate, historical] = await Promise.all([
+      firebase.db.collection('articles').where('slug', '==', slug).limit(1).get(),
+      firebase.db.collection('articles').where('previousSlugs', 'array-contains', slug).limit(1).get(),
+    ]);
+    if (!duplicate.empty || !historical.empty) return json({ ok: false, error: { code: 'conflict', message: '這個文章網址已被使用' } }, 409);
+    const now = new Date();
+    const ref = await firebase.db.collection('articles').add({ ...articlePayload(body, slug), previousSlugs: [], contentUpdatedAt: now, version: 1, createdAt: now });
+    await recordAdminAudit(firebase, admin, request, 'create', 'article', ref.id).catch(() => undefined);
+    return json({ ok: true, data: { id: ref.id, slug, version: 1 } }, 201);
   } catch { return json({ ok: false, error: { code: 'service_unavailable', message: '文章儲存失敗' } }, 503); }
 }

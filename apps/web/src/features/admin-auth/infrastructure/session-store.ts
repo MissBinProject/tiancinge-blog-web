@@ -1,6 +1,8 @@
 import { firebaseServer } from '@/lib/firebase-admin';
 import { createCsrfToken, createSessionToken, hashCsrfToken, hashSessionToken, SESSION_TTL_SECONDS } from './session';
 
+export const SESSION_IDLE_TTL_SECONDS = 30 * 60;
+
 export type StoredAdminSession = {
   token: string;
   csrfToken: string;
@@ -9,7 +11,7 @@ export type StoredAdminSession = {
   expiresAt: number;
 };
 
-type SessionDocument = { username?: unknown; csrfHash?: unknown; credentialVersion?: unknown; expiresAt?: unknown };
+type SessionDocument = { username?: unknown; csrfHash?: unknown; credentialVersion?: unknown; createdAt?: unknown; lastSeenAt?: unknown; expiresAt?: unknown };
 
 function millis(value: unknown): number {
   if (typeof value === 'number') return value;
@@ -24,7 +26,7 @@ export async function createStoredAdminSession(username: string, credentialVersi
   const token = createSessionToken();
   const csrfToken = createCsrfToken();
   const expiresAt = now + SESSION_TTL_SECONDS * 1_000;
-  await firebase.db.collection('admin_sessions').doc(hashSessionToken(token)).set({ username, csrfHash: hashCsrfToken(csrfToken), credentialVersion, createdAt: new Date(now), expiresAt: new Date(expiresAt) });
+  await firebase.db.collection('admin_sessions').doc(hashSessionToken(token)).set({ username, csrfHash: hashCsrfToken(csrfToken), credentialVersion, createdAt: new Date(now), lastSeenAt: new Date(now), expiresAt: new Date(expiresAt) });
   return { token, csrfToken, username, credentialVersion, expiresAt };
 }
 
@@ -37,10 +39,15 @@ export async function readStoredAdminSession(token: string, now = Date.now()): P
   const data = snapshot.data() as SessionDocument;
   const expiresAt = millis(data.expiresAt);
   if (!expiresAt || expiresAt <= now) return null;
+  const lastSeenAt = millis(data.lastSeenAt);
+  if (lastSeenAt && now - lastSeenAt > SESSION_IDLE_TTL_SECONDS * 1_000) return null;
   const username = typeof data.username === 'string' ? data.username : '';
   const credentialVersion = typeof data.credentialVersion === 'string' ? data.credentialVersion : '';
   const csrfHash = typeof data.csrfHash === 'string' ? data.csrfHash : '';
   if (!username || !credentialVersion || !csrfHash) return null;
+  if (!lastSeenAt || now - lastSeenAt >= 60_000) {
+    await snapshot.ref.update({ lastSeenAt: new Date(now) });
+  }
   return { username, credentialVersion, csrfHash, expiresAt };
 }
 

@@ -1,0 +1,179 @@
+{
+  "origin": "https://tiancinge-web.web.app",
+  "preset": "perf",
+  "formFactor": "mobile",
+  "runs": 3,
+  "measuredAt": "2026-09-20T04:43:06.271Z",
+  "summary": [
+    {
+      "route": "/",
+      "runs": 3,
+      "median": {
+        "performanceScore": 88,
+        "lcpMs": 2981.646,
+        "cls": 0.002631803875780663,
+        "tbtMs": 259.5740000000037,
+        "jsBytes": 121336,
+        "imageBytes": 158914
+      }
+    },
+    {
+      "route": "/services",
+      "runs": 3,
+      "median": {
+        "performanceScore": 94,
+        "lcpMs": 2779.099,
+        "cls": 0.006178681261248227,
+        "tbtMs": 96.25400000000036,
+        "jsBytes": 124128,
+        "imageBytes": 150838
+      }
+    },
+    {
+      "route": "/news",
+      "runs": 3,
+      "median": {
+        "performanceScore": 94,
+        "lcpMs": 2798.575,
+        "cls": 0.004567942609869058,
+        "tbtMs": 97.40500000000065,
+        "jsBytes": 123544,
+        "imageBytes": 158548
+      }
+    },
+    {
+      "route": "/blog",
+      "runs": 3,
+      "median": {
+        "performanceScore": 93,
+        "lcpMs": 2868.292,
+        "cls": 0.004340578950554309,
+        "tbtMs": 98.63300000000027,
+        "jsBytes": 123833,
+        "imageBytes": 285405
+      }
+    }
+  ],
+  "samples": [
+    {
+      "route": "/",
+      "run": 1,
+      "lcpMs": 2994.887,
+      "cls": 0.002631803875780663,
+      "tbtMs": 259.5740000000037,
+      "jsBytes": 121342,
+      "imageBytes": 158912,
+      "performanceScore": 88
+    },
+    {
+      "route": "/",
+      "run": 2,
+      "lcpMs": 2970.726,
+      "cls": 0.002631803875780663,
+      "tbtMs": 255.62699999999177,
+      "jsBytes": 121336,
+      "imageBytes": 158914,
+      "performanceScore": 88
+    },
+    {
+      "route": "/",
+      "run": 3,
+      "lcpMs": 2981.646,
+      "cls": 0.002631803875780663,
+      "tbtMs": 284.9339999999984,
+      "jsBytes": 121276,
+      "imageBytes": 158914,
+      "performanceScore": 87
+    },
+    {
+      "route": "/services",
+      "run": 1,
+      "lcpMs": 2791.86,
+      "cls": 0.006178681261248227,
+      "tbtMs": 99.30099999999993,
+      "jsBytes": 124249,
+      "imageBytes": 150838,
+      "performanceScore": 94
+    },
+    {
+      "route": "/services",
+      "run": 2,
+      "lcpMs": 2779.099,
+      "cls": 0.006178681261248227,
+      "tbtMs": 94.18099999999959,
+      "jsBytes": 123781,
+      "imageBytes": 150932,
+      "performanceScore": 94
+    },
+    {
+      "route": "/services",
+      "run": 3,
+      "lcpMs": 2775.362,
+      "cls": 0.006178681261248227,
+      "tbtMs": 96.25400000000036,
+      "jsBytes": 124128,
+      "imageBytes": 150838,
+      "performanceScore": 94
+    },
+    {
+      "route": "/news",
+      "run": 1,
+      "lcpMs": 2798.061,
+      "cls": 0.004567942609869058,
+      "tbtMs": 97.40500000000065,
+      "jsBytes": 124241,
+      "imageBytes": 157835,
+      "performanceScore": 94
+    },
+    {
+      "route": "/news",
+      "run": 2,
+      "lcpMs": 2798.575,
+      "cls": 0.004567942609869058,
+      "tbtMs": 92.58300000000008,
+      "jsBytes": 123510,
+      "imageBytes": 158578,
+      "performanceScore": 94
+    },
+    {
+      "route": "/news",
+      "run": 3,
+      "lcpMs": 2804.44,
+      "cls": 0.004567942609869058,
+      "tbtMs": 100.61400000000003,
+      "jsBytes": 123544,
+      "imageBytes": 158548,
+      "performanceScore": 94
+    },
+    {
+      "route": "/blog",
+      "run": 1,
+      "lcpMs": 2868.292,
+      "cls": 0.004340578950554309,
+      "tbtMs": 98.63300000000027,
+      "jsBytes": 123833,
+      "imageBytes": 285405,
+      "performanceScore": 93
+    },
+    {
+      "route": "/blog",
+      "run": 2,
+      "lcpMs": 2906.305,
+      "cls": 0.004340578950554309,
+      "tbtMs": 99.63100000000031,
+      "jsBytes": 124260,
+      "imageBytes": 285404,
+      "performanceScore": 93
+    },
+    {
+      "route": "/blog",
+      "run": 3,
+      "lcpMs": 2838.826,
+      "cls": 0.004340578950554309,
+      "tbtMs": 92.85099987792955,
+      "jsBytes": 123539,
+      "imageBytes": 285406,
+      "performanceScore": 94
+    }
+  ]
+}

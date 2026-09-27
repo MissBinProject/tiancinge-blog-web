@@ -1,6 +1,6 @@
-import type { Article, ContactMessage, MediaAsset, Service, SiteSettings } from './index';
+import type { Article, ContactMessage, MediaAsset, PricingPlan, Service, SiteSettings } from './index';
 
-const asset = (name: string) => `/assets/${name}`;
+const asset = (name: string) => `/assets/${name.replace(/\.png$/i, '.webp')}`;
 
 /**
  * A deterministic content set shared by the public site and admin preview.
@@ -54,25 +54,44 @@ export const fixtureSettings: SiteSettings = {
   seoTitle: '天心閣養生會館｜放鬆身心・找回最美的自己',
   seoDescription: '天心閣養生會館，提供專業、貼心、隱私的養生體驗。',
   ogImageUrl: asset('design/01_標題.png'),
+  editorialTeamName: '天心閣養生會館編輯團隊',
+  editorialBio: '由天心閣養生會館編輯團隊整理養生知識、生活保養與館內服務資訊。',
+  editorialPolicy: '文章以公開可查證的資料與館內實際服務為基礎，內容更新時會重新檢視來源與日期。',
 };
 
 export const fixtureServices: Service[] = [
-  { id: 's1', slug: '7usx1gzbua', name: '全身舒壓', summary: '釋放壓力・舒緩筋骨', description: '釋放壓力・舒緩筋骨\n重拾輕盈自在', imageUrl: asset('crops/service-1.png'), icon: 'lotus', durationMinutes: 60, price: 1500, sortOrder: 1, isVisible: true },
-  { id: 's2', slug: '0p38fpahrm', name: '精油按摩', summary: '香氛療癒・放鬆身心', description: '香氛療癒・放鬆身心\n喚醒身體能量', imageUrl: asset('crops/service-2.png'), icon: 'oil', durationMinutes: 90, price: 2000, sortOrder: 2, isVisible: true },
-  { id: 's3', slug: 'tce7trl2h8', name: '熱石養生', summary: '溫熱能量・促進循環', description: '溫熱能量・促進循環\n深層放鬆', imageUrl: asset('crops/service-3.png'), icon: 'stone', durationMinutes: 90, price: 2200, sortOrder: 3, isVisible: true },
-  { id: 's4', slug: 'z8gxmi43sb', name: '足部舒壓', summary: '舒緩疲勞・促進代謝', description: '舒緩疲勞・促進代謝\n一夜好眠', imageUrl: asset('crops/service-4.png'), icon: 'foot', durationMinutes: 60, price: 1200, sortOrder: 4, isVisible: true },
-  { id: 's5', slug: 'uiwtugzzor', name: '客製化課程', summary: '專屬方案・貼心安排', description: '專屬方案・貼心安排\n打造屬於您的放鬆體驗', imageUrl: asset('crops/service-5.png'), icon: 'flower', priceLabel: '洽詢', sortOrder: 5, isVisible: true },
+  { id: 's1', slug: 'full-body-massage', name: '全身舒壓', summary: '釋放壓力・舒緩筋骨', description: '釋放壓力・舒緩筋骨\n重拾輕盈自在', imageUrl: asset('crops/service-1.png'), icon: 'lotus', durationMinutes: 60, price: 1500, sortOrder: 1, isVisible: true },
+  { id: 's2', slug: 'essential-oil-massage', name: '精油按摩', summary: '香氛療癒・放鬆身心', description: '香氛療癒・放鬆身心\n喚醒身體能量', imageUrl: asset('crops/service-2.png'), icon: 'oil', durationMinutes: 90, price: 2000, sortOrder: 2, isVisible: true },
+  { id: 's3', slug: 'hot-stone-massage', name: '熱石養生', summary: '溫熱能量・促進循環', description: '溫熱能量・促進循環\n深層放鬆', imageUrl: asset('crops/service-3.png'), icon: 'stone', durationMinutes: 90, price: 2200, sortOrder: 3, isVisible: true },
+  { id: 's4', slug: 'foot-massage', name: '足部舒壓', summary: '舒緩疲勞・促進代謝', description: '舒緩疲勞・促進代謝\n一夜好眠', imageUrl: asset('crops/service-4.png'), icon: 'foot', durationMinutes: 60, price: 1200, sortOrder: 4, isVisible: true },
+  { id: 's5', slug: 'custom-massage-course', name: '客製化課程', summary: '專屬方案・貼心安排', description: '專屬方案・貼心安排\n打造屬於您的放鬆體驗', imageUrl: asset('crops/service-5.png'), icon: 'flower', priceLabel: '洽詢', sortOrder: 5, isVisible: true },
+];
+
+export const fixturePricingPlans: PricingPlan[] = [
+  { id: 'p1', name: '頭頸肩按摩', summary: '針對頭、頸、肩部的局部放鬆', description: '適合久坐、久站或肩頸容易緊繃時安排。', category: '局部舒壓', durationMinutes: 10, price: 200, isVisible: true, showOnHome: true, isFeatured: false, sortOrder: 1, homeSortOrder: 1 },
+  { id: 'p2', name: '腳底按摩＋精油 SPA 沐足', summary: '足部按摩搭配溫熱沐足', description: '先讓雙腳暖身，再依需求放鬆足部。', category: '足部服務', durationMinutes: 30, durationNote: '腳底 30 分鐘；沐足 10 分鐘', price: 500, isVisible: true, showOnHome: false, isFeatured: false, sortOrder: 2, homeSortOrder: 20 },
+  { id: 'p3', name: '腳底按摩＋頭頸肩按摩＋精油 SPA 沐足', summary: '足部與肩頸一次照顧', description: '足部、頭頸肩搭配精油 SPA 沐足，沐足與按摩可同時進行。', category: '組合方案', durationMinutes: 40, durationNote: '沐足同時進行', price: 600, isVisible: true, showOnHome: false, isFeatured: true, sortOrder: 3, homeSortOrder: 21 },
+  { id: 'p4', name: '削腳皮＋精油 SPA 沐足', summary: '足部角質整理與沐足', description: '適合想整理足部角質並享受沐足的人。', category: '足部服務', durationNote: '服務時間請洽詢', price: 600, isVisible: true, showOnHome: false, isFeatured: false, sortOrder: 4, homeSortOrder: 22 },
+  { id: 'p5', name: '刮痧', summary: '傳統刮痧放鬆服務', description: '服務前先確認狀態與可接受的力道。', category: '刮痧與拔罐', durationMinutes: 30, price: 600, isVisible: true, showOnHome: false, isFeatured: false, sortOrder: 5, homeSortOrder: 23 },
+  { id: 'p6', name: '拔罐', summary: '傳統拔罐放鬆服務', description: '依當日狀態溝通部位與方式。', category: '刮痧與拔罐', durationMinutes: 30, price: 600, isVisible: true, showOnHome: false, isFeatured: false, sortOrder: 6, homeSortOrder: 24 },
+  { id: 'p7', name: '腳底按摩＋半身按摩', summary: '足部搭配半身放鬆', description: '適合想同時照顧足部與上半身疲勞的客人。', category: '組合方案', durationMinutes: 50, durationNote: '腳底 30 分鐘＋半身 20 分鐘', price: 780, isVisible: true, showOnHome: true, isFeatured: true, sortOrder: 7, homeSortOrder: 2 },
+  { id: 'p8', name: '腳底按摩＋削腳皮', summary: '足部按摩搭配角質整理', description: '依足部狀況安排按摩與角質整理。', category: '足部服務', durationMinutes: 40, durationNote: '腳底 40 分鐘；總時長請洽詢', price: 1200, isVisible: true, showOnHome: false, isFeatured: true, sortOrder: 8, homeSortOrder: 25 },
+  { id: 'p9', name: '腳底按摩', summary: '完整足部放鬆', description: '針對足部與小腿疲勞安排舒壓。', category: '足部服務', durationMinutes: 60, price: 900, isVisible: true, showOnHome: true, isFeatured: false, sortOrder: 9, homeSortOrder: 3 },
+  { id: 'p10', name: '全身按摩', summary: '頭頸、背部與四肢整體放鬆', description: '適合工作忙碌、久坐久站或運動後想休息的人。', category: '全身與精油按摩', durationMinutes: 60, price: 900, isVisible: true, showOnHome: true, isFeatured: false, sortOrder: 10, homeSortOrder: 4 },
+  { id: 'p11', name: '腳底按摩＋全身按摩', summary: '足部與全身完整放鬆', description: '從足部開始，再延伸至全身按摩。', category: '組合方案', durationMinutes: 90, price: 1400, isVisible: true, showOnHome: true, isFeatured: true, sortOrder: 11, homeSortOrder: 5 },
+  { id: 'p12', name: '全身精油按摩', summary: '香氛搭配全身舒壓', description: '可先溝通香氣偏好、力道與重點部位。', category: '全身與精油按摩', durationMinutes: 60, price: 1100, isVisible: true, showOnHome: true, isFeatured: true, sortOrder: 12, homeSortOrder: 6 },
+  { id: 'p13', name: '腳底按摩＋全身按摩', summary: '加長版足部與全身放鬆', description: '適合想留出更多時間完整休息的人。', category: '組合方案', durationMinutes: 120, price: 1700, isVisible: true, showOnHome: false, isFeatured: false, sortOrder: 13, homeSortOrder: 26 },
 ];
 
 export const fixtureArticles: Article[] = [
-  { id: 'n1', slug: '0333lu87r6', type: 'news', category: '活動訊息', title: '中秋限定優惠活動', excerpt: '放鬆身心，與您一起迎接美好的節日。即日起預約享專屬優惠！', seoTitle: '中秋限定優惠活動｜天心閣養生會館', seoDescription: '天心閣中秋限定療程與預約優惠。', coverUrl: asset('crops/news-1.png'), publishedAt: '2025-09-10', status: 'published', body: [{ type: 'paragraph', text: '在團聚的季節裡，留一段溫柔時光給自己。中秋限定療程即日起開放預約。' }] },
-  { id: 'n2', slug: 'vngglp38p7', type: 'news', category: '課程介紹', title: '全新精油課程登場', excerpt: '嚴選天然精油，帶給您更深層的放鬆體驗，喚醒身心能量。', seoTitle: '全新精油課程登場｜天心閣養生會館', seoDescription: '認識天心閣全新精油按摩課程。', coverUrl: asset('crops/news-2.png'), publishedAt: '2025-09-05', status: 'published', body: [{ type: 'paragraph', text: '全新精油課程以舒緩香氣與細緻手技，陪你放下日常的忙碌。' }] },
-  { id: 'n3', slug: 'elfmhj13nd', type: 'news', category: '館內公告', title: '環境升級・更舒適的空間', excerpt: '全新空間完成，提供更舒適、溫馨的養生環境，期待與您相見。', seoTitle: '環境升級・更舒適的空間｜天心閣養生會館', seoDescription: '看看天心閣為你準備的舒適養生空間。', coverUrl: asset('crops/news-3.png'), publishedAt: '2025-08-28', status: 'published', body: [{ type: 'paragraph', text: '我們完成了接待區與療程空間的升級，讓每次到訪都更加安心。' }] },
-  { id: 'b1', slug: 'edxei4o1pk', type: 'blog', category: '養生知識', title: '精油的療癒力量', excerpt: '認識不同精油的功效，讓身心獲得深層放鬆。', seoTitle: '精油的療癒力量｜天心閣養生會館', seoDescription: '了解精油香氣與放鬆體驗的關係。', coverUrl: asset('crops/blog-1.png'), publishedAt: '2025-09-05', status: 'published', body: [{ type: 'heading', text: '香氣與身心的連結' }, { type: 'paragraph', text: '精油的香氣能為日常帶來一點餘裕，搭配專業按摩，讓呼吸重新變得深長。' }] },
-  { id: 'b2', slug: '99crpe93w5', type: 'blog', category: '生活美學', title: '日常養生小技巧', excerpt: '從生活細節開始，打造健康與美麗的日常。', seoTitle: '日常養生小技巧｜天心閣養生會館', seoDescription: '從生活細節開始建立放鬆的養生習慣。', coverUrl: asset('crops/blog-2.png'), publishedAt: '2025-08-25', status: 'published', body: [{ type: 'paragraph', text: '每天給自己幾分鐘伸展、補充水分，就是照顧自己的溫柔練習。' }] },
-  { id: 'b3', slug: '477d2ndlqa', type: 'blog', category: '心靈成長', title: '如何舒緩壓力？', excerpt: '幾個簡單的方法，讓心情回到平靜。', seoTitle: '如何舒緩壓力？｜天心閣養生會館', seoDescription: '幾個簡單方法陪你找回平靜。', coverUrl: asset('crops/blog-3.png'), publishedAt: '2025-08-18', status: 'published', body: [{ type: 'list', text: '每天留一段安靜時間', items: ['深呼吸三次', '放下手機，感受當下', '讓睡眠成為優先'] }] },
-  { id: 'b4', slug: 'n7vc35ksxr', type: 'blog', category: '館內日常', title: '環境升級・更舒適的空間', excerpt: '全新空間完成，提供更舒適、溫馨的養生環境。', seoTitle: '環境升級・更舒適的空間｜天心閣養生會館', seoDescription: '看看天心閣為你準備的舒適養生空間。', coverUrl: asset('crops/blog-4.png'), publishedAt: '2025-08-10', status: 'published', body: [{ type: 'paragraph', text: '一盞燈、一朵花，都是我們希望你感受到的安心。' }] },
-  { id: 'n-draft', slug: 'dt8qch6sy6', type: 'news', category: '館內公告', title: '內部草稿：秋季養生企劃', excerpt: '尚未發布的內部內容。', coverUrl: asset('crops/news-3.png'), publishedAt: '2025-09-14', status: 'draft', body: [] },
+  { id: 'n1', slug: 'mid-autumn-massage-offer', type: 'news', category: '活動訊息', title: '中秋限定優惠活動', excerpt: '放鬆身心，與您一起迎接美好的節日。即日起預約享專屬優惠！', seoTitle: '中秋限定優惠活動｜天心閣養生會館', seoDescription: '天心閣中秋限定療程與預約優惠。', coverUrl: asset('crops/news-1.png'), publishedAt: '2025-09-10', status: 'published', body: [{ type: 'paragraph', text: '在團聚的季節裡，留一段溫柔時光給自己。中秋限定療程即日起開放預約。' }] },
+  { id: 'n2', slug: 'essential-oil-massage-course', type: 'news', category: '課程介紹', title: '全新精油課程登場', excerpt: '嚴選天然精油，帶給您更深層的放鬆體驗，喚醒身心能量。', seoTitle: '全新精油課程登場｜天心閣養生會館', seoDescription: '認識天心閣全新精油按摩課程。', coverUrl: asset('crops/news-2.png'), publishedAt: '2025-09-05', status: 'published', body: [{ type: 'paragraph', text: '全新精油課程以舒緩香氣與細緻手技，陪你放下日常的忙碌。' }] },
+  { id: 'n3', slug: 'massage-space-upgrade', type: 'news', category: '館內公告', title: '環境升級・更舒適的空間', excerpt: '全新空間完成，提供更舒適、溫馨的養生環境，期待與您相見。', seoTitle: '環境升級・更舒適的空間｜天心閣養生會館', seoDescription: '看看天心閣為你準備的舒適養生空間。', coverUrl: asset('crops/news-3.png'), publishedAt: '2025-08-28', status: 'published', body: [{ type: 'paragraph', text: '我們完成了接待區與療程空間的升級，讓每次到訪都更加安心。' }] },
+  { id: 'b1', slug: 'essential-oil-benefits', type: 'blog', category: '養生知識', title: '精油的療癒力量', excerpt: '認識不同精油的功效，讓身心獲得深層放鬆。', seoTitle: '精油的療癒力量｜天心閣養生會館', seoDescription: '了解精油香氣與放鬆體驗的關係。', coverUrl: asset('crops/blog-1.png'), publishedAt: '2025-09-05', status: 'published', body: [{ type: 'heading', text: '香氣與身心的連結' }, { type: 'paragraph', text: '精油的香氣能為日常帶來一點餘裕，搭配專業按摩，讓呼吸重新變得深長。' }] },
+  { id: 'b2', slug: 'daily-wellness-tips', type: 'blog', category: '生活美學', title: '日常養生小技巧', excerpt: '從生活細節開始，打造健康與美麗的日常。', seoTitle: '日常養生小技巧｜天心閣養生會館', seoDescription: '從生活細節開始建立放鬆的養生習慣。', coverUrl: asset('crops/blog-2.png'), publishedAt: '2025-08-25', status: 'published', body: [{ type: 'paragraph', text: '每天給自己幾分鐘伸展、補充水分，就是照顧自己的溫柔練習。' }] },
+  { id: 'b3', slug: 'stress-relief-tips', type: 'blog', category: '心靈成長', title: '如何舒緩壓力？', excerpt: '幾個簡單的方法，讓心情回到平靜。', seoTitle: '如何舒緩壓力？｜天心閣養生會館', seoDescription: '幾個簡單方法陪你找回平靜。', coverUrl: asset('crops/blog-3.png'), publishedAt: '2025-08-18', status: 'published', body: [{ type: 'list', text: '每天留一段安靜時間', items: ['深呼吸三次', '放下手機，感受當下', '讓睡眠成為優先'] }] },
+  { id: 'b4', slug: 'wellness-space-upgrade', type: 'blog', category: '館內日常', title: '環境升級・更舒適的空間', excerpt: '全新空間完成，提供更舒適、溫馨的養生環境。', seoTitle: '環境升級・更舒適的空間｜天心閣養生會館', seoDescription: '看看天心閣為你準備的舒適養生空間。', coverUrl: asset('crops/blog-4.png'), publishedAt: '2025-08-10', status: 'published', body: [{ type: 'paragraph', text: '一盞燈、一朵花，都是我們希望你感受到的安心。' }] },
+  { id: 'n-draft', slug: 'autumn-wellness-plan', type: 'news', category: '館內公告', title: '內部草稿：秋季養生企劃', excerpt: '尚未發布的內部內容。', coverUrl: asset('crops/news-3.png'), publishedAt: '2025-09-14', status: 'draft', body: [] },
 ];
 
 export const fixtureCategories = [

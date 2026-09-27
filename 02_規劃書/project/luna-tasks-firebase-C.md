@@ -1,5 +1,7 @@
 # Firebase Luna 任務卡 C：管理後台
 
+> 歷史版本：本卡組的 Firebase Auth／Firestore 直連流程已停用。現行後台只呼叫 Cloud Run server account API；MFA、session 與安全待辦請以 `update/data-security/luna-tasks/` 為準。
+
 後台採 React、Vite、TypeScript；每卡只交付一個列表、表單或編輯器能力。所有圖片欄位必須透過共用素材選擇器或上傳，不提供手填圖片 URL。
 
 ## FB-C01 後台 Firebase Auth adapter

@@ -1,0 +1,19 @@
+# Never copy credentials or local configuration into an image build context.
+**/.env*
+
+# Dependencies and generated output are installed/generated in the build stages.
+**/node_modules/
+**/.next/
+**/dist/
+**/*.tsbuildinfo
+.git/
+.firebase/
+
+# The web image does not need the admin source, test suites, or delivery docs.
+apps/admin/src/
+apps/admin/public/
+apps/admin/index.html
+e2e/
+02_規劃書/
+test-results/
+playwright-report/
