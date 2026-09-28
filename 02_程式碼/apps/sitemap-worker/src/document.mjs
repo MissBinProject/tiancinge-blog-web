@@ -8,7 +8,7 @@ export function isoDate(value, now = new Date()) {
   try {
     date = typeof value.toDate === 'function' ? value.toDate() : new Date(value);
   } catch { return undefined; }
-  return Number.isFinite(date.getTime()) && date <= now ? date.toISOString() : undefined;
+  return Number.isFinite(date.getTime()) && date <= now ? date.toISOString().slice(0, 10) : undefined;
 }
 
 /** Pure rules: failures reading source data must be handled before calling this function. */

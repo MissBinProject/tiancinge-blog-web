@@ -29,7 +29,9 @@ test('deduplicates and keeps newest actual date; invalid/future dates omitted', 
   data.articles = ['2026-01-01', '2026-01-02'].map((updatedAt) => ({ type: 'news', slug: 'abcdefghij', status: 'published', updatedAt }));
   const result = buildSitemap(data, new Date('2026-02-01'));
   assert.equal(result.urls.length, 5);
-  assert.ok(result.xml.includes('2026-01-02T00:00:00.000Z'));
+  assert.ok(result.xml.includes('<lastmod>2026-01-02</lastmod>'));
+  assert.equal(isoDate('2026-09-26T07:05:52.962Z', new Date('2026-09-27')), '2026-09-26');
+  assert.doesNotMatch(result.xml, /<lastmod>[^<]*T[^<]*<\/lastmod>/);
   assert.equal(isoDate('invalid'), undefined);
   assert.equal(isoDate('2099-01-01'), undefined);
 });

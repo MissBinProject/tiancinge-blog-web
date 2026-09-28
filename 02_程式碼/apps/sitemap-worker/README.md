@@ -37,7 +37,7 @@ gcloud scheduler jobs create http article-scheduled-publications --project tianc
 - 分類頁可供站內瀏覽，但分類首頁與分類分頁都不列入 sitemap。
 - 編輯政策頁：作者介紹與編輯政策皆有內容才收錄。
 - 排除草稿、隱藏服務、所有分類網址、搜尋結果、後台、API、hash 錨點。刪除或下架後會移除。
-- `lastmod` 使用內容的時間；無效或未來時間省略。相同輸入不因執行時間而改變。
+- `lastmod` 使用內容時間的 UTC 日期（`YYYY-MM-DD`）；無效或未來時間省略。相同輸入不因執行時間而改變。
 
 ## 部署入口
 
