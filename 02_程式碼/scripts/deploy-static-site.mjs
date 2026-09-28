@@ -16,6 +16,7 @@ const snapshot = JSON.parse(await readFile(resolve(snapshotPath), 'utf8'));
 if (!/^[a-f0-9]{64}$/i.test(snapshot.digest || '')) throw new Error('Snapshot digest missing or invalid');
 const digest = createHash('sha256').update(await readFile(resolve(artifact, 'sitemap.xml'))).digest('hex');
 if (!digest) throw new Error('Static artifact does not contain sitemap.xml');
+if ((await readFile(resolve(artifact, 'sitemap_v2.xml'), 'utf8')) !== (await readFile(resolve(artifact, 'sitemap.xml'), 'utf8'))) throw new Error('sitemap_v2.xml must match sitemap.xml');
 const sitemapUrlCount = (await readFile(resolve(artifact, 'sitemap.xml'), 'utf8')).match(/<url>/g)?.length || 0;
 if (!Number.isSafeInteger(sitemapUrlCount) || sitemapUrlCount < 1 || sitemapUrlCount > 50_000) throw new Error('Static artifact sitemap URL count is invalid');
 const command = (binary, args, options = {}) => execFileSync(binary, args, { encoding: 'utf8', ...options });

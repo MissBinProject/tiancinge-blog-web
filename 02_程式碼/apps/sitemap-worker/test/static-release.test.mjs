@@ -19,6 +19,7 @@ test('writes sitemap and robots only after every indexable HTML artifact validat
     assert.equal(result.urls.length, 4);
     assert.deepEqual((await readFile(join(root, 'sitemap-diagnostic.txt'), 'utf8')).trim().split('\n'), result.urls.map(({ url }) => url));
     assert.match(await readFile(join(root, 'sitemap.xml'), 'utf8'), /<urlset/);
+    assert.equal(await readFile(join(root, 'sitemap_v2.xml'), 'utf8'), await readFile(join(root, 'sitemap.xml'), 'utf8'));
     const robotsText = await readFile(join(root, 'robots.txt'), 'utf8');
     assert.match(robotsText, /Sitemap:/);
     assert.match(robotsText, /Disallow: \/search/);

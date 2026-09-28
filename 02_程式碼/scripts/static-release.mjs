@@ -36,6 +36,7 @@ export async function prepareStaticRelease(directory, source, now = new Date()) 
   }
   // Run after export, before uploading a candidate; never patch the live site.
   await writeFile(resolve(root, 'sitemap.xml'), xml);
+  await writeFile(resolve(root, 'sitemap_v2.xml'), xml);
   // Controlled format/path comparison: always use the exact same public snapshot.
   await writeFile(resolve(root, 'sitemap-diagnostic.txt'), urls.map(({ url }) => url).join('\n') + '\n');
   await writeFile(resolve(root, 'robots.txt'), robots);
