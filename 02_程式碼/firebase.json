@@ -20,11 +20,14 @@
         { "source": "/services/7usx1gzbua", "destination": "/services/full-body-massage", "type": 301 }
       ],
       "headers": [
-        { "source": "/sitemap.xml", "headers": [{ "key": "Content-Type", "value": "application/xml; charset=utf-8" }, { "key": "Cache-Control", "value": "public, max-age=60" }] },
+        { "source": "/sitemap.xml", "headers": [{ "key": "Content-Type", "value": "application/xml; charset=utf-8" }, { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }] },
         { "source": "/robots.txt", "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }, { "key": "Cache-Control", "value": "public, max-age=60" }] }
       ],
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-      "rewrites": [{ "source": "**", "run": { "serviceId": "tiancinge-web", "region": "asia-east1" } }]
+      "rewrites": [
+        { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+        { "source": "**", "run": { "serviceId": "tiancinge-web", "region": "asia-east1" } }
+      ]
     },
     {
       "target": "admin",
